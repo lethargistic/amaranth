@@ -12,9 +12,11 @@
 - [ ] todo very: add base biome for every climate zone
 - [x] todo: "subtle" for desc? ; no but actually yes
 - [x] todo: vivid shrubland has too consistent rocks
-- [ ] todo: publish on Modrinth
-- [ ] todo: publish on Curseforge
+- [x] todo: publish on Modrinth
+- [x] todo: publish on Curseforge
 - [ ] todo: add Curseforge id to metadata later
+- [ ] todo: make satisforest a lot less rare
+- [ ] todo: make villages appear in shrublands and other relevant
 
 ### Moderate
 
@@ -38,6 +40,7 @@
 - [ ] todo maybe: 1.20.1
 - [ ] todo maybe: revisit some biomes ; witchy ; satisforest
 - [ ] todo: block that disables possibly annoying visual effects for biome
+- [ ] todo: add some custom soils (for at least a few at once, not just 1)
 
 ### Should, but would?
 
