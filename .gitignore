@@ -25,3 +25,4 @@ runs
 
 # repo
 /l-mods/
+/common/src/generated/*

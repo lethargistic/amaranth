@@ -1,6 +1,15 @@
 package dev.maksiks.amaranth.platform.services;
 
+import com.google.common.base.Supplier;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.SpawnEggItem;
+
+
 public interface IPlatformHelper {
+
+    SpawnEggItem createSpawnEggItem(Supplier<? extends EntityType<? extends Mob>> type, int backgroundColor, int highlightColor, Item.Properties props);
 
     /**
      * Gets the name of the current platform

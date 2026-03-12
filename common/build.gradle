@@ -1,6 +1,7 @@
 plugins {
     id 'multiloader-common'
     id 'net.neoforged.moddev'
+    id 'org.jetbrains.kotlin.jvm'
 }
 
 neoForge {
@@ -21,6 +22,12 @@ dependencies {
     // fabric and neoforge both bundle mixinextras, so it is safe to use it in common
     compileOnly group: 'io.github.llamalad7', name: 'mixinextras-common', version: '0.3.5'
     annotationProcessor group: 'io.github.llamalad7', name: 'mixinextras-common', version: '0.3.5'
+
+    // amaranth
+    implementation "com.github.glitchfiend:TerraBlender-neoforge:${minecraft_version}-${terrablender_version}"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+    implementation "maven.modrinth:twigonometry:mc${project.minecraft_version}-${project.twigonometry_version}-neoforge"
+    implementation "fuzs.forgeconfigapiport:forgeconfigapiport-common-neoforgeapi:${fc_api_port_version}"
 }
 
 configurations {
@@ -37,5 +44,11 @@ configurations {
 artifacts {
     commonJava sourceSets.main.java.sourceDirectories.singleFile
     commonResources sourceSets.main.resources.sourceDirectories.singleFile
+}
+repositories {
+    mavenCentral()
+}
+kotlin {
+    jvmToolchain(21)
 }
 

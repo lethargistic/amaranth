@@ -111,6 +111,11 @@
 
 --------------------
 
+IDEAS:
+(just a pile of them)
+
+-----------------------
+
 - [x] Mystic biome
 
 -------------------------
@@ -609,6 +614,11 @@
 - [ ] URANIUM
 - [ ] maybe those sphere thingies
 
+----------------------
+
+### cherry + snow
+----------------------
+- [ ] the concept of blood on snow doesn't leave my head so might as well
 ----------------------
 
 

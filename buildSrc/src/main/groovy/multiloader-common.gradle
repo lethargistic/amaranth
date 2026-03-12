@@ -47,6 +47,10 @@ repositories {
     // amaranth
     maven { url = "https://api.modrinth.com/maven" }
     maven { url = 'https://maven.minecraftforge.net/' }
+    maven {
+        name = "Fuzs Mod Resources"
+        url = "https://raw.githubusercontent.com/Fuzss/modresources/main/maven/"
+    }
 
 }
 

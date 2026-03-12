@@ -1,0 +1,777 @@
+package dev.maksiks.amaranth.worldgen.biome.surface;
+
+import com.mojang.datafixers.util.Pair;
+import dev.maksiks.amaranth.block.ModBlocks;
+import dev.maksiks.amaranth.worldgen.biome.ModBiomes;
+import dev.maksiks.amaranth.worldgen.noise.ModNoises;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.data.worldgen.SurfaceRuleData;
+import net.minecraft.util.KeyDispatchDataCodec;
+import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.SurfaceRules;
+import net.minecraft.world.level.levelgen.VerticalAnchor;
+import net.minecraft.world.level.levelgen.placement.CaveSurface;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static dev.maksiks.amaranth.worldgen.noise.ModNoises.*;
+import static net.minecraft.world.level.levelgen.SurfaceRules.stoneDepthCheck;
+import static net.minecraft.world.level.levelgen.SurfaceRules.yBlockCheck;
+
+public class ModSurfaceRules {
+    private static final SurfaceRules.RuleSource DIRT = makeStateRule(Blocks.DIRT);
+    private static final SurfaceRules.RuleSource GRASS_BLOCK = makeStateRule(Blocks.GRASS_BLOCK);
+    private static final SurfaceRules.RuleSource SNOW_BLOCK = makeStateRule(Blocks.SNOW_BLOCK);
+    private static final SurfaceRules.RuleSource YELLOW_TERRACOTTA = makeStateRule(Blocks.YELLOW_TERRACOTTA);
+    private static final SurfaceRules.RuleSource STONE = makeStateRule(Blocks.STONE);
+    private static final SurfaceRules.RuleSource POWDER_SNOW = makeStateRule(Blocks.POWDER_SNOW);
+    private static final SurfaceRules.RuleSource LIME_TERRACOTTA = makeStateRule(Blocks.LIME_TERRACOTTA);
+    private static final SurfaceRules.RuleSource MYCELIUM = makeStateRule(Blocks.MYCELIUM);
+    private static final SurfaceRules.RuleSource GRAVEL = makeStateRule(Blocks.GRAVEL);
+    private static final SurfaceRules.RuleSource DEAD_TUBE_CORAL_BLOCK = makeStateRule(Blocks.DEAD_TUBE_CORAL_BLOCK);
+    private static final SurfaceRules.RuleSource DEAD_BRAIN_CORAL_BLOCK = makeStateRule(Blocks.DEAD_BRAIN_CORAL_BLOCK);
+    private static final SurfaceRules.RuleSource DEAD_BUBBLE_CORAL_BLOCK = makeStateRule(Blocks.DEAD_BUBBLE_CORAL_BLOCK);
+    private static final SurfaceRules.RuleSource SUSPICIOUS_GRAVEL = makeStateRule(Blocks.SUSPICIOUS_GRAVEL);
+    private static final SurfaceRules.RuleSource PRISMARINE = makeStateRule(Blocks.PRISMARINE);
+    private static final SurfaceRules.RuleSource CYAN_CONCRETE = makeStateRule(Blocks.CYAN_CONCRETE);
+    private static final SurfaceRules.RuleSource DARK_PRISMARINE = makeStateRule(Blocks.DARK_PRISMARINE);
+    private static final SurfaceRules.RuleSource WATER = makeStateRule(Blocks.WATER);
+    private static final SurfaceRules.RuleSource MUD = makeStateRule(Blocks.MUD);
+    private static final SurfaceRules.RuleSource BLACKSTONE = makeStateRule(Blocks.BLACKSTONE);
+    private static final SurfaceRules.RuleSource GILDED_BLACKSTONE = makeStateRule(Blocks.GILDED_BLACKSTONE);
+    private static final SurfaceRules.RuleSource BASALT = makeStateRule(Blocks.BASALT);
+    private static final SurfaceRules.RuleSource SMOOTH_BASALT = makeStateRule(Blocks.SMOOTH_BASALT);
+    private static final SurfaceRules.RuleSource GOLD_BLOCK = makeStateRule(Blocks.GOLD_BLOCK);
+    private static final SurfaceRules.RuleSource TUFF = makeStateRule(Blocks.TUFF);
+    private static final SurfaceRules.RuleSource LAVA = makeStateRule(Blocks.LAVA);
+    private static final SurfaceRules.RuleSource VOLCANIC_ASH = makeStateRule(ModBlocks.VOLCANIC_ASH.get());
+    private static final SurfaceRules.RuleSource ANDESITE = makeStateRule(Blocks.ANDESITE);
+    private static final SurfaceRules.RuleSource COARSE_DIRT = makeStateRule(Blocks.COARSE_DIRT);
+    private static final SurfaceRules.RuleSource SAND = makeStateRule(Blocks.SAND);
+
+    private static SurfaceRules.RuleSource silverLayerRule(int layerY) {
+        return SurfaceRules.ifTrue(
+                SurfaceRules.isBiome(ModBiomes.SILVER_BIRCH_FOREST),
+                SurfaceRules.ifTrue(
+                        SurfaceRules.ON_FLOOR,
+                        SurfaceRules.ifTrue(
+                                SurfaceRules.noiseCondition(SILVER_NOISE, -0.1D, 0.1D),
+                                SurfaceRules.ifTrue(
+                                        yBlockCheck(VerticalAnchor.absolute(layerY), 0),
+                                        SurfaceRules.ifTrue(
+                                                SurfaceRules.not(yBlockCheck(VerticalAnchor.absolute(layerY + 1), 0)),
+                                                YELLOW_TERRACOTTA
+                                        )
+                                )
+                        )
+                )
+        );
+    }
+
+    private static SurfaceRules.RuleSource powderSnowBlobsLayerRule() {
+        return SurfaceRules.sequence(
+                SurfaceRules.ifTrue(
+                        SurfaceRules.noiseCondition(SILVER_NOISE, -0.1D, 0.1D),
+                        SurfaceRules.sequence(
+                                SurfaceRules.ifTrue(SurfaceRules.ON_FLOOR, POWDER_SNOW),
+                                SurfaceRules.ifTrue(SurfaceRules.UNDER_FLOOR, POWDER_SNOW)
+                        )
+                )
+        );
+    }
+
+    private static SurfaceRules.RuleSource safeSurfaceFloorRule(SurfaceRules.RuleSource innerRule) {
+        return SurfaceRules.ifTrue(
+                stoneDepthCheck(0, false, 10, CaveSurface.FLOOR),
+                SurfaceRules.ifTrue(
+                        SurfaceRules.abovePreliminarySurface(),
+                        SurfaceRules.ifTrue(SurfaceRules.ON_FLOOR, innerRule)
+                )
+        );
+    }
+
+    /**
+     *
+     * Makes sure blocks (usu. liquids) don't have air/non-sturdy blocks nearby except from the top,
+     * as to not create waterfalls.
+     *
+     * @param allowChunkBoundariesSometimes you can allow that half the time it will not check a chunk boundary,
+     *                                      this will create an effect letting some through as waterfalls occasionally. Is this a janky way to do this? Yes.
+     *                                      I like the distribution tho.
+     */
+    public record LiquidWontRunAwayCondition(boolean allowChunkBoundariesSometimes)
+            implements SurfaceRules.ConditionSource {
+
+        @Override
+        public SurfaceRules.Condition apply(SurfaceRules.Context context) {
+            return new ConditionImpl(context, allowChunkBoundariesSometimes);
+        }
+
+        @Override
+        public KeyDispatchDataCodec<? extends SurfaceRules.ConditionSource> codec() {
+            return null;
+        }
+
+        static class ConditionImpl implements SurfaceRules.Condition {
+            private final SurfaceRules.Context context;
+            private final boolean allowChunkBoundaries;
+            static final Direction[] HORIZONTAL_AND_DOWN = {
+                    Direction.NORTH, Direction.SOUTH, Direction.EAST,
+                    Direction.WEST, Direction.DOWN
+            };
+
+            ConditionImpl(SurfaceRules.Context context, boolean allowChunkBoundaries) {
+                this.context = context;
+                this.allowChunkBoundaries = allowChunkBoundaries;
+            }
+
+            @Override
+            public boolean test() {
+                BlockPos currentPos = new BlockPos(context.blockX, context.blockY, context.blockZ);
+
+                for (Direction dir : HORIZONTAL_AND_DOWN) {
+                    BlockPos neighborPos = currentPos.relative(dir);
+
+                    int chunkX = currentPos.getX() >> 4;
+                    int chunkZ = currentPos.getZ() >> 4;
+                    int neighborChunkX = neighborPos.getX() >> 4;
+                    int neighborChunkZ = neighborPos.getZ() >> 4;
+                    boolean crossesChunkBorder = (chunkX != neighborChunkX || chunkZ != neighborChunkZ);
+
+                    if (crossesChunkBorder) {
+                        if (!allowChunkBoundaries) {
+                            return false;
+                        }
+                        continue;
+                    }
+
+                    BlockState neighborState = context.chunk.getBlockState(neighborPos);
+                    if (neighborState.getFluidState().isEmpty()) {
+                        if (!neighborState.isSolid()) {
+                            return false;
+                        }
+                    }
+                }
+                return true;
+            }
+        }
+    }
+
+    /**
+     * Would do with the world seed, but it's a pain to get it in this class
+     */
+    private static boolean deterministicChance(BlockPos pos, int percent) {
+        if (percent <= 0) return false;
+        if (percent >= 100) return true;
+
+        long seed = (long) pos.getX() * 73428767L ^ (long) pos.getY() * 9122851L ^ (long) pos.getZ() * 1234567L;
+        seed = seed * 6364136223846793005L + 1442695040888963407L;
+        int value = (int) ((seed >>> 24) % 100);
+        return value < percent;
+    }
+
+    /**
+     * not spilling the hell out like vanilla
+     */
+    public record HasWaterfallDropCondition() implements SurfaceRules.ConditionSource {
+
+        @Override
+        public SurfaceRules.Condition apply(SurfaceRules.Context context) {
+            return new Impl(context);
+        }
+
+        @Override
+        public KeyDispatchDataCodec<? extends SurfaceRules.ConditionSource> codec() {
+            return null;
+        }
+
+        static class Impl implements SurfaceRules.Condition {
+            static final Direction[] HORIZONTAL_AND_DOWN = {
+                    Direction.NORTH, Direction.SOUTH, Direction.EAST,
+                    Direction.WEST, Direction.DOWN
+            };
+
+            private final SurfaceRules.Context context;
+
+            Impl(SurfaceRules.Context context) {
+                this.context = context;
+            }
+
+            @Override
+            public boolean test() {
+                BlockPos currentPos = new BlockPos(context.blockX, context.blockY, context.blockZ);
+                ChunkPos thisChunkPos = context.chunk.getPos();
+
+                for (Direction dir : HORIZONTAL_AND_DOWN) {
+                    BlockPos neighborPos = currentPos.relative(dir);
+
+                    int neighborChunkX = neighborPos.getX() >> 4;
+                    int neighborChunkZ = neighborPos.getZ() >> 4;
+                    if (neighborChunkX != thisChunkPos.x || neighborChunkZ != thisChunkPos.z) {
+                        continue;
+                    }
+
+                    BlockState neighborState = context.chunk.getBlockState(neighborPos);
+                    if (neighborState.getFluidState().isEmpty()) {
+                        if (!neighborState.isSolid()) {
+                            Pair<Boolean, BlockPos> w = shouldWaterfall(neighborPos);
+                            if (w.getFirst()) {
+                                if (deterministicChance(neighborPos, 3)) return false;
+
+                                context.chunk.setBlockState(w.getSecond(), Blocks.WATER.defaultBlockState(), false);
+                                return true;
+                            }
+                            return false;
+                        }
+                    }
+                }
+                return true;
+            }
+
+            private Pair<Boolean, BlockPos> shouldWaterfall(BlockPos pos) {
+                int checkHeight = 3;
+                for (int i = 0; i < 96; i++) {
+                    BlockPos fallPos = pos.below(i + 1);
+                    BlockState state = context.chunk.getBlockState(pos.below(i + 1));
+
+                    if (!state.getFluidState().isEmpty()
+                            || state.isSolid()) {
+                        if (i < checkHeight) {
+                            return Pair.of(false, BlockPos.ZERO);
+                        }
+                        return Pair.of(true, fallPos);
+                    }
+                }
+                return Pair.of(false, BlockPos.ZERO);
+            }
+        }
+    }
+
+    /**
+     * cliff edges
+     */
+    public record ExposedHorizontallyOrBelow() implements SurfaceRules.ConditionSource {
+
+        @Override
+        public SurfaceRules.Condition apply(SurfaceRules.Context context) {
+            return new Impl(context);
+        }
+
+        @Override
+        public KeyDispatchDataCodec<? extends SurfaceRules.ConditionSource> codec() {
+            return null;
+        }
+
+        static class Impl implements SurfaceRules.Condition {
+            static final Direction[] HORIZONTAL_AND_DOWN = {
+                    Direction.NORTH, Direction.SOUTH, Direction.EAST,
+                    Direction.WEST, Direction.DOWN
+            };
+
+            private final SurfaceRules.Context context;
+
+            Impl(SurfaceRules.Context context) {
+                this.context = context;
+            }
+
+            @Override
+            public boolean test() {
+                BlockPos currentPos = new BlockPos(context.blockX, context.blockY, context.blockZ);
+                ChunkPos thisChunkPos = context.chunk.getPos();
+
+                for (Direction dir : HORIZONTAL_AND_DOWN) {
+                    BlockPos neighborPos = currentPos.relative(dir);
+
+                    int neighborChunkX = neighborPos.getX() >> 4;
+                    int neighborChunkZ = neighborPos.getZ() >> 4;
+                    if (neighborChunkX != thisChunkPos.x || neighborChunkZ != thisChunkPos.z) {
+                        continue;
+                    }
+
+                    BlockState neighborState = context.chunk.getBlockState(neighborPos);
+                    if (neighborState.getFluidState().isEmpty()) {
+                        if (!neighborState.isSolid()) {
+                            return true;
+                        }
+                    }
+                }
+                return false;
+            }
+
+            private Pair<Boolean, BlockPos> shouldWaterfall(BlockPos pos) {
+                int checkHeight = 3;
+                for (int i = 0; i < 96; i++) {
+                    BlockPos fallPos = pos.below(i + 1);
+                    BlockState state = context.chunk.getBlockState(pos.below(i + 1));
+
+                    if (!state.getFluidState().isEmpty()
+                            || state.isSolid()) {
+                        if (i < checkHeight) {
+                            return Pair.of(false, BlockPos.ZERO);
+                        }
+                        return Pair.of(true, fallPos);
+                    }
+                }
+                return Pair.of(false, BlockPos.ZERO);
+            }
+        }
+    }
+
+    public static SurfaceRules.RuleSource makeRules() {
+        SurfaceRules.ConditionSource isAtOrAboveWaterLevel = SurfaceRules.waterBlockCheck(-1, 0);
+
+        List<SurfaceRules.RuleSource> rules = new ArrayList<>();
+
+        // silver
+        int[] silverLayers = {
+                62,
+                64,
+                70,
+                73,
+                80,
+                85,
+                98,
+                105,
+                125,
+                146
+        };
+
+        for (int layer : silverLayers) {
+            rules.add(silverLayerRule(layer));
+        }
+
+        // desolate
+        rules.add(SurfaceRules.ifTrue(SurfaceRules.isBiome(ModBiomes.DESOLATE_ICE_FIELDS), powderSnowBlobsLayerRule()));
+        rules.add(
+                SurfaceRules.ifTrue(
+                        SurfaceRules.isBiome(ModBiomes.DESOLATE_ICE_FIELDS),
+                        SurfaceRules.ifTrue(
+                                // making an illusion instead of cutoff underground i guess, even if it really corresponds to terrain above lol
+                                stoneDepthCheck(0, false, 64, CaveSurface.FLOOR),
+                                SurfaceRules.ifTrue(isAtOrAboveWaterLevel, SNOW_BLOCK)
+                        )
+                )
+        );
+
+        // orderly (VARIANT BELOW)
+        rules.add(SurfaceRules.ifTrue(
+                SurfaceRules.isBiome(ModBiomes.ORDERLY_COURTS),
+                safeSurfaceFloorRule(
+                        SurfaceRules.ifTrue(
+                                SurfaceRules.noiseCondition(ModNoises.STRIPE_ATTEMPT_NOISE, -0.88, 0.05),
+                                SurfaceRules.ifTrue(isAtOrAboveWaterLevel, LIME_TERRACOTTA)
+                        )
+                )
+        ));
+
+        // orderly ruins (ORIGINAL ABOVE)
+        rules.add(SurfaceRules.ifTrue(
+                SurfaceRules.isBiome(ModBiomes.ORDERLY_COURTS_RUINS),
+                safeSurfaceFloorRule(
+                        SurfaceRules.ifTrue(
+                                SurfaceRules.noiseCondition(ModNoises.STRIPE_ATTEMPT_NOISE, -0.88, 0.05),
+                                SurfaceRules.ifTrue(isAtOrAboveWaterLevel, LIME_TERRACOTTA)
+                        )
+                )
+        ));
+
+        // shroom
+        rules.add(SurfaceRules.ifTrue(
+                SurfaceRules.isBiome(ModBiomes.SHROOMLANDS),
+                SurfaceRules.sequence(
+                        safeSurfaceFloorRule(
+                                SurfaceRules.ifTrue(
+                                        SurfaceRules.noiseCondition(PATCHY_NOISE, 0.2D, 2.0D),
+                                        SurfaceRules.ifTrue(isAtOrAboveWaterLevel, MYCELIUM)
+                                )
+                        ),
+                        safeSurfaceFloorRule(
+                                SurfaceRules.ifTrue(
+                                        SurfaceRules.noiseCondition(SILVER_NOISE, -0.1D, 0.1D),
+                                        SurfaceRules.ifTrue(isAtOrAboveWaterLevel, MYCELIUM)
+                                )
+                        ),
+                        safeSurfaceFloorRule(
+                                SurfaceRules.ifTrue(
+                                        SurfaceRules.noiseCondition(PATCHY_NOISE, -1.0D, -0.3D),
+                                        SurfaceRules.ifTrue(isAtOrAboveWaterLevel, GRASS_BLOCK)
+                                )
+                        ),
+                        SurfaceRules.ifTrue(SurfaceRules.ON_FLOOR, SurfaceRules.ifTrue(SurfaceRules.not(isAtOrAboveWaterLevel), DIRT)),
+                        SurfaceRules.ifTrue(SurfaceRules.UNDER_FLOOR, DIRT),
+                        STONE
+                )
+        ));
+
+        // dusty
+        rules.add(SurfaceRules.ifTrue(
+                SurfaceRules.isBiome(ModBiomes.DUSTY_FLATS),
+                SurfaceRules.sequence(
+                        SurfaceRules.ifTrue(
+                                stoneDepthCheck(0, false, 10, CaveSurface.FLOOR),
+                                SurfaceRules.ifTrue(
+                                        SurfaceRules.abovePreliminarySurface(),
+                                        SurfaceRules.sequence(
+                                                SurfaceRules.ifTrue(
+                                                        SurfaceRules.ON_FLOOR,
+                                                        SurfaceRules.ifTrue(
+                                                                SurfaceRules.noiseCondition(SILVER_NOISE, -0.20D, 0.20D),
+                                                                SurfaceRules.ifTrue(isAtOrAboveWaterLevel, DEAD_BUBBLE_CORAL_BLOCK)
+                                                        )
+                                                ),
+                                                SurfaceRules.ifTrue(
+                                                        SurfaceRules.UNDER_FLOOR,
+                                                        SurfaceRules.ifTrue(
+                                                                SurfaceRules.noiseCondition(SILVER_NOISE, -0.20D, 0.20D),
+                                                                SurfaceRules.ifTrue(isAtOrAboveWaterLevel, DEAD_BUBBLE_CORAL_BLOCK)
+                                                        )
+                                                )
+                                        )
+                                )
+                        ),
+                        safeSurfaceFloorRule(
+                                SurfaceRules.ifTrue(
+                                        SurfaceRules.noiseCondition(SILVER_NOISE, -0.24D, 0.24D),
+                                        SurfaceRules.ifTrue(isAtOrAboveWaterLevel, DEAD_BRAIN_CORAL_BLOCK)
+                                )
+                        ),
+                        safeSurfaceFloorRule(
+                                SurfaceRules.ifTrue(
+                                        SurfaceRules.noiseCondition(SILVER_NOISE, -0.28D, 0.28D),
+                                        SurfaceRules.ifTrue(isAtOrAboveWaterLevel, DEAD_TUBE_CORAL_BLOCK)
+                                )
+                        ),
+                        safeSurfaceFloorRule(
+                                SurfaceRules.ifTrue(
+                                        SurfaceRules.noiseCondition(SILVER_NOISE, -0.30D, 0.30D),
+                                        SurfaceRules.ifTrue(isAtOrAboveWaterLevel, SUSPICIOUS_GRAVEL)
+                                )
+                        ),
+                        SurfaceRules.ifTrue(
+                                stoneDepthCheck(0, false, 20, CaveSurface.FLOOR),
+                                SurfaceRules.ifTrue(
+                                        SurfaceRules.abovePreliminarySurface(),
+                                        SurfaceRules.sequence(
+                                                SurfaceRules.ifTrue(SurfaceRules.ON_FLOOR, SurfaceRules.ifTrue(isAtOrAboveWaterLevel, GRAVEL)),
+                                                SurfaceRules.ifTrue(SurfaceRules.UNDER_FLOOR, GRAVEL),
+                                                SurfaceRules.ifTrue(stoneDepthCheck(0, true, 10, CaveSurface.FLOOR), GRAVEL)
+                                        )
+                                )
+                        )
+                )
+        ));
+
+        // anthocyanin
+        rules.add(SurfaceRules.ifTrue(
+                SurfaceRules.isBiome(ModBiomes.ANTHOCYANIN_FOREST),
+                safeSurfaceFloorRule(
+                        SurfaceRules.ifTrue(
+                                SurfaceRules.noiseCondition(VEINY_NOISE, -0.06D, 0.06D),
+                                SurfaceRules.ifTrue(isAtOrAboveWaterLevel, DARK_PRISMARINE)
+                        )
+                )
+        ));
+
+        rules.add(SurfaceRules.ifTrue(
+                SurfaceRules.isBiome(ModBiomes.ANTHOCYANIN_FOREST),
+                safeSurfaceFloorRule(
+                        SurfaceRules.ifTrue(
+                                SurfaceRules.noiseCondition(VEINY_NOISE, -0.11D, 0.11D),
+                                SurfaceRules.ifTrue(isAtOrAboveWaterLevel, CYAN_CONCRETE)
+                        )
+                )
+        ));
+
+        rules.add(SurfaceRules.ifTrue(
+                SurfaceRules.isBiome(ModBiomes.ANTHOCYANIN_FOREST),
+                safeSurfaceFloorRule(
+                        SurfaceRules.ifTrue(
+                                SurfaceRules.noiseCondition(VEINY_NOISE, -0.16D, 0.16D),
+                                SurfaceRules.ifTrue(isAtOrAboveWaterLevel, PRISMARINE)
+                        )
+                )
+        ));
+
+        // mush
+        rules.add(SurfaceRules.ifTrue(
+                SurfaceRules.isBiome(ModBiomes.MUSHLAND),
+                SurfaceRules.ifTrue(
+                        SurfaceRules.noiseCondition(SILVER_NOISE, -0.1D, 0.1D),
+                        SurfaceRules.ifTrue(
+                                yBlockCheck(VerticalAnchor.absolute(62), 0),
+                                SurfaceRules.ifTrue(
+                                        SurfaceRules.not(yBlockCheck(VerticalAnchor.absolute(63), 0)),
+                                        WATER
+                                )
+                        )
+                )
+        ));
+
+        rules.add(SurfaceRules.ifTrue(
+                SurfaceRules.isBiome(ModBiomes.MUSHLAND),
+                safeSurfaceFloorRule(
+                        SurfaceRules.ifTrue(
+                                SurfaceRules.noiseCondition(VEINY_NOISE, -0.12D, 0.12D),
+                                SurfaceRules.ifTrue(isAtOrAboveWaterLevel, MUD)
+                        )
+                )
+        ));
+
+        //
+        // ashen & volcanic ashen
+        //
+        SurfaceRules.ConditionSource isAshen = SurfaceRules.isBiome(ModBiomes.ASHEN_PEAKS, ModBiomes.VOLCANIC_ASHEN_PEAKS);
+
+        // ash spread
+        rules.add(SurfaceRules.ifTrue(
+                isAshen,
+                safeSurfaceFloorRule(
+                        SurfaceRules.ifTrue(
+                                SurfaceRules.noiseCondition(SILVER_NOISE, -0.20D, 0.20D),
+                                SurfaceRules.ifTrue(isAtOrAboveWaterLevel, VOLCANIC_ASH)
+                        )
+                )
+        ));
+
+        // lava at volcanic peaks
+        // if the mountain is very high it's likely the lavafall won't look ugly
+        rules.add(SurfaceRules.ifTrue(
+                SurfaceRules.isBiome(ModBiomes.VOLCANIC_ASHEN_PEAKS),
+                SurfaceRules.ifTrue(
+                        new LiquidWontRunAwayCondition(
+                                true
+                        ),
+                        SurfaceRules.ifTrue(
+                                yBlockCheck(VerticalAnchor.absolute(180), 0),
+                                safeSurfaceFloorRule(
+                                        SurfaceRules.ifTrue(
+                                                SurfaceRules.noiseCondition(VEINY_NOISE, -0.12D, 0.12D),
+                                                SurfaceRules.ifTrue(isAtOrAboveWaterLevel, LAVA)
+                                        )
+                                )
+                        )
+                )
+        ));
+        rules.add(SurfaceRules.ifTrue(
+                SurfaceRules.isBiome(ModBiomes.VOLCANIC_ASHEN_PEAKS),
+                SurfaceRules.ifTrue(
+                        new LiquidWontRunAwayCondition(
+                                false
+                        ),
+                        SurfaceRules.ifTrue(
+                                yBlockCheck(VerticalAnchor.absolute(140), 0),
+                                safeSurfaceFloorRule(
+                                        SurfaceRules.ifTrue(
+                                                SurfaceRules.noiseCondition(VEINY_NOISE, -0.24D, 0.24D),
+                                                SurfaceRules.ifTrue(isAtOrAboveWaterLevel, LAVA)
+                                        )
+                                )
+                        )
+                )
+        ));
+        rules.add(SurfaceRules.ifTrue(
+                SurfaceRules.isBiome(ModBiomes.VOLCANIC_ASHEN_PEAKS),
+                SurfaceRules.ifTrue(
+                        new LiquidWontRunAwayCondition(
+                                false
+                        ),
+                        SurfaceRules.ifTrue(
+                                yBlockCheck(VerticalAnchor.absolute(140), 0),
+                                safeSurfaceFloorRule(
+                                        SurfaceRules.ifTrue(
+                                                SurfaceRules.noiseCondition(SILVER_NOISE, -0.18D, 0.18D),
+                                                SurfaceRules.ifTrue(isAtOrAboveWaterLevel, LAVA)
+                                        )
+                                )
+                        )
+                )
+        ));
+
+        // lava at peaks
+        rules.add(SurfaceRules.ifTrue(
+                SurfaceRules.isBiome(ModBiomes.ASHEN_PEAKS),
+                SurfaceRules.ifTrue(
+                        new LiquidWontRunAwayCondition(
+                                false
+                        ),
+                        SurfaceRules.ifTrue(
+                                yBlockCheck(VerticalAnchor.absolute(175), 0),
+                                safeSurfaceFloorRule(
+                                        SurfaceRules.ifTrue(
+                                                SurfaceRules.noiseCondition(SILVER_NOISE, -0.05D, 0.05D),
+                                                SurfaceRules.ifTrue(isAtOrAboveWaterLevel, LAVA)
+                                        )
+                                )
+                        )
+                )
+        ));
+
+        // blackstone veins
+        rules.add(SurfaceRules.ifTrue(
+                isAshen,
+                SurfaceRules.ifTrue(
+                        stoneDepthCheck(0, false, 3, CaveSurface.FLOOR),
+                        SurfaceRules.ifTrue(
+                                SurfaceRules.noiseCondition(VEINY_NOISE, -0.03D, 0.02D),
+                                SurfaceRules.ifTrue(isAtOrAboveWaterLevel, GILDED_BLACKSTONE)
+                        )
+                )
+        ));
+
+        rules.add(SurfaceRules.ifTrue(
+                isAshen,
+                SurfaceRules.ifTrue(
+                        stoneDepthCheck(0, false, 5, CaveSurface.FLOOR),
+                        SurfaceRules.ifTrue(
+                                SurfaceRules.noiseCondition(VEINY_NOISE, -0.12D, 0.12D),
+                                SurfaceRules.ifTrue(isAtOrAboveWaterLevel, BLACKSTONE)
+                        )
+                )
+        ));
+
+        rules.add(SurfaceRules.ifTrue(
+                isAshen,
+                SurfaceRules.ifTrue(
+                        stoneDepthCheck(0, false, 5, CaveSurface.FLOOR),
+                        SurfaceRules.ifTrue(
+                                SurfaceRules.noiseCondition(VEINY_NOISE, -0.18D, 0.18D),
+                                SurfaceRules.ifTrue(isAtOrAboveWaterLevel, BASALT)
+                        )
+                )
+        ));
+
+        rules.add(SurfaceRules.ifTrue(
+                isAshen,
+                SurfaceRules.ifTrue(
+                        stoneDepthCheck(0, false, 5, CaveSurface.FLOOR),
+                        SurfaceRules.ifTrue(
+                                SurfaceRules.noiseCondition(VEINY_NOISE, -0.28D, 0.28D),
+                                SurfaceRules.ifTrue(isAtOrAboveWaterLevel, SMOOTH_BASALT)
+                        )
+                )
+        ));
+
+        // upper smooth basalt fill dithered with tuff a bit
+        rules.add(
+                SurfaceRules.ifTrue(
+                        isAshen,
+                        SurfaceRules.ifTrue(
+                                yBlockCheck(VerticalAnchor.absolute(145), 0),
+                                SurfaceRules.ifTrue(
+                                        stoneDepthCheck(0, false, 140, CaveSurface.FLOOR),
+                                        SurfaceRules.ifTrue(isAtOrAboveWaterLevel,
+                                                SurfaceRules.sequence(
+                                                        SurfaceRules.ifTrue(
+                                                                SurfaceRules.verticalGradient("ashen_peaks_transition",
+                                                                        VerticalAnchor.absolute(144),
+                                                                        VerticalAnchor.absolute(185)
+                                                                ),
+                                                                TUFF
+                                                        ),
+                                                        SMOOTH_BASALT
+                                                )
+                                        )
+                                )
+                        )
+                )
+        );
+
+        // tuff fill
+        rules.add(
+                SurfaceRules.ifTrue(
+                        isAshen,
+                        SurfaceRules.ifTrue(
+                                // making an illusion instead of cutoff underground i guess, even if it really corresponds to terrain above lol
+                                stoneDepthCheck(0, false, 140, CaveSurface.FLOOR),
+                                SurfaceRules.ifTrue(isAtOrAboveWaterLevel, TUFF)
+                        )
+                )
+        );
+
+        //
+        // springs
+        //
+        rules.add(SurfaceRules.ifTrue(
+                        SurfaceRules.isBiome(ModBiomes.STEPPED_SPRINGS),
+                        safeSurfaceFloorRule(
+                                SurfaceRules.ifTrue(
+                                        new HasWaterfallDropCondition(),
+                                        SurfaceRules.ifTrue(
+                                                SurfaceRules.noiseCondition(VEINY_NOISE, -0.12D, 0.12D),
+                                                SurfaceRules.ifTrue(isAtOrAboveWaterLevel, WATER)
+                                        )
+                                )
+                        )
+                )
+        );
+
+
+        rules.add(SurfaceRules.ifTrue(
+                        SurfaceRules.isBiome(ModBiomes.STEPPED_SPRINGS),
+                        safeSurfaceFloorRule(
+                                SurfaceRules.ifTrue(
+                                        SurfaceRules.noiseCondition(CRACKED_VEINY_NOISE, -0.06D, 0.06D),
+                                        SurfaceRules.ifTrue(isAtOrAboveWaterLevel, STONE)
+                                )
+                        )
+                )
+        );
+
+        rules.add(
+                SurfaceRules.ifTrue(
+                        SurfaceRules.isBiome(ModBiomes.STEPPED_SPRINGS),
+                        SurfaceRules.ifTrue(
+                                new ExposedHorizontallyOrBelow(),
+                                SurfaceRules.ifTrue(
+                                        stoneDepthCheck(0, false, 40, CaveSurface.FLOOR),
+                                        SurfaceRules.ifTrue(isAtOrAboveWaterLevel,
+                                                SurfaceRules.sequence(
+                                                        SurfaceRules.ifTrue(
+                                                                SurfaceRules.verticalGradient("springs_transition",
+                                                                        VerticalAnchor.absolute(100),
+                                                                        VerticalAnchor.absolute(200)
+                                                                ),
+                                                                STONE
+                                                        ),
+                                                        ANDESITE
+                                                )
+                                        )
+                                )
+                        )
+                )
+        );
+
+        rules.add(
+                SurfaceRules.ifTrue(
+                        SurfaceRules.isBiome(ModBiomes.STEPPED_SPRINGS),
+                        safeSurfaceFloorRule(GRASS_BLOCK)
+                )
+        );
+
+        // satis
+        rules.add(SurfaceRules.ifTrue(
+                        SurfaceRules.isBiome(ModBiomes.SATISFOREST),
+                        safeSurfaceFloorRule(
+                                SurfaceRules.ifTrue(
+                                        SurfaceRules.noiseCondition(VEINY_NOISE, -0.10D, 0.10D),
+                                        SurfaceRules.ifTrue(isAtOrAboveWaterLevel, COARSE_DIRT)
+                                )
+                        )
+                )
+        );
+
+        // vanilla default fallback
+        SurfaceRuleData.overworld();
+
+        return SurfaceRules.sequence(rules.toArray(SurfaceRules.RuleSource[]::new));
+    }
+
+    private static SurfaceRules.RuleSource makeStateRule(Block block) {
+        return SurfaceRules.state(block.defaultBlockState());
+    }
+}
