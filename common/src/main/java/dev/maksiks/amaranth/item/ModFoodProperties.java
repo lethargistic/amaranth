@@ -5,7 +5,6 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Items;
 
-// TODO mov: check if works
 public class ModFoodProperties {
     // image eating this before a boss intentionally and the 0.9 chance does not proc lmao
     // evil hehehe

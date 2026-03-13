@@ -5,8 +5,8 @@ import com.google.common.base.Suppliers;
 import dev.maksiks.amaranth.block.custom.*;
 import dev.maksiks.amaranth.block.custom.leaves.*;
 import dev.maksiks.amaranth.item.ModItems;
+import dev.maksiks.amaranth.platform.Services;
 import dev.maksiks.amaranth.worldgen.tree.ModTreeGrowers;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.util.ColorRGBA;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffects;
@@ -26,8 +26,12 @@ import java.util.Map;
 public class ModBlocks {
     public static final HashMap<String, Supplier<? extends Block>> BLOCK_MAP = new HashMap<>();
     public static HashMap<Supplier<Block>, Supplier<FlowerPotBlock>> MOD_FLOWER_POTS = new HashMap<>();
-    public record FlammabilityData(int burn, int spread) {}
+
+    public record FlammabilityData(int burn, int spread) {
+    }
+
     public static HashMap<Supplier<? extends Block>, FlammabilityData> FABRIC_MOD_FLAMMABLE_BLOCKS = new HashMap<>();
+    public static Map<Supplier<? extends Block>, Supplier<Block>> MOD_STRIPPABLES = new HashMap<>();
 
     private static final Supplier<BlockBehaviour.Properties> normalWoodProps = () -> BlockBehaviour.Properties.of()
             .mapColor(MapColor.WOOD)
@@ -42,14 +46,12 @@ public class ModBlocks {
             () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.CALCITE)));
 
     // mystic
-    public static final Supplier<Block> MYSTIC_LOG = registerWithItem("mystic_log",
-            () -> new FlammableRotatedPillarBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_LOG)));
-    public static final Supplier<Block> MYSTIC_WOOD = registerWithItem("mystic_wood",
-            () -> new FlammableRotatedPillarBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_WOOD)));
     public static final Supplier<Block> STRIPPED_MYSTIC_LOG = registerWithItem("stripped_mystic_log",
             () -> new FlammableRotatedPillarBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STRIPPED_SPRUCE_LOG)));
+    public static final Supplier<RotatedPillarBlock> MYSTIC_LOG = registerStrippablePillarBlock("mystic_log", STRIPPED_MYSTIC_LOG, BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_LOG));
     public static final Supplier<Block> STRIPPED_MYSTIC_WOOD = registerWithItem("stripped_mystic_wood",
             () -> new FlammableRotatedPillarBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STRIPPED_SPRUCE_WOOD)));
+    public static final Supplier<RotatedPillarBlock> MYSTIC_WOOD = registerStrippablePillarBlock("mystic_wood", STRIPPED_MYSTIC_WOOD, BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_WOOD));
 
     public static final Supplier<Block> MYSTIC_PLANKS = registerWithItem("mystic_planks",
             () -> new FlammablePlanksBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_PLANKS)));
@@ -57,7 +59,6 @@ public class ModBlocks {
     public static final Supplier<Block> MYSTIC_LEAVES = registerWithItem("mystic_leaves",
             () -> new FlammableLeavesBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_LEAVES)));
 
-    // TODO: figure out if to use reflection or an AT
     public static final Supplier<Block> MYSTIC_SAPLING = registerWithItem("mystic_sapling",
             () -> new SaplingBlock(ModTreeGrowers.MYSTIC_GROWER, BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_SAPLING)));
     public static final Supplier<FlowerPotBlock> POTTED_MYSTIC_SAPLING = registerFlowerPot(MYSTIC_SAPLING);
@@ -79,6 +80,7 @@ public class ModBlocks {
             () -> new FenceGateBlock(WoodType.SPRUCE, normalWoodProps.get()));
 
     // TODO mov: fix for common
+    // TODO fabrec: no occlusion?
     public static final Supplier<DoorBlock> MYSTIC_DOOR = registerWithItem("mystic_door",
             () -> new DoorBlock(BlockSetType.SPRUCE, BlockBehaviour.Properties.of().strength(2F).noOcclusion().isValidSpawn(Blocks::never)));
     public static final Supplier<TrapDoorBlock> MYSTIC_TRAPDOOR = registerWithItem("mystic_trapdoor",
@@ -145,14 +147,12 @@ public class ModBlocks {
     public static final Supplier<FlowerPotBlock> POTTED_TRIMMED_TREE_SAPLING = registerFlowerPot(TRIMMED_TREE_SAPLING);
 
     // anthocyanin
-    public static final Supplier<Block> ANTHOCYANIN_LOG = registerWithItem("anthocyanin_log",
-            () -> new FlammableRotatedPillarBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_LOG)));
-    public static final Supplier<Block> ANTHOCYANIN_WOOD = registerWithItem("anthocyanin_wood",
-            () -> new FlammableRotatedPillarBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_WOOD)));
     public static final Supplier<Block> STRIPPED_ANTHOCYANIN_LOG = registerWithItem("stripped_anthocyanin_log",
             () -> new FlammableRotatedPillarBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STRIPPED_SPRUCE_LOG)));
+    public static final Supplier<RotatedPillarBlock> ANTHOCYANIN_LOG = registerStrippablePillarBlock("anthocyanin_log", STRIPPED_ANTHOCYANIN_LOG, BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_LOG));
     public static final Supplier<Block> STRIPPED_ANTHOCYANIN_WOOD = registerWithItem("stripped_anthocyanin_wood",
             () -> new FlammableRotatedPillarBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STRIPPED_SPRUCE_WOOD)));
+    public static final Supplier<RotatedPillarBlock> ANTHOCYANIN_WOOD = registerStrippablePillarBlock("anthocyanin_wood", STRIPPED_ANTHOCYANIN_WOOD, BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_WOOD));
 
     public static final Supplier<Block> ANTHOCYANIN_PLANKS = registerWithItem("anthocyanin_planks",
             () -> new FlammablePlanksBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_PLANKS)));
@@ -210,16 +210,13 @@ public class ModBlocks {
     public static final Supplier<FlowerPotBlock> POTTED_SPEARY_SAPLING = registerFlowerPot(SPEARY_SAPLING);
 
     // pastel
-    public static final Supplier<Block> JUICY_WISTERIA_LOG = registerWithItem("juicy_wisteria_log",
-            () -> new FlammableRotatedPillarBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_LOG)));
-    public static final Supplier<Block> WISTERIA_LOG = registerWithItem("wisteria_log",
-            () -> new FlammableRotatedPillarBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_LOG)));
-    public static final Supplier<Block> WISTERIA_WOOD = registerWithItem("wisteria_wood",
-            () -> new FlammableRotatedPillarBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_WOOD)));
-    public static final Supplier<Block> STRIPPED_WISTERIA_LOG = registerWithItem("stripped_wisteria_log",
+public static final Supplier<Block> STRIPPED_WISTERIA_LOG = registerWithItem("stripped_wisteria_log",
             () -> new FlammableRotatedPillarBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STRIPPED_SPRUCE_LOG)));
     public static final Supplier<Block> STRIPPED_WISTERIA_WOOD = registerWithItem("stripped_wisteria_wood",
             () -> new FlammableRotatedPillarBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STRIPPED_SPRUCE_WOOD)));
+    public static final Supplier<RotatedPillarBlock> JUICY_WISTERIA_LOG = registerStrippablePillarBlock("juicy_wisteria_log", STRIPPED_WISTERIA_LOG, BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_LOG));
+    public static final Supplier<RotatedPillarBlock> WISTERIA_LOG = registerStrippablePillarBlock("wisteria_log", STRIPPED_WISTERIA_LOG, BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_LOG));
+    public static final Supplier<RotatedPillarBlock> WISTERIA_WOOD = registerStrippablePillarBlock("wisteria_wood", STRIPPED_WISTERIA_WOOD, BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_WOOD));
 
     public static final Supplier<Block> WISTERIA_PLANKS = registerWithItem("wisteria_planks",
             () -> new FlammablePlanksBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_PLANKS)));
@@ -309,12 +306,12 @@ public class ModBlocks {
                     BlockBehaviour.Properties.ofFullCopy(Blocks.SAND)));
 
     // satis
-    public static final Supplier<Block> SATISTREE_LOG = registerWithItem("satistree_log",
-            () -> new FlammableRotatedPillarBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_LOG)));
-    public static final Supplier<Block> SATISTREE_WOOD = registerWithItem("satistree_wood",
-            () -> new FlammableRotatedPillarBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_WOOD)));
     public static final Supplier<Block> STRIPPED_SATISTREE_LOG = registerWithItem("stripped_satistree_log",
             () -> new FlammableRotatedPillarBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STRIPPED_SPRUCE_LOG)));
+    public static final Supplier<RotatedPillarBlock> SATISTREE_LOG = registerStrippablePillarBlock("satistree_log",
+            STRIPPED_SATISTREE_LOG, BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_LOG));
+    public static final Supplier<Block> SATISTREE_WOOD = registerWithItem("satistree_wood",
+            () -> new FlammableRotatedPillarBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_WOOD)));
     public static final Supplier<Block> STRIPPED_SATISTREE_WOOD = registerWithItem("stripped_satistree_wood",
             () -> new FlammableRotatedPillarBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STRIPPED_SPRUCE_WOOD)));
 
@@ -383,17 +380,12 @@ public class ModBlocks {
             () -> new SaplingBlock(ModTreeGrowers.SHRUB_GROWER, BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_SAPLING)));
     public static final Supplier<FlowerPotBlock> POTTED_SHRUB_SAPLING = registerFlowerPot(SHRUB_SAPLING);
 
-    public static Map<Supplier<Block>, Supplier<Block>> MOD_STRIPPABLES = Map.of(
-            MYSTIC_LOG, STRIPPED_MYSTIC_LOG,
-            MYSTIC_WOOD, STRIPPED_MYSTIC_WOOD,
-            ANTHOCYANIN_LOG, STRIPPED_ANTHOCYANIN_LOG,
-            ANTHOCYANIN_WOOD, STRIPPED_ANTHOCYANIN_WOOD,
-            WISTERIA_LOG, STRIPPED_WISTERIA_LOG,
-            WISTERIA_WOOD, STRIPPED_WISTERIA_WOOD,
-            JUICY_WISTERIA_LOG, STRIPPED_WISTERIA_LOG,
-            SATISTREE_LOG, STRIPPED_SATISTREE_LOG,
-            SATISTREE_WOOD, STRIPPED_SATISTREE_WOOD
-    );
+    private static Supplier<RotatedPillarBlock> registerStrippablePillarBlock(String name, Supplier<Block> stripped, BlockBehaviour.Properties props) {
+        Supplier<RotatedPillarBlock> memoized = Suppliers.memoize(Services.PLATFORM.createLoaderStrippableLog(props));
+        MOD_STRIPPABLES.put(memoized, stripped);
+        registerWithItem(name, memoized);
+        return memoized;
+    }
 
     // friendly reminder to do this with Neo's methods too!
     public static <B extends Block> void registerFabricFlammability(Supplier<B> block, int burn, int spread) {

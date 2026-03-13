@@ -18,6 +18,10 @@
 - [ ] todo: make satisforest a lot less rare
 - [ ] todo: make villages appear in shrublands and other relevant
 
+Multiloader moves:
+- [ ] todo: written down todos
+- [ ] fix: logs are not strippable
+
 ### Moderate
 
 - [ ] pain: do a 50/50 on some biomes if that would work reasonably ??? ; couldnt with current terrablender rip

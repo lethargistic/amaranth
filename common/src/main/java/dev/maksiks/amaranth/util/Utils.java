@@ -6,6 +6,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 
 public class Utils {
+    // note: call only after registries exist
     public static String findBlockId(Supplier<? extends Block> block) {
         return BuiltInRegistries.BLOCK.getKey(block.get()).getPath();
     }
