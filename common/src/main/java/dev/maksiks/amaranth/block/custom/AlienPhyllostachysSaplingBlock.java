@@ -2,9 +2,9 @@ package dev.maksiks.amaranth.block.custom;
 
 import com.mojang.serialization.MapCodec;
 import dev.maksiks.amaranth.block.ModBlocks;
+import dev.maksiks.amaranth.tags.ModTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
@@ -54,6 +54,6 @@ public class AlienPhyllostachysSaplingBlock extends BambooSaplingBlock {
 
     @Override
     protected boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
-        return level.getBlockState(pos.below()).is(BlockTags.BAMBOO_PLANTABLE_ON);
+        return level.getBlockState(pos.below()).is(ModTags.Blocks.ALIEN_PHYLLOSTACHYS_PLANTABLE_ON);
     }
 }

@@ -20,16 +20,16 @@ public class GiganticSatistreeStructureProcessor extends StructureProcessor {
     public static final MapCodec<GiganticSatistreeStructureProcessor> CODEC =
             MapCodec.unit(() -> INSTANCE);
 
+    // TODO mov: check if works the same
     @Nullable
     @Override
-    public StructureTemplate.StructureBlockInfo process(
+    public StructureTemplate.StructureBlockInfo processBlock(
             LevelReader level,
             BlockPos worldPos,
             BlockPos localPos,
             StructureTemplate.StructureBlockInfo original,
             StructureTemplate.StructureBlockInfo placed,
-            StructurePlaceSettings settings,
-            StructureTemplate template
+            StructurePlaceSettings settings
     ) {
         RandomSource random = settings.getRandom(worldPos);
 

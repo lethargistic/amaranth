@@ -1,5 +1,6 @@
 package dev.maksiks.amaranth.datagen;
 
+import com.google.common.base.Supplier;
 import dev.maksiks.amaranth.Constants;
 import dev.maksiks.amaranth.block.ModBlocks;
 import dev.maksiks.amaranth.item.ModItems;
@@ -8,7 +9,9 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
-import net.neoforged.neoforge.registries.DeferredBlock;
+
+import static dev.maksiks.amaranth.util.Utils.findBlockId;
+import static dev.maksiks.amaranth.util.Utils.findItemId;
 
 
 public class ModItemModelProvider extends ItemModelProvider {
@@ -21,7 +24,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         // misc
         basicItem(ModItems.PALETTE_OVERLOAD_MUSIC_DISC.get());
         basicItem(ModItems.EMPTY_TEA_CUP.get());
-        basicItem(ModItems.MELON_HELMET.asItem());
+        basicItem(ModItems.MELON_HELMET.get());
 
         // mystic
         basicItem(ModItems.MAFIA_BLOB.get());
@@ -31,7 +34,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         buttonItem(ModBlocks.MYSTIC_BUTTON, ModBlocks.MYSTIC_PLANKS);
         fenceItem(ModBlocks.MYSTIC_FENCE, ModBlocks.MYSTIC_PLANKS);
 
-        basicItem(ModBlocks.MYSTIC_DOOR.asItem());
+        basicItem(ModBlocks.MYSTIC_DOOR.get().asItem());
 
         splatBlockItem(ModBlocks.MYSTIC_SAPLING);
 
@@ -50,7 +53,8 @@ public class ModItemModelProvider extends ItemModelProvider {
         // orderly
         splatBlockItem(ModBlocks.TRIMMED_TREE_SAPLING);
 
-        withExistingParent(ModItems.SHROOM_BOI_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
+        // TODO mov: check if get id check is the same
+        withExistingParent(findItemId(ModItems.SHROOM_BOI_SPAWN_EGG), mcLoc("item/template_spawn_egg"));
 
         // shroom
         basicItem(ModItems.MUSHROOM_TEA.get());
@@ -59,8 +63,8 @@ public class ModItemModelProvider extends ItemModelProvider {
         buttonItem(ModBlocks.ANTHOCYANIN_BUTTON, ModBlocks.ANTHOCYANIN_PLANKS);
         fenceItem(ModBlocks.ANTHOCYANIN_FENCE, ModBlocks.ANTHOCYANIN_PLANKS);
 
-        basicItem(ModBlocks.ANTHOCYANIN_DOOR.asItem());
-        basicItem(ModBlocks.ORNAMENTED_ANTHOCYANIN_DOOR.asItem());
+        basicItem(ModBlocks.ANTHOCYANIN_DOOR.get().asItem());
+        basicItem(ModBlocks.ORNAMENTED_ANTHOCYANIN_DOOR.get().asItem());
 
         splatBlockItem(ModBlocks.ANTHOCYANIN_SAPLING);
 
@@ -68,9 +72,9 @@ public class ModItemModelProvider extends ItemModelProvider {
 
         // pain
         splatBlockItem(ModBlocks.SPIKY_ARCHES);
-        basicItem(ModItems.THORN.asItem());
+        basicItem(ModItems.THORN.get().asItem());
 
-        basicItem(ModItems.CROWN_OF_THORNS.asItem());
+        basicItem(ModItems.CROWN_OF_THORNS.get().asItem());
 
         // speary
         splatBlockItem(ModBlocks.SPEARY_SAPLING);
@@ -79,7 +83,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         buttonItem(ModBlocks.WISTERIA_BUTTON, ModBlocks.WISTERIA_PLANKS);
         fenceItem(ModBlocks.WISTERIA_FENCE, ModBlocks.WISTERIA_PLANKS);
 
-        basicItem(ModBlocks.WISTERIA_DOOR.asItem());
+        basicItem(ModBlocks.WISTERIA_DOOR.get().asItem());
 
         splatBlockItem(ModBlocks.WISTERIA_SAPLING);
 
@@ -88,7 +92,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         basicItem(ModItems.WISTERIA_JUICE.get());
 
         // mush
-        basicItem(ModBlocks.REEDS.asItem());
+        basicItem(ModBlocks.REEDS.get().asItem());
         basicItem(ModItems.REED_BAR.get());
 
         splatBlockItem(ModBlocks.RED_MINI_SHROOM_SPORELING);
@@ -107,12 +111,12 @@ public class ModItemModelProvider extends ItemModelProvider {
         buttonItem(ModBlocks.SATISTREE_BUTTON, ModBlocks.SATISTREE_PLANKS);
         fenceItem(ModBlocks.SATISTREE_FENCE, ModBlocks.SATISTREE_PLANKS);
 
-        basicItem(ModBlocks.SATISTREE_DOOR.asItem());
+        basicItem(ModBlocks.SATISTREE_DOOR.get().asItem());
 
         splatBlockItem(ModBlocks.SATISTREE_SAPLING);
         splatBlockItem(ModBlocks.GIGANTIC_SATISTREE_SPROUTS);
 
-        basicItem(ModBlocks.ALIEN_PHYLLOSTACHYS.asItem());
+        basicItem(ModBlocks.ALIEN_PHYLLOSTACHYS.get().asItem());
 
         fenceItem(ModBlocks.ALIEN_FENCE_PLANT, ModBlocks.ALIEN_FENCE_PLANKS);
         splatBlockItem(ModBlocks.ALIEN_FENCE_PLANT_SAPLING);
@@ -121,28 +125,29 @@ public class ModItemModelProvider extends ItemModelProvider {
         splatBlockItem(ModBlocks.SHRUB_SAPLING);
 
     }
+    // TODO mov: check if get id check is the same
 
-    private void splatBlockItem(DeferredBlock<Block> item) {
-        withExistingParent(item.getId().getPath(),
+    private void splatBlockItem(Supplier<Block> block) {
+        withExistingParent(findBlockId(block),
                 ResourceLocation.parse("item/generated")).texture("layer0",
-                ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "block/" + item.getId().getPath()));
+                ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "block/" + findBlockId(block)));
     }
 
-    private void splatBlockItem(DeferredBlock<Block> item, String appendix) {
-        withExistingParent(item.getId().getPath(),
+    private void splatBlockItem(Supplier<Block> block, String appendix) {
+        withExistingParent(findBlockId(block),
                 ResourceLocation.parse("item/generated")).texture("layer0",
-                ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "block/" + item.getId().getPath() + appendix));
+                ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "block/" + findBlockId(block) + appendix));
     }
 
-    public void buttonItem(DeferredBlock<?> block, DeferredBlock<Block> baseBlock) {
-        this.withExistingParent(block.getId().getPath(), mcLoc("block/button_inventory"))
+    public void buttonItem(Supplier<? extends Block> block, Supplier<Block> baseBlock) {
+        this.withExistingParent(findBlockId(block), mcLoc("block/button_inventory"))
                 .texture("texture",  ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID,
-                        "block/" + baseBlock.getId().getPath()));
+                        "block/" + findBlockId(baseBlock)));
     }
 
-    public void fenceItem(DeferredBlock<?> block, DeferredBlock<Block> baseBlock) {
-        this.withExistingParent(block.getId().getPath(), mcLoc("block/fence_inventory"))
+    public void fenceItem(Supplier< ? extends Block> block, Supplier<Block> baseBlock) {
+        this.withExistingParent(findBlockId(block), mcLoc("block/fence_inventory"))
                 .texture("texture",  ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID,
-                        "block/" + baseBlock.getId().getPath()));
+                        "block/" + findBlockId(baseBlock)));
     }
 }

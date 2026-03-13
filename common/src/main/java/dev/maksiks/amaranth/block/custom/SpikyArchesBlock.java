@@ -1,6 +1,7 @@
 package dev.maksiks.amaranth.block.custom;
 
 import dev.maksiks.amaranth.item.ModItems;
+import dev.maksiks.amaranth.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
@@ -9,8 +10,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.SwordItem;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -22,7 +22,6 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.common.ItemAbilities;
 import org.jetbrains.annotations.Nullable;
 
 public class SpikyArchesBlock extends Block implements BonemealableBlock {
@@ -38,17 +37,13 @@ public class SpikyArchesBlock extends Block implements BonemealableBlock {
     ///  making them faster when sheared/dug with a sword
     @Override
     protected float getDestroyProgress(BlockState state, Player player, BlockGetter level, BlockPos pos) {
-        ItemStack handItem = player.getMainHandItem();
-        return handItem.canPerformAction(ItemAbilities.SWORD_DIG)
-                || handItem.canPerformAction(ItemAbilities.SHEARS_DIG)
-                || handItem.canPerformAction(ItemAbilities.HOE_DIG)
+        Item handItem = player.getMainHandItem().getItem();
+        return handItem instanceof SwordItem
+                || handItem instanceof ShearsItem
+                || handItem instanceof HoeItem
                 ? 1.0F
                 : super.getDestroyProgress(state, player, level, pos);
-    }	@Override
-    protected float getDestroyProgress(BlockState blockState, Player player, BlockGetter blockGetter, BlockPos blockPos) {
-        return player.getMainHandItem().getItem() instanceof SwordItem ? 1.0F : super.getDestroyProgress(blockState, player, blockGetter, blockPos);
     }
-
 
     ///
     /// So mobs dont walk in.
@@ -56,10 +51,11 @@ public class SpikyArchesBlock extends Block implements BonemealableBlock {
     /// did test it with /tick sprint 1d, and mobs didn't really die just get hurt until despawn
     /// so no accidental mob/lag farms at least
     ///
-    @Override
     public PathType getBlockPathType(BlockState state, BlockGetter level, BlockPos pos, @Nullable Mob entity) {
         return PathType.DAMAGE_OTHER;
     }
+
+    // TODO mov: figure out how to make mobs avoid
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {

@@ -58,3 +58,13 @@ neoForge {
 }
 
 sourceSets.main.resources { srcDir '../common/src/generated/resources' }
+
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
+// Making the compiler complain when I'm misusing a @Nullable in Kotlin
+// i think
+tasks.withType(KotlinCompile).configureEach {
+    compilerOptions {
+        freeCompilerArgs.add("-Xjsr305=strict")
+    }
+}

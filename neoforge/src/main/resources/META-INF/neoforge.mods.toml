@@ -16,6 +16,8 @@ description = '''${description}''' #mandatory (Supports multiline text)
 [[mixins]]
 config = "${mod_id}.mixins.json"
 
+# TODO: remove example logs
+
 [[mixins]]
 config = "${mod_id}.neoforge.mixins.json"
 

@@ -1,5 +1,6 @@
 package dev.maksiks.amaranth.datagen;
 
+import com.google.common.base.Supplier;
 import dev.maksiks.amaranth.Constants;
 import dev.maksiks.amaranth.block.ModBlocks;
 import dev.maksiks.amaranth.block.custom.SpikyArchesBlock;
@@ -17,7 +18,6 @@ import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
 import net.neoforged.neoforge.client.model.generators.ModelFile;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
-import net.neoforged.neoforge.registries.DeferredBlock;
 
 public class ModBlockStateProvider extends BlockStateProvider {
     public ModBlockStateProvider(PackOutput output, ExistingFileHelper exFileHelper) {
@@ -261,7 +261,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
         pottedPlantBlock(ModBlocks.POTTED_SHRUB_SAPLING, ModBlocks.SHRUB_SAPLING);
     }
 
-    private void pottedPlantBlock(DeferredBlock<FlowerPotBlock> pottedBlock, DeferredBlock<Block> plantBlock) {
+    private void pottedPlantBlock(Supplier<FlowerPotBlock> pottedBlock, Supplier<Block> plantBlock) {
         String pottedName = BuiltInRegistries.BLOCK.getKey(pottedBlock.get()).getPath();
         ResourceLocation plantTexture = blockTexture(plantBlock.get());
 
@@ -273,7 +273,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
         simpleBlock(pottedBlock.get(), pottedModel);
     }
 
-    private void thickPumpkinBlock(DeferredBlock<Block> blockRegistryObject) {
+    private void thickPumpkinBlock(Supplier<Block> blockRegistryObject) {
         Block block = blockRegistryObject.get();
         String baseName = BuiltInRegistries.BLOCK.getKey(blockRegistryObject.get()).getPath();
 
@@ -325,7 +325,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
         }
     }
 
-    private void thickPumpkinBlockItem(DeferredBlock<Block> block) {
+    private void thickPumpkinBlockItem(Supplier<Block> block) {
         String name = BuiltInRegistries.BLOCK.getKey(block.get()).getPath();
         ResourceLocation side = modLoc("block/thick_pumpkin_side");
         ResourceLocation end = modLoc("block/thick_pumpkin_end");
@@ -342,7 +342,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
         simpleBlockItem(block.get(), models().getExistingFile(modLoc(name)));
     }
 
-    private void randomVariantTwoPlaneCutout(DeferredBlock<Block> blockRegistryObject, int variantCount) {
+    private void randomVariantTwoPlaneCutout(Supplier<Block> blockRegistryObject, int variantCount) {
         String baseName = BuiltInRegistries.BLOCK.getKey(blockRegistryObject.get()).getPath();
 
         getVariantBuilder(blockRegistryObject.get()).forAllStates(state -> {
@@ -359,17 +359,18 @@ public class ModBlockStateProvider extends BlockStateProvider {
         }
     }
 
-    private void twoPlanesCutoutBlock(DeferredBlock<Block> blockRegistryObject) {
+    // TODO mov: fix the auto paths
+    private void twoPlanesCutoutBlock(Supplier<Block> blockRegistryObject) {
         simpleBlock(blockRegistryObject.get(),
                 models().cross(BuiltInRegistries.BLOCK.getKey(blockRegistryObject.get()).getPath(), blockTexture(blockRegistryObject.get())).renderType("cutout"));
     }
 
-    private void twoPlanesCutoutMippedBlock(DeferredBlock<Block> blockRegistryObject) {
+    private void twoPlanesCutoutMippedBlock(Supplier<Block> blockRegistryObject) {
         simpleBlock(blockRegistryObject.get(),
                 models().cross(BuiltInRegistries.BLOCK.getKey(blockRegistryObject.get()).getPath(), blockTexture(blockRegistryObject.get())).renderType("cutout_mipped"));
     }
 
-    private void doubleFourPlaneCropBlock(DeferredBlock<Block> block) {
+    private void doubleFourPlaneCropBlock(Supplier<Block> block) {
         Block b = block.get();
         String name = BuiltInRegistries.BLOCK.getKey(b).getPath();
 
@@ -388,26 +389,28 @@ public class ModBlockStateProvider extends BlockStateProvider {
         });
     }
 
-    private void leavesBlock(DeferredBlock<Block> blockRegistryObject) {
+    private void leavesBlock(Supplier<Block> blockRegistryObject) {
         simpleBlockWithItem(blockRegistryObject.get(),
                 models().singleTexture(BuiltInRegistries.BLOCK.getKey(blockRegistryObject.get()).getPath(), ResourceLocation.parse("minecraft:block/leaves"),
                         "all", blockTexture(blockRegistryObject.get())).renderType("cutout_mipped"));
     }
 
-    private void iceBlock(DeferredBlock<Block> blockRegistryObject) {
-        simpleBlockWithItem(blockRegistryObject.get(),
-                models().cubeAll(BuiltInRegistries.BLOCK.getKey(blockRegistryObject.get()).getPath(), blockTexture(blockRegistryObject.get())).renderType("translucent"));
+    private void iceBlock(Supplier<Block> block) {
+        simpleBlockWithItem(block.get(),
+                models().cubeAll(BuiltInRegistries.BLOCK.getKey(block.get()).getPath(), blockTexture(block.get())).renderType("translucent"));
     }
 
-    private void blockWithItem(DeferredBlock<?> deferredBlock) {
-        simpleBlockWithItem(deferredBlock.get(), cubeAll(deferredBlock.get()));
+    private void blockWithItem(Supplier<? extends Block> block) {
+        simpleBlockWithItem(block.get(), cubeAll(block.get()));
     }
 
-    private void blockItem(DeferredBlock<?> deferredBlock) {
-        simpleBlockItem(deferredBlock.get(), new ModelFile.UncheckedModelFile("amaranth:block/" + deferredBlock.getId().getPath()));
+    private void blockItem(Supplier<? extends Block> block) {
+        // TODO mov: check if block name is correct
+        simpleBlockItem(block.get(), new ModelFile.UncheckedModelFile("amaranth:block/" + BuiltInRegistries.BLOCK.getKey(block.get()).getPath()));
     }
 
-    private void blockItem(DeferredBlock<?> deferredBlock, String appendix) {
-        simpleBlockItem(deferredBlock.get(), new ModelFile.UncheckedModelFile("amaranth:block/" + deferredBlock.getId().getPath() + appendix));
+    private void blockItem(Supplier<? extends Block> block, String appendix) {
+        // TODO mov: check if block name is correct
+        simpleBlockItem(block.get(), new ModelFile.UncheckedModelFile("amaranth:block/" + BuiltInRegistries.BLOCK.getKey(block.get()).getPath() + appendix));
     }
 }

@@ -64,9 +64,10 @@ public class ModItems {
     public static final Supplier<Item> REED_BAR = register("reed_bar",
             () -> new Item(new Item.Properties().food(ModFoodProperties.REED_BAR)));
 
-    public static <B extends Item> Supplier<B> register(String key, Supplier<B> item) {
-        ITEM_MAP.put(key, item);
-        return Suppliers.memoize(item);
+    public static <I extends Item> Supplier<I> register(String key, Supplier<I> item) {
+        Supplier<I> memoized = Suppliers.memoize(item);
+        ITEM_MAP.put(key, memoized);
+        return memoized;
     }
 
     // TODO mov: figure eggs out

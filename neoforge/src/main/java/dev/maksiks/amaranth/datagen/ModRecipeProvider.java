@@ -23,7 +23,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
     @Override
     protected void buildRecipes(RecipeOutput recipeOutput) {
         // misc
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.COMBAT, ModItems.MELON_HELMET, 1)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.COMBAT, ModItems.MELON_HELMET.get(), 1)
                 .requires(Blocks.MELON)
                 .requires(Items.SHEARS)
                 .unlockedBy("has_melon", has(Items.MELON))
@@ -67,7 +67,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_tea_cup", has(ModItems.EMPTY_TEA_CUP.get()))
                 .save(recipeOutput);
 
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, ModBlocks.SPIKY_ARCHES.asItem(), 1)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, ModBlocks.SPIKY_ARCHES.get().asItem(), 1)
                 .requires(ModItems.THORN.get())
                 .requires(ModItems.THORN.get())
                 .requires(ModItems.THORN.get())
@@ -75,7 +75,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_thorn", has(ModItems.THORN.get()))
                 .save(recipeOutput);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ModItems.CROWN_OF_THORNS, 1)
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ModItems.CROWN_OF_THORNS.get(), 1)
                 .pattern("TTT")
                 .pattern("T T")
                 .pattern("   ")
@@ -83,7 +83,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_thorn", has(ModItems.THORN.get()))
                 .save(recipeOutput);
 
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, ModBlocks.THICK_PUMPKIN.asItem(), 1)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, ModBlocks.THICK_PUMPKIN.get().asItem(), 1)
                 .requires(Blocks.PUMPKIN)
                 .requires(Blocks.PUMPKIN)
                 .requires(Blocks.PUMPKIN)
@@ -92,13 +92,13 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .save(recipeOutput);
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, Items.PUMPKIN_SEEDS, 12)
-                .requires(ModBlocks.THICK_PUMPKIN.asItem())
+                .requires(ModBlocks.THICK_PUMPKIN.get().asItem())
                 .unlockedBy("has_thick_pumpkin", has(ModBlocks.THICK_PUMPKIN.get()))
                 .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "pumpkin_seeds_from_thick_pumpkin"));
 
         // who in the world will ever need this
         ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, Items.PUMPKIN_PIE, 5)
-                .requires(ModBlocks.THICK_PUMPKIN.asItem())
+                .requires(ModBlocks.THICK_PUMPKIN.get().asItem())
                 .requires(Items.SUGAR)
                 .requires(Items.SUGAR)
                 .requires(Items.SUGAR)
@@ -110,17 +110,17 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
 
         // yoink a custom method for smelting later so it's inside neo's folder because it's hardcoded to be in mc
         // mystic
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, ModBlocks.MYSTIC_PLANKS.asItem(), 4)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, ModBlocks.MYSTIC_PLANKS.get().asItem(), 4)
                 .requires(ModBlocks.MYSTIC_LOG.get())
-                .unlockedBy("has_mystic_log", has(ModBlocks.MYSTIC_LOG.asItem()))
+                .unlockedBy("has_mystic_log", has(ModBlocks.MYSTIC_LOG.get().asItem()))
                 .save(recipeOutput);
 
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, ModBlocks.MYSTIC_WOOD.asItem(), 3)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, ModBlocks.MYSTIC_WOOD.get().asItem(), 3)
                 .requires(ModBlocks.MYSTIC_LOG.get())
                 .requires(ModBlocks.MYSTIC_LOG.get())
                 .requires(ModBlocks.MYSTIC_LOG.get())
                 .requires(ModBlocks.MYSTIC_LOG.get())
-                .unlockedBy("has_mystic_log", has(ModBlocks.MYSTIC_LOG.asItem()))
+                .unlockedBy("has_mystic_log", has(ModBlocks.MYSTIC_LOG.get().asItem()))
                 .save(recipeOutput);
 
         stairBuilder(ModBlocks.MYSTIC_STAIRS.get(), Ingredient.of(ModBlocks.MYSTIC_PLANKS.get())).group("mystic")
@@ -143,17 +143,17 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_mystic_planks", has(ModBlocks.MYSTIC_PLANKS.get())).save(recipeOutput);
 
         // anthocyanin
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, ModBlocks.ANTHOCYANIN_PLANKS.asItem(), 4)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, ModBlocks.ANTHOCYANIN_PLANKS.get().asItem(), 4)
                 .requires(ModBlocks.ANTHOCYANIN_LOG.get())
-                .unlockedBy("has_anthocyanin_log", has(ModBlocks.ANTHOCYANIN_LOG.asItem()))
+                .unlockedBy("has_anthocyanin_log", has(ModBlocks.ANTHOCYANIN_LOG.get().asItem()))
                 .save(recipeOutput);
 
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, ModBlocks.ANTHOCYANIN_WOOD.asItem(), 3)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, ModBlocks.ANTHOCYANIN_WOOD.get().asItem(), 3)
                 .requires(ModBlocks.ANTHOCYANIN_LOG.get())
                 .requires(ModBlocks.ANTHOCYANIN_LOG.get())
                 .requires(ModBlocks.ANTHOCYANIN_LOG.get())
                 .requires(ModBlocks.ANTHOCYANIN_LOG.get())
-                .unlockedBy("has_anthocyanin_log", has(ModBlocks.ANTHOCYANIN_LOG.asItem()))
+                .unlockedBy("has_anthocyanin_log", has(ModBlocks.ANTHOCYANIN_LOG.get().asItem()))
                 .save(recipeOutput);
 
         stairBuilder(ModBlocks.ANTHOCYANIN_STAIRS.get(), Ingredient.of(ModBlocks.ANTHOCYANIN_PLANKS.get())).group("anthocyanin")
@@ -190,41 +190,41 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .save(recipeOutput);
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Items.CYAN_DYE, 1)
-                .requires(ModBlocks.MALACHITE_VIPERS_BUGLOSS)
-                .unlockedBy("has_malachite_vipers_bugloss", has(ModBlocks.MALACHITE_VIPERS_BUGLOSS))
+                .requires(ModBlocks.MALACHITE_VIPERS_BUGLOSS.get())
+                .unlockedBy("has_malachite_vipers_bugloss", has(ModBlocks.MALACHITE_VIPERS_BUGLOSS.get()))
                 .save(recipeOutput);
 
         // pastel
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, ModBlocks.WISTERIA_PLANKS.asItem(), 4)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, ModBlocks.WISTERIA_PLANKS.get().asItem(), 4)
                 .requires(ModBlocks.JUICY_WISTERIA_LOG.get())
-                .unlockedBy("has_juicy_wisteria_log", has(ModBlocks.JUICY_WISTERIA_LOG.asItem()))
+                .unlockedBy("has_juicy_wisteria_log", has(ModBlocks.JUICY_WISTERIA_LOG.get().asItem()))
                 .save(recipeOutput);
 
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, ModBlocks.WISTERIA_PLANKS.asItem(), 4)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, ModBlocks.WISTERIA_PLANKS.get().asItem(), 4)
                 .requires(ModBlocks.WISTERIA_LOG.get())
-                .unlockedBy("has_wisteria_log", has(ModBlocks.WISTERIA_LOG.asItem()))
+                .unlockedBy("has_wisteria_log", has(ModBlocks.WISTERIA_LOG.get().asItem()))
                 .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "wisteria_planks_from_juiceless_log"));
 
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, ModBlocks.WISTERIA_LOG.asItem())
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, ModBlocks.WISTERIA_LOG.get().asItem())
                 .requires(ModBlocks.JUICY_WISTERIA_LOG.get())
                 .requires(Items.GLASS_BOTTLE)
-                .unlockedBy("has_juicy_wisteria_log", has(ModBlocks.JUICY_WISTERIA_LOG.asItem()))
+                .unlockedBy("has_juicy_wisteria_log", has(ModBlocks.JUICY_WISTERIA_LOG.get().asItem()))
                 .save(recipeOutput);
 
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, ModBlocks.WISTERIA_WOOD.asItem(), 3)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, ModBlocks.WISTERIA_WOOD.get().asItem(), 3)
                 .requires(ModBlocks.JUICY_WISTERIA_LOG.get())
                 .requires(ModBlocks.JUICY_WISTERIA_LOG.get())
                 .requires(ModBlocks.JUICY_WISTERIA_LOG.get())
                 .requires(ModBlocks.JUICY_WISTERIA_LOG.get())
-                .unlockedBy("has_juicy_wisteria_log", has(ModBlocks.JUICY_WISTERIA_LOG.asItem()))
+                .unlockedBy("has_juicy_wisteria_log", has(ModBlocks.JUICY_WISTERIA_LOG.get().asItem()))
                 .save(recipeOutput);
 
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, ModBlocks.WISTERIA_WOOD.asItem(), 3)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, ModBlocks.WISTERIA_WOOD.get().asItem(), 3)
                 .requires(ModBlocks.WISTERIA_LOG.get())
                 .requires(ModBlocks.WISTERIA_LOG.get())
                 .requires(ModBlocks.WISTERIA_LOG.get())
                 .requires(ModBlocks.WISTERIA_LOG.get())
-                .unlockedBy("has_wisteria_log", has(ModBlocks.WISTERIA_LOG.asItem()))
+                .unlockedBy("has_wisteria_log", has(ModBlocks.WISTERIA_LOG.get().asItem()))
                 .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "wisteria_wood_from_juiceless_log"));
 
         stairBuilder(ModBlocks.WISTERIA_STAIRS.get(), Ingredient.of(ModBlocks.WISTERIA_PLANKS.get())).group("wisteria")
@@ -247,31 +247,31 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_wisteria_planks", has(ModBlocks.WISTERIA_PLANKS.get())).save(recipeOutput);
 
         // mush
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, ModItems.REED_BAR, 1)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, ModItems.REED_BAR.get(), 1)
                 .requires(Items.SUGAR_CANE)
                 .requires(Items.SUGAR)
-                .requires(ModBlocks.REEDS.asItem())
-                .unlockedBy("has_reeds", has(ModBlocks.REEDS.asItem()))
+                .requires(ModBlocks.REEDS.get().asItem())
+                .unlockedBy("has_reeds", has(ModBlocks.REEDS.get().asItem()))
                 .save(recipeOutput);
 
         // lupine
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Items.PURPLE_DYE, 1)
-                .requires(ModBlocks.LUPINE.asItem())
-                .unlockedBy("has_lupine", has(ModBlocks.LUPINE.asItem()))
+                .requires(ModBlocks.LUPINE.get().asItem())
+                .unlockedBy("has_lupine", has(ModBlocks.LUPINE.get().asItem()))
                 .save(recipeOutput);
 
         // satis
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, ModBlocks.SATISTREE_PLANKS.asItem(), 4)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, ModBlocks.SATISTREE_PLANKS.get().asItem(), 4)
                 .requires(ModBlocks.SATISTREE_LOG.get())
-                .unlockedBy("has_satistree_log", has(ModBlocks.SATISTREE_LOG.asItem()))
+                .unlockedBy("has_satistree_log", has(ModBlocks.SATISTREE_LOG.get().asItem()))
                 .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "satistree_planks_from_juiceless_log"));
 
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, ModBlocks.SATISTREE_WOOD.asItem(), 3)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, ModBlocks.SATISTREE_WOOD.get().asItem(), 3)
                 .requires(ModBlocks.SATISTREE_LOG.get())
                 .requires(ModBlocks.SATISTREE_LOG.get())
                 .requires(ModBlocks.SATISTREE_LOG.get())
                 .requires(ModBlocks.SATISTREE_LOG.get())
-                .unlockedBy("has_satistree_log", has(ModBlocks.SATISTREE_LOG.asItem()))
+                .unlockedBy("has_satistree_log", has(ModBlocks.SATISTREE_LOG.get().asItem()))
                 .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "satistree_wood_from_juiceless_log"));
 
         stairBuilder(ModBlocks.SATISTREE_STAIRS.get(), Ingredient.of(ModBlocks.SATISTREE_PLANKS.get())).group("satistree")
@@ -294,17 +294,17 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_satistree_planks", has(ModBlocks.SATISTREE_PLANKS.get())).save(recipeOutput);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Items.STICK, 1)
-                .define('#', ModBlocks.ALIEN_PHYLLOSTACHYS.asItem())
+                .define('#', ModBlocks.ALIEN_PHYLLOSTACHYS.get().asItem())
                 .pattern("#")
                 .pattern("#")
                 .group("sticks")
-                .unlockedBy("has_alien_phyllostachys", has(ModBlocks.ALIEN_PHYLLOSTACHYS.asItem()))
+                .unlockedBy("has_alien_phyllostachys", has(ModBlocks.ALIEN_PHYLLOSTACHYS.get().asItem()))
                 .save(recipeOutput, "stick_from_alien_phyllostachys_item");
 
         fenceBuilder(ModBlocks.ALIEN_FENCE_PLANT.get(), Ingredient.of(ModBlocks.ALIEN_FENCE_PLANKS.get())).group("mystic")
                 .unlockedBy("has_alien_fence_planks", has(ModBlocks.ALIEN_FENCE_PLANKS.get())).save(recipeOutput);
 
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModBlocks.GIGANTIC_SATISTREE_SPROUTS.asItem(), 1)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModBlocks.GIGANTIC_SATISTREE_SPROUTS.get().asItem(), 1)
                 .requires(Blocks.BONE_BLOCK)
                 .requires(Blocks.BONE_BLOCK)
                 .requires(Blocks.PODZOL)
@@ -314,7 +314,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .requires(ModBlocks.SATISTREE_SAPLING.get())
                 .requires(ModBlocks.SATISTREE_SAPLING.get())
                 .requires(ModBlocks.SATISTREE_SAPLING.get())
-                .unlockedBy("has_satistree_sapling", has(ModBlocks.SATISTREE_SAPLING.asItem()))
+                .unlockedBy("has_satistree_sapling", has(ModBlocks.SATISTREE_SAPLING.get().asItem()))
                 .save(recipeOutput);
 
     }

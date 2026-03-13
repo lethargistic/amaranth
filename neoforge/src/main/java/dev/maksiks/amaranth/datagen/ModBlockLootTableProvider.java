@@ -1,5 +1,6 @@
 package dev.maksiks.amaranth.datagen;
 
+import com.google.common.base.Supplier;
 import dev.maksiks.amaranth.block.ModBlocks;
 import dev.maksiks.amaranth.item.ModItems;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
@@ -159,7 +160,7 @@ public class ModBlockLootTableProvider extends BlockLootSubProvider {
         // pain
         this.add(ModBlocks.SPIKY_ARCHES.get(),
                 block -> createSilkTouchOrShearsDispatchTable(ModBlocks.SPIKY_ARCHES.get(),
-                        LootItem.lootTableItem(ModItems.THORN)
+                        LootItem.lootTableItem(ModItems.THORN.get())
                         .when(BonusLevelTableCondition.bonusLevelFlatChance(enchantmentRegistryLookup.getOrThrow(Enchantments.FORTUNE), 0.33F, 0.55F, 0.77F, 1.0F))
                 ));
 
@@ -203,7 +204,7 @@ public class ModBlockLootTableProvider extends BlockLootSubProvider {
                 block -> createPetalsDrops(ModBlocks.PHLOX.get()));
 
         // mush
-        this.add(ModBlocks.REEDS.get(), block -> this.createItemDoublePlantTable(ModBlocks.REEDS.asItem(), ModBlocks.REEDS.get(), DoublePlantBlock.HALF, DoubleBlockHalf.LOWER));
+        this.add(ModBlocks.REEDS.get(), block -> this.createItemDoublePlantTable(ModBlocks.REEDS.get().asItem(), ModBlocks.REEDS.get(), DoublePlantBlock.HALF, DoubleBlockHalf.LOWER));
 
         this.dropSelf(ModBlocks.RED_MINI_SHROOM_SPORELING.get());
         this.add(ModBlocks.POTTED_RED_MINI_SHROOM_SPORELING.get(),
@@ -242,7 +243,7 @@ public class ModBlockLootTableProvider extends BlockLootSubProvider {
         this.dropSelf(ModBlocks.GIGANTIC_SATISTREE_SPROUTS.get());
 
         this.add(ModBlocks.ALIEN_LEAVES.get(),
-                block -> createFruitOrExtraLeavesDrops(ModBlocks.ALIEN_LEAVES.get(), ModBlocks.SATISTREE_SAPLING.get(), ModBlocks.ALIEN_FENCE_PLANT_SAPLING.asItem(), NORMAL_LEAVES_SAPLING_CHANCES));
+                block -> createFruitOrExtraLeavesDrops(ModBlocks.ALIEN_LEAVES.get(), ModBlocks.SATISTREE_SAPLING.get(), ModBlocks.ALIEN_FENCE_PLANT_SAPLING.get().asItem(), NORMAL_LEAVES_SAPLING_CHANCES));
 
         this.dropSelf(ModBlocks.SATISTREE_STAIRS.get());
         this.add(ModBlocks.SATISTREE_SLAB.get(),
@@ -324,6 +325,6 @@ public class ModBlockLootTableProvider extends BlockLootSubProvider {
 
     @Override
     protected Iterable<Block> getKnownBlocks() {
-        return ModBlocks.BLOCKS.getEntries().stream().map(Holder::value)::iterator;
+        return ModBlocks.BLOCK_MAP.values().stream().map(s -> (Block) s.get())::iterator;
     }
 }

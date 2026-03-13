@@ -6,6 +6,7 @@ import dev.maksiks.amaranth.entity.ModEntities;
 import dev.maksiks.amaranth.entity.client.ShroomBoiModel;
 import dev.maksiks.amaranth.entity.custom.ShroomBoiEntity;
 import dev.maksiks.amaranth.item.ModItems;
+import dev.maksiks.amaranth.util.Utils;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.SpawnPlacementTypes;
 import net.minecraft.world.item.ItemStack;
@@ -52,7 +53,8 @@ public class ModEventBusEvents {
         event.enqueueWork(() -> {
             MOD_FLOWER_POTS.forEach((plant, pot) -> {
                 ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(
-                        ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, plant.getId().getPath()),
+                        // TODO mov: check if path works correctlyx
+                        ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, Utils.findBlockId(plant)),
                         pot
                 );
             });
@@ -61,8 +63,8 @@ public class ModEventBusEvents {
 
     @SubscribeEvent
     public static void onCrafted(PlayerEvent.ItemCraftedEvent event) {
-        if (event.getCrafting().is(ModBlocks.WISTERIA_LOG.asItem())) {
-            ItemStack secondary = new ItemStack(ModItems.WISTERIA_JUICE.asItem());
+        if (event.getCrafting().is(ModBlocks.WISTERIA_LOG.get().asItem())) {
+            ItemStack secondary = new ItemStack(ModItems.WISTERIA_JUICE.get().asItem());
             if (!event.getEntity().getInventory().add(secondary)) {
                 event.getEntity().drop(secondary, false);
             }

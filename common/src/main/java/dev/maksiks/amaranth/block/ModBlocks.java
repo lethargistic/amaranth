@@ -6,7 +6,9 @@ import dev.maksiks.amaranth.block.custom.*;
 import dev.maksiks.amaranth.block.custom.leaves.*;
 import dev.maksiks.amaranth.item.ModItems;
 import dev.maksiks.amaranth.worldgen.tree.ModTreeGrowers;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.util.ColorRGBA;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -17,16 +19,15 @@ import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.block.state.properties.WoodType;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
-import java.util.Optional;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 public class ModBlocks {
     public static final HashMap<String, Supplier<? extends Block>> BLOCK_MAP = new HashMap<>();
-
     public static HashMap<Supplier<Block>, Supplier<FlowerPotBlock>> MOD_FLOWER_POTS = new HashMap<>();
+    public record FlammabilityData(int burn, int spread) {}
+    public static HashMap<Supplier<? extends Block>, FlammabilityData> FABRIC_MOD_FLAMMABLE_BLOCKS = new HashMap<>();
 
     private static final Supplier<BlockBehaviour.Properties> normalWoodProps = () -> BlockBehaviour.Properties.of()
             .mapColor(MapColor.WOOD)
@@ -34,21 +35,6 @@ public class ModBlocks {
             .strength(2.0F, 3.0F)
             .sound(SoundType.WOOD)
             .ignitedByLava();
-
-    public static <K, V> Optional<K> getKeyByValue(Map<K, V> map, V value) {
-        return map.entrySet().stream()
-                .filter(e -> Objects.equals(e.getValue(), value))
-                .map(Map.Entry::getKey)
-                .findFirst();
-    }
-
-    // TODO mov: yoink neo's util if it doesnt work
-    private static Supplier<FlowerPotBlock> registerFlowerPot(Supplier<Block> plant) {
-        Supplier<FlowerPotBlock> pot = register("potted_" + getKeyByValue(BLOCK_MAP, plant),
-                Suppliers.memoize(() -> new FlowerPotBlock(plant.get(), BlockBehaviour.Properties.ofFullCopy(Blocks.POTTED_SPRUCE_SAPLING))));
-        MOD_FLOWER_POTS.put(plant, pot);
-        return pot;
-    }
 
     // misc
     // mmm yes calcite 2
@@ -71,6 +57,7 @@ public class ModBlocks {
     public static final Supplier<Block> MYSTIC_LEAVES = registerWithItem("mystic_leaves",
             () -> new FlammableLeavesBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_LEAVES)));
 
+    // TODO: figure out if to use reflection or an AT
     public static final Supplier<Block> MYSTIC_SAPLING = registerWithItem("mystic_sapling",
             () -> new SaplingBlock(ModTreeGrowers.MYSTIC_GROWER, BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_SAPLING)));
     public static final Supplier<FlowerPotBlock> POTTED_MYSTIC_SAPLING = registerFlowerPot(MYSTIC_SAPLING);
@@ -91,6 +78,7 @@ public class ModBlocks {
     public static final Supplier<FenceGateBlock> MYSTIC_FENCE_GATE = registerWithItem("mystic_fence_gate",
             () -> new FenceGateBlock(WoodType.SPRUCE, normalWoodProps.get()));
 
+    // TODO mov: fix for common
     public static final Supplier<DoorBlock> MYSTIC_DOOR = registerWithItem("mystic_door",
             () -> new DoorBlock(BlockSetType.SPRUCE, BlockBehaviour.Properties.of().strength(2F).noOcclusion().isValidSpawn(Blocks::never)));
     public static final Supplier<TrapDoorBlock> MYSTIC_TRAPDOOR = registerWithItem("mystic_trapdoor",
@@ -407,13 +395,31 @@ public class ModBlocks {
             SATISTREE_WOOD, STRIPPED_SATISTREE_WOOD
     );
 
-    public static <B extends Block> Supplier<B> register(String key, Supplier<B> block) {
-        BLOCK_MAP.put(key, block);
-        return Suppliers.memoize(block);
+    // friendly reminder to do this with Neo's methods too!
+    public static <B extends Block> void registerFabricFlammability(Supplier<B> block, int burn, int spread) {
+        FABRIC_MOD_FLAMMABLE_BLOCKS.put(block, new FlammabilityData(burn, spread));
+    }
+
+    // TODO mov: yoink neo's util if it doesnt work
+    // TODO mov: fix greg
+    private static Supplier<FlowerPotBlock> registerFlowerPot(Supplier<Block> plant) {
+//        String plantName = BuiltInRegistries.BLOCK.getKey(plant.get()).getPath();
+        Supplier<FlowerPotBlock> pot = register("potted_" + "greg" + RandomSource.create().nextInt(10000),
+                Suppliers.memoize(() -> new FlowerPotBlock(plant.get(), BlockBehaviour.Properties.ofFullCopy(Blocks.POTTED_SPRUCE_SAPLING))));
+        MOD_FLOWER_POTS.put(plant, pot);
+        return pot;
     }
 
     public static <B extends Block> Supplier<B> registerWithItem(String key, Supplier<B> block) {
-        ModItems.register(key, () -> new BlockItem(block.get(), new Item.Properties()));
-        return register(key, block);
+        Supplier<B> memoized = Suppliers.memoize(block);
+        BLOCK_MAP.put(key, memoized);
+        ModItems.register(key, () -> new BlockItem(memoized.get(), new Item.Properties()));
+        return memoized;
+    }
+
+    public static <B extends Block> Supplier<B> register(String key, Supplier<B> block) {
+        Supplier<B> memoized = Suppliers.memoize(block);
+        BLOCK_MAP.put(key, memoized);
+        return memoized;
     }
 }

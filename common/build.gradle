@@ -45,6 +45,7 @@ artifacts {
     commonJava sourceSets.main.java.sourceDirectories.singleFile
     commonResources sourceSets.main.resources.sourceDirectories.singleFile
 }
+
 repositories {
     mavenCentral()
 }
@@ -52,3 +53,12 @@ kotlin {
     jvmToolchain(21)
 }
 
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
+// Making the compiler complain when I'm misusing a @Nullable in Kotlin
+// i think
+tasks.withType(KotlinCompile).configureEach {
+    compilerOptions {
+        freeCompilerArgs.add("-Xjsr305=strict")
+    }
+}

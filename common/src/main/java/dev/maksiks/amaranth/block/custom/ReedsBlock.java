@@ -72,8 +72,7 @@ public class ReedsBlock extends DoublePlantBlock implements SimpleWaterloggedBlo
         }
 
         // checking if the block is valid
-        TriState soilDecision = below.canSustainPlant(level, pos.below(), Direction.UP, state);
-        if (!soilDecision.isDefault()) return soilDecision.isTrue();
+        // TODO: maybe integrate with Neo's soil check
         if (!isValidReedSoil(below)) return false;
 
         // in water

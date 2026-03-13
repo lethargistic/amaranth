@@ -1,6 +1,7 @@
 package dev.maksiks.amaranth.block.custom;
 
 import com.google.common.base.Supplier;
+import dev.maksiks.amaranth.block.ModBlocks;
 import dev.maksiks.amaranth.util.ItemAbility;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -19,33 +20,31 @@ import static dev.maksiks.amaranth.block.ModBlocks.MOD_STRIPPABLES;
 public class FlammableRotatedPillarBlock extends RotatedPillarBlock {
     public FlammableRotatedPillarBlock(Properties properties) {
         super(properties);
+        ModBlocks.registerFabricFlammability(() -> this, 5, 5);
     }
 
-    @Override
     public boolean isFlammable(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
         return true;
     }
 
-    @Override
     public int getFlammability(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
         return 5;
     }
 
-    @Override
     public int getFireSpreadSpeed(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
         return 5;
     }
 
-    @Override
-    public @Nullable BlockState getToolModifiedState(BlockState state, UseOnContext context, ItemAbility itemAbility, boolean simulate) {
-        if (context.getItemInHand().getItem() instanceof AxeItem) {
-            for (Map.Entry<Supplier<Block>, Supplier<Block>> entry : MOD_STRIPPABLES.entrySet()) {
-                if(state.is(entry.getKey().get())) {
-                    return entry.getValue().get().defaultBlockState().setValue(AXIS, state.getValue(AXIS));
-                }
-            }
-        }
-
-        return super.getToolModifiedState(state, context, itemAbility, simulate);
-    }
+    // TODO: fix tool modified state / see if it just works anyway as in my map?
+//    public @Nullable BlockState getToolModifiedState(BlockState state, UseOnContext context, ItemAbility itemAbility, boolean simulate) {
+//        if (context.getItemInHand().getItem() instanceof AxeItem) {
+//            for (Map.Entry<Supplier<Block>, Supplier<Block>> entry : MOD_STRIPPABLES.entrySet()) {
+//                if(state.is(entry.getKey().get())) {
+//                    return entry.getValue().get().defaultBlockState().setValue(AXIS, state.getValue(AXIS));
+//                }
+//            }
+//        }
+//
+//        return super.getToolModifiedState(state, context, itemAbility, simulate);
+//    }
 }

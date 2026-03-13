@@ -1,20 +1,24 @@
 package dev.maksiks.amaranth.worldgen.features.structure_processor;
 
-import dev.maksiks.amaranth.Constants;
+import com.google.common.base.Supplier;
+import com.google.common.base.Suppliers;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
-import net.neoforged.neoforge.registries.DeferredHolder;
-import net.neoforged.neoforge.registries.DeferredRegister;
 
-import static net.minecraft.core.registries.BuiltInRegistries.STRUCTURE_PROCESSOR;
+import java.util.HashMap;
 
 public class ModStructureProcessorTypes {
-    public static final DeferredRegister<StructureProcessorType<?>> STRUCTURE_PROCESSOR_TYPES =
-            DeferredRegister.create(STRUCTURE_PROCESSOR, Constants.MOD_ID);
+    public static final HashMap<String, Supplier<? extends StructureProcessorType<?>>> STRUCTURE_PROCESSOR_TYPE_MAP = new HashMap<>();
 
-    public static final DeferredHolder<StructureProcessorType<?>, StructureProcessorType<GiganticSatistreeStructureProcessor>>
+    public static final Supplier<StructureProcessorType<GiganticSatistreeStructureProcessor>>
             GIGANTIC_SATISTREE_PROCESSOR =
-            STRUCTURE_PROCESSOR_TYPES.register(
+            register(
                     "gigantic_satistree_processor",
                     () -> () -> GiganticSatistreeStructureProcessor.CODEC
             );
+
+    private static <T extends StructureProcessor> Supplier<StructureProcessorType<T>> register(String key, Supplier<StructureProcessorType<T>> processor) {
+        STRUCTURE_PROCESSOR_TYPE_MAP.put(key, processor);
+        return Suppliers.memoize(processor);
+    }
 }

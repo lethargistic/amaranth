@@ -1,5 +1,7 @@
 package dev.maksiks.amaranth.sound;
 
+import com.google.common.base.Supplier;
+import com.google.common.base.Suppliers;
 import dev.maksiks.amaranth.Constants;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -8,14 +10,11 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.item.JukeboxSong;
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.registries.DeferredRegister;
 
-import java.util.function.Supplier;
+import java.util.HashMap;
 
 public class ModSounds {
-    public static final DeferredRegister<SoundEvent> SOUND_EVENTS =
-            DeferredRegister.create(BuiltInRegistries.SOUND_EVENT, Constants.MOD_ID);
+    public static final HashMap<String, com.google.common.base.Supplier<SoundEvent>> SOUND_EVENT_MAP = new HashMap<>();
 
     public static final Supplier<SoundEvent> ARCTIC_WIND_THRONGLED = registerSoundEvent("arctic_wind_throngled");
 
@@ -35,10 +34,8 @@ public class ModSounds {
 
     private static Supplier<SoundEvent> registerSoundEvent(String name) {
         ResourceLocation id = ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, name);
-        return SOUND_EVENTS.register(name, () -> SoundEvent.createVariableRangeEvent(id));
-    }
-
-    public static void register(IEventBus eventBus) {
-        SOUND_EVENTS.register(eventBus);
+        Supplier<SoundEvent> event = () -> SoundEvent.createVariableRangeEvent(id);
+        SOUND_EVENT_MAP.put(name, event);
+        return Suppliers.memoize(event);
     }
 }

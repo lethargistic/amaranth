@@ -39,7 +39,7 @@ public abstract class ChunkStatusTasksMixin {
                 key0 -> new Long2ObjectOpenHashMap<>()).computeIfAbsent(ChunkPos.asLong(pos.getX(), pos.getZ()),
                 key1 -> biomeManager.getBiome(pos));
 
-        // mush
+        // biomes
         MushlandTerrain.processMushlandTerrain(biomeGetter, chunk, worldGenRegion);
         SteppedSpringsTerrain.processSteppedSpringsTerrain(biomeGetter, chunk, worldGenRegion);
     }

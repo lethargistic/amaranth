@@ -46,12 +46,6 @@ public class NeoAmaranth {
 
         ModCreativeModeTabs.register(modEventBus);
 
-        ModItems.register(modEventBus);
-        ModBlocks.register(modEventBus);
-        ModParticles.register(modEventBus);
-        ModFeatures.FEATURES.register(modEventBus);
-        ModSounds.register(modEventBus);
-
         NeoModRegistries.register(modEventBus);
 
         ModTerrablenderRegion.init();
@@ -72,19 +66,19 @@ public class NeoAmaranth {
 
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
         if (event.getTabKey() == CreativeModeTabs.COMBAT) {
-            event.accept(ModItems.MAFIA_BLOB);
-            event.accept(ModItems.BEANIE_BLOB);
+            event.accept(ModItems.MAFIA_BLOB.get());
+            event.accept(ModItems.BEANIE_BLOB.get());
         }
 
         if (event.getTabKey() == CreativeModeTabs.SPAWN_EGGS) {
-            event.accept(ModItems.SHROOM_BOI_SPAWN_EGG);
+            event.accept(ModItems.SHROOM_BOI_SPAWN_EGG.get());
         }
 
         // not putting much stuff into vanilla tabs because you can just find it in the mod tab
         // and thus less thinking for me
 
         if (event.getTabKey() == CreativeModeTabs.FOOD_AND_DRINKS) {
-            event.accept(ModItems.HEXFRUIT);
+            event.accept(ModItems.HEXFRUIT.get());
         }
     }
 

@@ -1,12 +1,15 @@
 package dev.maksiks.amaranth.util;
 
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.block.state.BlockState;
+import com.google.common.base.Supplier;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
 
 public class Utils {
-    TriState canSustainPlant(BlockState soil, BlockGetter level, BlockPos soilPosition, Direction facing, BlockState plant) {
-        return soil.getBlock().canSustainPlant(level, soilPosition, facing, plant);
+    public static String findBlockId(Supplier<? extends Block> block) {
+        return BuiltInRegistries.BLOCK.getKey(block.get()).getPath();
+    }
+    public static String findItemId(Supplier<? extends Item> item) {
+        return BuiltInRegistries.ITEM.getKey(item.get()).getPath();
     }
 }

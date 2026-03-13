@@ -1,6 +1,10 @@
 package dev.maksiks.amaranth;
 
+import dev.maksiks.amaranth.block.ModBlocks;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
+import net.fabricmc.fabric.api.registry.LandPathNodeTypesRegistry;
+import net.minecraft.world.level.pathfinder.PathType;
 
 public class FabricAmaranth implements ModInitializer {
     
@@ -14,5 +18,7 @@ public class FabricAmaranth implements ModInitializer {
         // Use Fabric to bootstrap the Common mod.
         Constants.LOG.info("Hello Fabric world!");
         CommonClass.init();
+
+        FabricModRegistries.init();
     }
 }
