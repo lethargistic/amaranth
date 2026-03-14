@@ -15,13 +15,13 @@ dependencies {
 
     // amaranth
     modImplementation("net.fabricmc:fabric-language-kotlin:${flk_version}")
-    implementation "com.github.glitchfiend:TerraBlender-fabric:${minecraft_version}-${terrablender_version}"
-    implementation "maven.modrinth:twigonometry:mc${project.minecraft_version}-${project.twigonometry_version}-fabric"
-    implementation "fuzs.forgeconfigapiport:forgeconfigapiport-fabric:${fc_api_port_version}"
+    modImplementation "com.github.glitchfiend:TerraBlender-fabric:${minecraft_version}-${terrablender_version}"
+    modImplementation "maven.modrinth:twigonometry:mc${project.minecraft_version}-${project.twigonometry_version}-fabric"
+    modImplementation "fuzs.forgeconfigapiport:forgeconfigapiport-fabric:${fc_api_port_version}"
 }
 
 loom {
-    def aw = project(':common').file("src/main/resources/${mod_id}.accesswidener")
+    def aw = project(':fabric').file("src/main/resources/${mod_id}.classtweaker")
     if (aw.exists()) {
         accessWidenerPath.set(aw)
     }
@@ -43,3 +43,5 @@ loom {
         }
     }
 }
+
+sourceSets.main.resources { srcDir '../common/src/generated/resources' }

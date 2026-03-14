@@ -6,7 +6,7 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.*;
 import net.minecraft.core.particles.SimpleParticleType;
 
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 import static dev.maksiks.amaranth.ClientConfig.HIDE_ALL_BIOME_PARTICLES;
 import static dev.maksiks.amaranth.ClientConfig.HIDE_BIOME_LEAF_PARTICLES;

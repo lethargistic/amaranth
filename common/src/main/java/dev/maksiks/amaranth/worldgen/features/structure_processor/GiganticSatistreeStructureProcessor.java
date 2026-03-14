@@ -10,7 +10,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProc
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 import static dev.maksiks.amaranth.worldgen.features.structure_processor.ModStructureProcessorTypes.GIGANTIC_SATISTREE_PROCESSOR;
 

@@ -116,7 +116,8 @@ processResources {
             twigonometry_version_range     : twigonometry_version_range,
             kff_version                    : kff_version,
             kff_version_range              : kff_version_range,
-            flk_version                    : flk_version
+            flk_version                    : flk_version,
+            fc_api_port_version            : fc_api_port_version,
     ]
 
     filesMatching(['pack.mcmeta', 'fabric.mod.json', 'META-INF/mods.toml', 'META-INF/neoforge.mods.toml', '*.mixins.json']) {

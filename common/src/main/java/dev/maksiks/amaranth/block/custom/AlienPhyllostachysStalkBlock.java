@@ -5,7 +5,6 @@ import dev.maksiks.amaranth.tags.ModTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
@@ -17,9 +16,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BambooLeaves;
 import net.minecraft.world.level.material.FluidState;
 
-import javax.annotation.Nullable;
-
-import static dev.maksiks.amaranth.block.ModBlocks.FABRIC_MOD_FLAMMABLE_BLOCKS;
+import org.jetbrains.annotations.Nullable;
 
 public class AlienPhyllostachysStalkBlock extends BambooStalkBlock {
     private static final int MAX_HEIGHT = 5;

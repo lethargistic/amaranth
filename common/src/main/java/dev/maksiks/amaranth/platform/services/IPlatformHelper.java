@@ -3,13 +3,19 @@ package dev.maksiks.amaranth.platform.services;
 import com.google.common.base.Supplier;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.SpawnEggItem;
+import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 
+import java.util.List;
+
 
 public interface IPlatformHelper {
+
+    Supplier<CreativeModeTab> createCreativeTab(String tabName, List<Supplier<? extends ItemLike>> items, Supplier<? extends ItemLike> icon);
 
     Supplier<RotatedPillarBlock> createLoaderStrippableLog(BlockBehaviour.Properties props);
 

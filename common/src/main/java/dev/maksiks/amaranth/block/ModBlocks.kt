@@ -1,415 +1,887 @@
-package dev.maksiks.amaranth.block;
+package dev.maksiks.amaranth.block
 
-import com.google.common.base.Supplier;
-import com.google.common.base.Suppliers;
-import dev.maksiks.amaranth.block.custom.*;
-import dev.maksiks.amaranth.block.custom.leaves.*;
-import dev.maksiks.amaranth.item.ModItems;
-import dev.maksiks.amaranth.platform.Services;
-import dev.maksiks.amaranth.util.Utils;
-import dev.maksiks.amaranth.worldgen.tree.ModTreeGrowers;
-import net.minecraft.util.ColorRGBA;
-import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.*;
-import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.block.state.properties.BlockSetType;
-import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
-import net.minecraft.world.level.block.state.properties.WoodType;
-import net.minecraft.world.level.material.MapColor;
-import net.minecraft.world.level.material.PushReaction;
+import com.google.common.base.Supplier
+import com.google.common.base.Suppliers
+import dev.maksiks.amaranth.block.custom.*
+import dev.maksiks.amaranth.block.custom.leaves.*
+import dev.maksiks.amaranth.item.ModItems
+import dev.maksiks.amaranth.platform.Services
+import dev.maksiks.amaranth.util.Utils
+import dev.maksiks.amaranth.worldgen.tree.ModTreeGrowers
+import net.minecraft.core.BlockPos
+import net.minecraft.util.ColorRGBA
+import net.minecraft.world.effect.MobEffects
+import net.minecraft.world.entity.EntityType
+import net.minecraft.world.item.BlockItem
+import net.minecraft.world.item.Item
+import net.minecraft.world.level.BlockGetter
+import net.minecraft.world.level.block.*
+import net.minecraft.world.level.block.state.BlockBehaviour
+import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.block.state.properties.BlockSetType
+import net.minecraft.world.level.block.state.properties.NoteBlockInstrument
+import net.minecraft.world.level.block.state.properties.WoodType
+import net.minecraft.world.level.material.MapColor
+import net.minecraft.world.level.material.PushReaction
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+class ModBlocks {
+    companion object {
+        @JvmField
+        val BLOCK_MAP: HashMap<String?, Supplier<out Block?>?> = HashMap<String?, Supplier<out Block?>?>()
 
-public class ModBlocks {
-    public static final HashMap<String, Supplier<? extends Block>> BLOCK_MAP = new HashMap<>();
-    public static HashMap<Supplier<Block>, Supplier<FlowerPotBlock>> MOD_FLOWER_POTS = new HashMap<>();
+        @JvmField
+        var MOD_FLOWER_POTS: HashMap<Supplier<Block?>?, Supplier<FlowerPotBlock?>?> =
+            HashMap<Supplier<Block?>?, Supplier<FlowerPotBlock?>?>()
 
-    public record FlammabilityData(int burn, int spread) {
-    }
+        @JvmField
+        var MOD_CUTOUT_BLOCKS: MutableList<Supplier<Block?>?> = ArrayList<Supplier<Block?>?>()
 
-    public static HashMap<Supplier<? extends Block>, FlammabilityData> FABRIC_MOD_FLAMMABLE_BLOCKS = new HashMap<>();
-    public static Map<Supplier<? extends Block>, Supplier<Block>> MOD_STRIPPABLES = new HashMap<>();
+        @JvmField
+        var FABRIC_MOD_FLAMMABLE_BLOCKS: HashMap<Supplier<out Block?>?, FlammabilityData?> =
+            HashMap<Supplier<out Block?>?, FlammabilityData?>()
 
-    private static final Supplier<BlockBehaviour.Properties> normalWoodProps = () -> BlockBehaviour.Properties.of()
-            .mapColor(MapColor.WOOD)
-            .instrument(NoteBlockInstrument.BASS)
-            .strength(2.0F, 3.0F)
-            .sound(SoundType.WOOD)
-            .ignitedByLava();
+        @JvmField
+        var MOD_STRIPPABLES: MutableMap<Supplier<out Block?>?, Supplier<Block?>?> =
+            HashMap<Supplier<out Block?>?, Supplier<Block?>?>()
 
-    // misc
-    // mmm yes calcite 2
-    public static final Supplier<Block> MARBLE = registerWithItem("marble",
-            () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.CALCITE)));
+        private val normalWoodProps = Supplier {
+            BlockBehaviour.Properties.of()
+                .mapColor(MapColor.WOOD)
+                .instrument(NoteBlockInstrument.BASS)
+                .strength(2.0f, 3.0f)
+                .sound(SoundType.WOOD)
+                .ignitedByLava()
+        }
 
-    // mystic
-    public static final Supplier<Block> STRIPPED_MYSTIC_LOG = registerWithItem("stripped_mystic_log",
-            () -> new FlammableRotatedPillarBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STRIPPED_SPRUCE_LOG)));
-    public static final Supplier<RotatedPillarBlock> MYSTIC_LOG = registerStrippablePillarBlock("mystic_log", STRIPPED_MYSTIC_LOG, BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_LOG));
-    public static final Supplier<Block> STRIPPED_MYSTIC_WOOD = registerWithItem("stripped_mystic_wood",
-            () -> new FlammableRotatedPillarBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STRIPPED_SPRUCE_WOOD)));
-    public static final Supplier<RotatedPillarBlock> MYSTIC_WOOD = registerStrippablePillarBlock("mystic_wood", STRIPPED_MYSTIC_WOOD, BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_WOOD));
+        fun doorFromSpruce(): DoorBlock = DoorBlock(
+            BlockSetType.SPRUCE,
+            BlockBehaviour.Properties.of().strength(2f).noOcclusion()
+                .isValidSpawn { state: BlockState?, blockGetter: BlockGetter?, pos: BlockPos?, entity: EntityType<*>? ->
+                    Blocks.never(
+                        state!!,
+                        blockGetter!!,
+                        pos!!,
+                        entity!!
+                    )
+                }
+        )
+        fun trapdoorFromSpruce(): TrapDoorBlock = TrapDoorBlock(
+            BlockSetType.SPRUCE,
+            normalWoodProps.get()!!.noOcclusion()
+                .isValidSpawn { state: BlockState?, blockGetter: BlockGetter?, pos: BlockPos?, entity: EntityType<*>? ->
+                    Blocks.never(
+                        state!!,
+                        blockGetter!!,
+                        pos!!,
+                        entity!!
+                    )
+                }
+        )
 
-    public static final Supplier<Block> MYSTIC_PLANKS = registerWithItem("mystic_planks",
-            () -> new FlammablePlanksBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_PLANKS)));
+        // misc
+        // mmm yes calcite 2
+        @JvmField
+        val MARBLE: Supplier<Block?> = registerWithItem<Block?>(
+            "marble"
+        ) { Block(BlockBehaviour.Properties.ofFullCopy(Blocks.CALCITE)) }
 
-    public static final Supplier<Block> MYSTIC_LEAVES = registerWithItem("mystic_leaves",
-            () -> new FlammableLeavesBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_LEAVES)));
+        // mystic
+        @JvmField
+        val STRIPPED_MYSTIC_LOG: Supplier<Block?> = registerWithItem<Block?>(
+            "stripped_mystic_log"
+        ) { FlammableRotatedPillarBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STRIPPED_SPRUCE_LOG)) }
 
-    public static final Supplier<Block> MYSTIC_SAPLING = registerWithItem("mystic_sapling",
-            () -> new SaplingBlock(ModTreeGrowers.MYSTIC_GROWER, BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_SAPLING)));
-    public static final Supplier<FlowerPotBlock> POTTED_MYSTIC_SAPLING = registerFlowerPot(MYSTIC_SAPLING);
+        @JvmField
+        val MYSTIC_LOG: Supplier<RotatedPillarBlock?> = registerStrippablePillarBlock(
+            "mystic_log", STRIPPED_MYSTIC_LOG, BlockBehaviour.Properties.ofFullCopy(
+                Blocks.SPRUCE_LOG
+            )
+        )
 
-    // non-full block stuff
-    public static final Supplier<StairBlock> MYSTIC_STAIRS = registerWithItem("mystic_stairs",
-            () -> new StairBlock(ModBlocks.MYSTIC_PLANKS.get().defaultBlockState(), normalWoodProps.get()));
-    public static final Supplier<SlabBlock> MYSTIC_SLAB = registerWithItem("mystic_slab",
-            () -> new SlabBlock(normalWoodProps.get()));
+        @JvmField
+        val STRIPPED_MYSTIC_WOOD: Supplier<Block?> = registerWithItem<Block?>(
+            "stripped_mystic_wood"
+        ) { FlammableRotatedPillarBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STRIPPED_SPRUCE_WOOD)) }
 
-    public static final Supplier<PressurePlateBlock> MYSTIC_PRESSURE_PLATE = registerWithItem("mystic_pressure_plate",
-            () -> new PressurePlateBlock(BlockSetType.SPRUCE, normalWoodProps.get()));
-    public static final Supplier<ButtonBlock> MYSTIC_BUTTON = registerWithItem("mystic_button",
-            () -> new ButtonBlock(BlockSetType.SPRUCE, 30, normalWoodProps.get().noCollission()));
+        @JvmField
+        val MYSTIC_WOOD: Supplier<RotatedPillarBlock?> = registerStrippablePillarBlock(
+            "mystic_wood", STRIPPED_MYSTIC_WOOD, BlockBehaviour.Properties.ofFullCopy(
+                Blocks.SPRUCE_WOOD
+            )
+        )
 
-    public static final Supplier<FenceBlock> MYSTIC_FENCE = registerWithItem("mystic_fence",
-            () -> new FenceBlock(normalWoodProps.get()));
-    public static final Supplier<FenceGateBlock> MYSTIC_FENCE_GATE = registerWithItem("mystic_fence_gate",
-            () -> new FenceGateBlock(WoodType.SPRUCE, normalWoodProps.get()));
+        @JvmField
+        val MYSTIC_PLANKS: Supplier<Block?> = registerWithItem<Block?>(
+            "mystic_planks"
+        ) { FlammablePlanksBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_PLANKS)) }
 
-    // TODO fabrec: no occlusion?
-    public static final Supplier<DoorBlock> MYSTIC_DOOR = registerWithItem("mystic_door",
-            () -> new DoorBlock(BlockSetType.SPRUCE, BlockBehaviour.Properties.of().strength(2F).noOcclusion().isValidSpawn(Blocks::never)));
-    public static final Supplier<TrapDoorBlock> MYSTIC_TRAPDOOR = registerWithItem("mystic_trapdoor",
-            () -> new TrapDoorBlock(BlockSetType.SPRUCE, normalWoodProps.get().noOcclusion().isValidSpawn(Blocks::never)));
+        @JvmField
+        val MYSTIC_LEAVES: Supplier<Block?> = registerWithItem<Block?>(
+            "mystic_leaves"
+        ) { FlammableLeavesBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_LEAVES)) }
 
-    // sign
-    // hanged sign
-    // boat
-    // chest boat
+        @JvmField
+        val MYSTIC_SAPLING: Supplier<Block?> = registerWithItem<Block?>(
+            "mystic_sapling"
+        ) {
+            SaplingBlock(
+                ModTreeGrowers.MYSTIC_GROWER,
+                BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_SAPLING)
+            )
+        }
 
-    // stubby
-    public static final Supplier<Block> STUBBY_SAPLING = registerWithItem("stubby_sapling",
-            () -> new SaplingBlock(ModTreeGrowers.STUBBY_GROWER, BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_SAPLING)));
-    public static final Supplier<FlowerPotBlock> POTTED_STUBBY_SAPLING = registerFlowerPot(STUBBY_SAPLING);
+        @JvmField
+        val POTTED_MYSTIC_SAPLING: Supplier<FlowerPotBlock?> = registerFlowerPot(MYSTIC_SAPLING)
 
-    // silver birch
-    public static final Supplier<Block> SILVERY_SILVER_BIRCH_LEAVES = registerWithItem("silvery_silver_birch_leaves",
-            () -> new SilverBirchLeavesBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_LEAVES)));
+        // non-full block stuff
+        @JvmField
+        val MYSTIC_STAIRS: Supplier<StairBlock?> = registerWithItem<StairBlock?>(
+            "mystic_stairs"
+        ) { StairBlock(MYSTIC_PLANKS.get()!!.defaultBlockState(), normalWoodProps.get()!!) }
 
-    public static final Supplier<Block> LIGHT_SILVER_BIRCH_LEAVES = registerWithItem("light_silver_birch_leaves",
-            () -> new SilverBirchLeavesBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_LEAVES)));
+        @JvmField
+        val MYSTIC_SLAB: Supplier<SlabBlock?> = registerWithItem<SlabBlock?>(
+            "mystic_slab"
+        ) { SlabBlock(normalWoodProps.get()!!) }
 
-    public static final Supplier<Block> DARK_SILVER_BIRCH_LEAVES = registerWithItem("dark_silver_birch_leaves",
-            () -> new SilverBirchLeavesBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_LEAVES)));
+        @JvmField
+        val MYSTIC_PRESSURE_PLATE: Supplier<PressurePlateBlock?> = registerWithItem<PressurePlateBlock?>(
+            "mystic_pressure_plate"
+        ) { PressurePlateBlock(BlockSetType.SPRUCE, normalWoodProps.get()!!) }
 
-    public static final Supplier<Block> SILVER_BIRCH_SAPLING = registerWithItem("silver_birch_sapling",
-            () -> new SaplingBlock(ModTreeGrowers.SILVER_BIRCH_GROWER, BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_SAPLING)));
-    public static final Supplier<FlowerPotBlock> POTTED_SILVER_BIRCH_SAPLING = registerFlowerPot(SILVER_BIRCH_SAPLING);
+        @JvmField
+        val MYSTIC_BUTTON: Supplier<ButtonBlock?> = registerWithItem<ButtonBlock?>(
+            "mystic_button"
+        ) { ButtonBlock(BlockSetType.SPRUCE, 30, normalWoodProps.get()!!.noCollission()) }
 
-    public static final Supplier<Block> GOLDEN_LEAF_LITTER = registerWithItem("golden_leaf_litter",
-            () -> new GoldenLeafLitterBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.PINK_PETALS)));
+        @JvmField
+        val MYSTIC_FENCE: Supplier<FenceBlock?> = registerWithItem<FenceBlock?>(
+            "mystic_fence"
+        ) { FenceBlock(normalWoodProps.get()!!) }
 
-    // desolate ice fields
-    public static final Supplier<Block> SORROW_ICE = registerWithItem("sorrow_ice",
-            () -> new IceBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.ICE)));
-    public static final Supplier<Block> REMNANT_SORROW_ICE = registerWithItem("remnant_sorrow_ice",
-            () -> new HalfTransparentBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.BLUE_ICE)));
+        @JvmField
+        val MYSTIC_FENCE_GATE: Supplier<FenceGateBlock?> = registerWithItem<FenceGateBlock?>(
+            "mystic_fence_gate"
+        ) { FenceGateBlock(WoodType.SPRUCE, normalWoodProps.get()!!) }
 
-    // mixed forest
-    public static final Supplier<Block> PURPLE_MIXED_OAK_LEAVES = registerWithItem("purple_mixed_oak_leaves",
-            () -> new FlammableLeavesBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES)));
+        // TODO fabrec: no occlusion?
+        @JvmField
+        val MYSTIC_DOOR: Supplier<DoorBlock?> = registerWithItem<DoorBlock?>(
+            "mystic_door"
+        ) {
+            doorFromSpruce()
+        }
 
-    public static final Supplier<Block> YELLOW_MIXED_OAK_LEAVES = registerWithItem("yellow_mixed_oak_leaves",
-            () -> new FlammableLeavesBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES)));
+        @JvmField
+        val MYSTIC_TRAPDOOR: Supplier<TrapDoorBlock?> = registerWithItem<TrapDoorBlock?>(
+            "mystic_trapdoor"
+        ) {
+            trapdoorFromSpruce()
+        }
 
-    public static final Supplier<Block> RED_MIXED_OAK_LEAVES = registerWithItem("red_mixed_oak_leaves",
-            () -> new FlammableLeavesBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES)));
+        // sign
+        // hanged sign
+        // boat
+        // chest boat
+        // stubby
+        @JvmField
+        val STUBBY_SAPLING: Supplier<Block?> = registerWithItem<Block?>(
+            "stubby_sapling"
+        ) {
+            SaplingBlock(
+                ModTreeGrowers.STUBBY_GROWER,
+                BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_SAPLING)
+            )
+        }
 
-    public static final Supplier<Block> PURPLE_MIXED_OAK_SAPLING = registerWithItem("purple_mixed_oak_sapling",
-            () -> new SaplingBlock(ModTreeGrowers.PURPLE_MIXED_OAK_GROWER, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_SAPLING)));
-    public static final Supplier<FlowerPotBlock> POTTED_PURPLE_MIXED_OAK_SAPLING = registerFlowerPot(PURPLE_MIXED_OAK_SAPLING);
+        @JvmField
+        val POTTED_STUBBY_SAPLING: Supplier<FlowerPotBlock?> = registerFlowerPot(STUBBY_SAPLING)
 
-    public static final Supplier<Block> RED_MIXED_OAK_SAPLING = registerWithItem("red_mixed_oak_sapling",
-            () -> new SaplingBlock(ModTreeGrowers.RED_MIXED_OAK_GROWER, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_SAPLING)));
-    public static final Supplier<FlowerPotBlock> POTTED_RED_MIXED_OAK_SAPLING = registerFlowerPot(RED_MIXED_OAK_SAPLING);
+        // silver birch
+        @JvmField
+        val SILVERY_SILVER_BIRCH_LEAVES: Supplier<Block?> = registerWithItem<Block?>(
+            "silvery_silver_birch_leaves"
+        ) { SilverBirchLeavesBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_LEAVES)) }
 
-    public static final Supplier<Block> YELLOW_MIXED_OAK_SAPLING = registerWithItem("yellow_mixed_oak_sapling",
-            () -> new SaplingBlock(ModTreeGrowers.YELLOW_MIXED_OAK_GROWER, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_SAPLING)));
-    public static final Supplier<FlowerPotBlock> POTTED_YELLOW_MIXED_OAK_SAPLING = registerFlowerPot(YELLOW_MIXED_OAK_SAPLING);
+        @JvmField
+        val LIGHT_SILVER_BIRCH_LEAVES: Supplier<Block?> = registerWithItem<Block?>(
+            "light_silver_birch_leaves"
+        ) { SilverBirchLeavesBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_LEAVES)) }
 
-    // orderly courts
-    public static final Supplier<Block> TRIMMED_TREE_SAPLING = registerWithItem("trimmed_tree_sapling",
-            () -> new SaplingBlock(ModTreeGrowers.TRIMMED_TREE_GROWER, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_SAPLING)));
-    public static final Supplier<FlowerPotBlock> POTTED_TRIMMED_TREE_SAPLING = registerFlowerPot(TRIMMED_TREE_SAPLING);
+        @JvmField
+        val DARK_SILVER_BIRCH_LEAVES: Supplier<Block?> = registerWithItem<Block?>(
+            "dark_silver_birch_leaves"
+        ) { SilverBirchLeavesBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_LEAVES)) }
 
-    // anthocyanin
-    public static final Supplier<Block> STRIPPED_ANTHOCYANIN_LOG = registerWithItem("stripped_anthocyanin_log",
-            () -> new FlammableRotatedPillarBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STRIPPED_SPRUCE_LOG)));
-    public static final Supplier<RotatedPillarBlock> ANTHOCYANIN_LOG = registerStrippablePillarBlock("anthocyanin_log", STRIPPED_ANTHOCYANIN_LOG, BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_LOG));
-    public static final Supplier<Block> STRIPPED_ANTHOCYANIN_WOOD = registerWithItem("stripped_anthocyanin_wood",
-            () -> new FlammableRotatedPillarBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STRIPPED_SPRUCE_WOOD)));
-    public static final Supplier<RotatedPillarBlock> ANTHOCYANIN_WOOD = registerStrippablePillarBlock("anthocyanin_wood", STRIPPED_ANTHOCYANIN_WOOD, BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_WOOD));
+        @JvmField
+        val SILVER_BIRCH_SAPLING: Supplier<Block?> = registerWithItem<Block?>(
+            "silver_birch_sapling"
+        ) {
+            SaplingBlock(
+                ModTreeGrowers.SILVER_BIRCH_GROWER,
+                BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_SAPLING)
+            )
+        }
 
-    public static final Supplier<Block> ANTHOCYANIN_PLANKS = registerWithItem("anthocyanin_planks",
-            () -> new FlammablePlanksBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_PLANKS)));
+        @JvmField
+        val POTTED_SILVER_BIRCH_SAPLING: Supplier<FlowerPotBlock?> = registerFlowerPot(SILVER_BIRCH_SAPLING)
 
-    public static final Supplier<Block> ANTHOCYANIN_LEAVES = registerWithItem("anthocyanin_leaves",
-            () -> new AnthocyaninLeavesBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_LEAVES)));
-    public static final Supplier<Block> BLOOMING_ANTHOCYANIN_LEAVES = registerWithItem("blooming_anthocyanin_leaves",
-            () -> new AnthocyaninLeavesBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_LEAVES)));
+        @JvmField
+        val GOLDEN_LEAF_LITTER: Supplier<Block?> = registerWithItem<Block?>(
+            "golden_leaf_litter"
+        ) { GoldenLeafLitterBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.PINK_PETALS)) }
 
-    public static final Supplier<Block> ANTHOCYANIN_SAPLING = registerWithItem("anthocyanin_sapling",
-            () -> new SaplingBlock(ModTreeGrowers.ANTHOCYANIN_GROWER, BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_SAPLING)));
-    public static final Supplier<FlowerPotBlock> POTTED_ANTHOCYANIN_SAPLING = registerFlowerPot(ANTHOCYANIN_SAPLING);
+        // desolate ice fields
+        @JvmField
+        val SORROW_ICE: Supplier<Block?> = registerWithItem<Block?>(
+            "sorrow_ice"
+        ) { IceBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.ICE)) }
 
-    // non-full block stuff
-    public static final Supplier<StairBlock> ANTHOCYANIN_STAIRS = registerWithItem("anthocyanin_stairs",
-            () -> new StairBlock(ModBlocks.ANTHOCYANIN_PLANKS.get().defaultBlockState(), normalWoodProps.get()));
-    public static final Supplier<SlabBlock> ANTHOCYANIN_SLAB = registerWithItem("anthocyanin_slab",
-            () -> new SlabBlock(normalWoodProps.get()));
+        @JvmField
+        val REMNANT_SORROW_ICE: Supplier<Block?> = registerWithItem<Block?>(
+            "remnant_sorrow_ice"
+        ) { HalfTransparentBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.BLUE_ICE)) }
 
-    public static final Supplier<PressurePlateBlock> ANTHOCYANIN_PRESSURE_PLATE = registerWithItem("anthocyanin_pressure_plate",
-            () -> new PressurePlateBlock(BlockSetType.SPRUCE, normalWoodProps.get()));
-    public static final Supplier<ButtonBlock> ANTHOCYANIN_BUTTON = registerWithItem("anthocyanin_button",
-            () -> new ButtonBlock(BlockSetType.SPRUCE, 30, normalWoodProps.get().noCollission()));
+        // mixed forest
+        @JvmField
+        val PURPLE_MIXED_OAK_LEAVES: Supplier<Block?> = registerWithItem<Block?>(
+            "purple_mixed_oak_leaves"
+        ) { FlammableLeavesBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES)) }
 
-    public static final Supplier<FenceBlock> ANTHOCYANIN_FENCE = registerWithItem("anthocyanin_fence",
-            () -> new FenceBlock(normalWoodProps.get()));
-    public static final Supplier<FenceGateBlock> ANTHOCYANIN_FENCE_GATE = registerWithItem("anthocyanin_fence_gate",
-            () -> new FenceGateBlock(WoodType.SPRUCE, normalWoodProps.get()));
+        @JvmField
+        val YELLOW_MIXED_OAK_LEAVES: Supplier<Block?> = registerWithItem<Block?>(
+            "yellow_mixed_oak_leaves"
+        ) { FlammableLeavesBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES)) }
 
-    public static final Supplier<DoorBlock> ANTHOCYANIN_DOOR = registerWithItem("anthocyanin_door",
-            () -> new DoorBlock(BlockSetType.SPRUCE, BlockBehaviour.Properties.of().strength(2F).noOcclusion().isValidSpawn(Blocks::never)));
-    public static final Supplier<DoorBlock> ORNAMENTED_ANTHOCYANIN_DOOR = registerWithItem("ornamented_anthocyanin_door",
-            () -> new DoorBlock(BlockSetType.SPRUCE, BlockBehaviour.Properties.of().strength(2F).noOcclusion().isValidSpawn(Blocks::never)));
-    public static final Supplier<TrapDoorBlock> ANTHOCYANIN_TRAPDOOR = registerWithItem("anthocyanin_trapdoor",
-            () -> new TrapDoorBlock(BlockSetType.SPRUCE, normalWoodProps.get().noOcclusion().isValidSpawn(Blocks::never)));
-    public static final Supplier<TrapDoorBlock> ORNAMENTED_ANTHOCYANIN_TRAPDOOR = registerWithItem("ornamented_anthocyanin_trapdoor",
-            () -> new TrapDoorBlock(BlockSetType.SPRUCE, normalWoodProps.get().noOcclusion().isValidSpawn(Blocks::never)));
+        @JvmField
+        val RED_MIXED_OAK_LEAVES: Supplier<Block?> = registerWithItem<Block?>(
+            "red_mixed_oak_leaves"
+        ) { FlammableLeavesBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES)) }
 
-    public static final Supplier<Block> MALACHITE_VIPERS_BUGLOSS = registerWithItem("malachite_vipers_bugloss",
-            () -> new FlowerBlock(MobEffects.POISON, 0.35F, BlockBehaviour.Properties.ofFullCopy(Blocks.POPPY)));
-    public static final Supplier<FlowerPotBlock> POTTED_MALACHITE_VIPERS_BUGLOSS = registerFlowerPot(MALACHITE_VIPERS_BUGLOSS);
+        @JvmField
+        val PURPLE_MIXED_OAK_SAPLING: Supplier<Block?> = registerWithItem<Block?>(
+            "purple_mixed_oak_sapling"
+        ) {
+            SaplingBlock(
+                ModTreeGrowers.PURPLE_MIXED_OAK_GROWER,
+                BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_SAPLING)
+            )
+        }
 
-    // pain
-    public static final Supplier<Block> SPIKY_ARCHES = registerWithItem("spiky_arches",
-            () -> new SpikyArchesBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SWEET_BERRY_BUSH).forceSolidOn().strength(4.0F)));
+        @JvmField
+        val POTTED_PURPLE_MIXED_OAK_SAPLING: Supplier<FlowerPotBlock?> = registerFlowerPot(PURPLE_MIXED_OAK_SAPLING)
+
+        @JvmField
+        val RED_MIXED_OAK_SAPLING: Supplier<Block?> = registerWithItem<Block?>(
+            "red_mixed_oak_sapling"
+        ) {
+            SaplingBlock(
+                ModTreeGrowers.RED_MIXED_OAK_GROWER,
+                BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_SAPLING)
+            )
+        }
+
+        @JvmField
+        val POTTED_RED_MIXED_OAK_SAPLING: Supplier<FlowerPotBlock?> = registerFlowerPot(RED_MIXED_OAK_SAPLING)
+
+        @JvmField
+        val YELLOW_MIXED_OAK_SAPLING: Supplier<Block?> = registerWithItem<Block?>(
+            "yellow_mixed_oak_sapling"
+        ) {
+            SaplingBlock(
+                ModTreeGrowers.YELLOW_MIXED_OAK_GROWER,
+                BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_SAPLING)
+            )
+        }
+
+        @JvmField
+        val POTTED_YELLOW_MIXED_OAK_SAPLING: Supplier<FlowerPotBlock?> = registerFlowerPot(YELLOW_MIXED_OAK_SAPLING)
+
+        // orderly courts
+        @JvmField
+        val TRIMMED_TREE_SAPLING: Supplier<Block?> = registerWithItem<Block?>(
+            "trimmed_tree_sapling"
+        ) {
+            SaplingBlock(
+                ModTreeGrowers.TRIMMED_TREE_GROWER,
+                BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_SAPLING)
+            )
+        }
+
+        @JvmField
+        val POTTED_TRIMMED_TREE_SAPLING: Supplier<FlowerPotBlock?> = registerFlowerPot(TRIMMED_TREE_SAPLING)
+
+        // anthocyanin
+        @JvmField
+        val STRIPPED_ANTHOCYANIN_LOG: Supplier<Block?> = registerWithItem<Block?>(
+            "stripped_anthocyanin_log"
+        ) { FlammableRotatedPillarBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STRIPPED_SPRUCE_LOG)) }
+
+        @JvmField
+        val ANTHOCYANIN_LOG: Supplier<RotatedPillarBlock?> = registerStrippablePillarBlock(
+            "anthocyanin_log", STRIPPED_ANTHOCYANIN_LOG, BlockBehaviour.Properties.ofFullCopy(
+                Blocks.SPRUCE_LOG
+            )
+        )
+
+        @JvmField
+        val STRIPPED_ANTHOCYANIN_WOOD: Supplier<Block?> = registerWithItem<Block?>(
+            "stripped_anthocyanin_wood"
+        ) { FlammableRotatedPillarBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STRIPPED_SPRUCE_WOOD)) }
+
+        @JvmField
+        val ANTHOCYANIN_WOOD: Supplier<RotatedPillarBlock?> = registerStrippablePillarBlock(
+            "anthocyanin_wood", STRIPPED_ANTHOCYANIN_WOOD, BlockBehaviour.Properties.ofFullCopy(
+                Blocks.SPRUCE_WOOD
+            )
+        )
+
+        @JvmField
+        val ANTHOCYANIN_PLANKS: Supplier<Block?> = registerWithItem<Block?>(
+            "anthocyanin_planks"
+        ) { FlammablePlanksBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_PLANKS)) }
+
+        @JvmField
+        val ANTHOCYANIN_LEAVES: Supplier<Block?> = registerWithItem<Block?>(
+            "anthocyanin_leaves"
+        ) { AnthocyaninLeavesBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_LEAVES)) }
+
+        @JvmField
+        val BLOOMING_ANTHOCYANIN_LEAVES: Supplier<Block?> = registerWithItem<Block?>(
+            "blooming_anthocyanin_leaves"
+        ) { AnthocyaninLeavesBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_LEAVES)) }
+
+        @JvmField
+        val ANTHOCYANIN_SAPLING: Supplier<Block?> = registerWithItem<Block?>(
+            "anthocyanin_sapling"
+        ) {
+            SaplingBlock(
+                ModTreeGrowers.ANTHOCYANIN_GROWER,
+                BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_SAPLING)
+            )
+        }
+
+        @JvmField
+        val POTTED_ANTHOCYANIN_SAPLING: Supplier<FlowerPotBlock?> = registerFlowerPot(ANTHOCYANIN_SAPLING)
+
+        // non-full block stuff
+        @JvmField
+        val ANTHOCYANIN_STAIRS: Supplier<StairBlock?> = registerWithItem<StairBlock?>(
+            "anthocyanin_stairs"
+        ) { StairBlock(ANTHOCYANIN_PLANKS.get()!!.defaultBlockState(), normalWoodProps.get()!!) }
+
+        @JvmField
+        val ANTHOCYANIN_SLAB: Supplier<SlabBlock?> = registerWithItem<SlabBlock?>(
+            "anthocyanin_slab"
+        ) { SlabBlock(normalWoodProps.get()!!) }
+
+        @JvmField
+        val ANTHOCYANIN_PRESSURE_PLATE: Supplier<PressurePlateBlock?> = registerWithItem<PressurePlateBlock?>(
+            "anthocyanin_pressure_plate"
+        ) { PressurePlateBlock(BlockSetType.SPRUCE, normalWoodProps.get()!!) }
+
+        @JvmField
+        val ANTHOCYANIN_BUTTON: Supplier<ButtonBlock?> = registerWithItem<ButtonBlock?>(
+            "anthocyanin_button"
+        ) { ButtonBlock(BlockSetType.SPRUCE, 30, normalWoodProps.get()!!.noCollission()) }
+
+        @JvmField
+        val ANTHOCYANIN_FENCE: Supplier<FenceBlock?> = registerWithItem<FenceBlock?>(
+            "anthocyanin_fence"
+        ) { FenceBlock(normalWoodProps.get()!!) }
+
+        @JvmField
+        val ANTHOCYANIN_FENCE_GATE: Supplier<FenceGateBlock?> = registerWithItem<FenceGateBlock?>(
+            "anthocyanin_fence_gate"
+        ) { FenceGateBlock(WoodType.SPRUCE, normalWoodProps.get()!!) }
+
+        @JvmField
+        val ANTHOCYANIN_DOOR: Supplier<DoorBlock?> = registerWithItem<DoorBlock?>(
+            "anthocyanin_door"
+        ) {
+            doorFromSpruce()
+        }
+
+        @JvmField
+        val ORNAMENTED_ANTHOCYANIN_DOOR: Supplier<DoorBlock?> = registerWithItem<DoorBlock?>(
+            "ornamented_anthocyanin_door"
+        ) {
+            doorFromSpruce()
+        }
+
+        @JvmField
+        val ANTHOCYANIN_TRAPDOOR: Supplier<TrapDoorBlock?> = registerWithItem<TrapDoorBlock?>(
+            "anthocyanin_trapdoor"
+        ) {
+            trapdoorFromSpruce()
+        }
+
+        @JvmField
+        val ORNAMENTED_ANTHOCYANIN_TRAPDOOR: Supplier<TrapDoorBlock?> = registerWithItem<TrapDoorBlock?>(
+            "ornamented_anthocyanin_trapdoor"
+        ) {
+            trapdoorFromSpruce()
+        }
+
+        @JvmField
+        val MALACHITE_VIPERS_BUGLOSS: Supplier<Block?> = registerWithItem<Block?>(
+            "malachite_vipers_bugloss"
+        ) { FlowerBlock(MobEffects.POISON, 0.35f, BlockBehaviour.Properties.ofFullCopy(Blocks.POPPY)) }
+
+        @JvmField
+        val POTTED_MALACHITE_VIPERS_BUGLOSS: Supplier<FlowerPotBlock?> = registerFlowerPot(MALACHITE_VIPERS_BUGLOSS)
+
+        // pain
+        @JvmField
+        val SPIKY_ARCHES: Supplier<Block?> = registerWithItem<Block?>(
+            "spiky_arches"
+        ) {
+            SpikyArchesBlock(
+                BlockBehaviour.Properties.ofFullCopy(Blocks.SWEET_BERRY_BUSH).forceSolidOn().strength(4.0f)
+            )
+        }
 
 
-    // thrumletons
-    public static final Supplier<Block> THICK_PUMPKIN = registerWithItem("thick_pumpkin",
-            () -> new ThickPumpkinBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.PUMPKIN)));
+        // thrumletons
+        @JvmField
+        val THICK_PUMPKIN: Supplier<Block?> = registerWithItem<Block?>(
+            "thick_pumpkin"
+        ) { ThickPumpkinBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.PUMPKIN)) }
 
-    // speary
-    public static final Supplier<Block> SPEARY_SAPLING = registerWithItem("speary_sapling",
-            () -> new SaplingBlock(ModTreeGrowers.SPEARY_GROWER, BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_SAPLING)));
-    public static final Supplier<FlowerPotBlock> POTTED_SPEARY_SAPLING = registerFlowerPot(SPEARY_SAPLING);
+        // speary
+        @JvmField
+        val SPEARY_SAPLING: Supplier<Block?> = registerWithItem<Block?>(
+            "speary_sapling"
+        ) {
+            SaplingBlock(
+                ModTreeGrowers.SPEARY_GROWER,
+                BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_SAPLING)
+            )
+        }
 
-    // pastel
-public static final Supplier<Block> STRIPPED_WISTERIA_LOG = registerWithItem("stripped_wisteria_log",
-            () -> new FlammableRotatedPillarBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STRIPPED_SPRUCE_LOG)));
-    public static final Supplier<Block> STRIPPED_WISTERIA_WOOD = registerWithItem("stripped_wisteria_wood",
-            () -> new FlammableRotatedPillarBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STRIPPED_SPRUCE_WOOD)));
-    public static final Supplier<RotatedPillarBlock> JUICY_WISTERIA_LOG = registerStrippablePillarBlock("juicy_wisteria_log", STRIPPED_WISTERIA_LOG, BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_LOG));
-    public static final Supplier<RotatedPillarBlock> WISTERIA_LOG = registerStrippablePillarBlock("wisteria_log", STRIPPED_WISTERIA_LOG, BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_LOG));
-    public static final Supplier<RotatedPillarBlock> WISTERIA_WOOD = registerStrippablePillarBlock("wisteria_wood", STRIPPED_WISTERIA_WOOD, BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_WOOD));
+        @JvmField
+        val POTTED_SPEARY_SAPLING: Supplier<FlowerPotBlock?> = registerFlowerPot(SPEARY_SAPLING)
 
-    public static final Supplier<Block> WISTERIA_PLANKS = registerWithItem("wisteria_planks",
-            () -> new FlammablePlanksBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_PLANKS)));
+        // pastel
+        @JvmField
+        val STRIPPED_WISTERIA_LOG: Supplier<Block?> = registerWithItem<Block?>(
+            "stripped_wisteria_log"
+        ) { FlammableRotatedPillarBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STRIPPED_SPRUCE_LOG)) }
 
-    public static final Supplier<Block> WISTERIA_LEAVES = registerWithItem("wisteria_leaves",
-            () -> new WisteriaLeavesBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_LEAVES)));
+        @JvmField
+        val STRIPPED_WISTERIA_WOOD: Supplier<Block?> = registerWithItem<Block?>(
+            "stripped_wisteria_wood"
+        ) { FlammableRotatedPillarBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STRIPPED_SPRUCE_WOOD)) }
 
-    public static final Supplier<Block> WISTERIA_SAPLING = registerWithItem("wisteria_sapling",
-            () -> new SaplingBlock(ModTreeGrowers.WISTERIA_GROWER, BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_SAPLING)));
-    public static final Supplier<FlowerPotBlock> POTTED_WISTERIA_SAPLING = registerFlowerPot(WISTERIA_SAPLING);
+        @JvmField
+        val JUICY_WISTERIA_LOG: Supplier<RotatedPillarBlock?> = registerStrippablePillarBlock(
+            "juicy_wisteria_log", STRIPPED_WISTERIA_LOG, BlockBehaviour.Properties.ofFullCopy(
+                Blocks.SPRUCE_LOG
+            )
+        )
 
-    // non-full block stuff
-    public static final Supplier<StairBlock> WISTERIA_STAIRS = registerWithItem("wisteria_stairs",
-            () -> new StairBlock(ModBlocks.WISTERIA_PLANKS.get().defaultBlockState(), normalWoodProps.get()));
-    public static final Supplier<SlabBlock> WISTERIA_SLAB = registerWithItem("wisteria_slab",
-            () -> new SlabBlock(normalWoodProps.get()));
+        @JvmField
+        val WISTERIA_LOG: Supplier<RotatedPillarBlock?> = registerStrippablePillarBlock(
+            "wisteria_log", STRIPPED_WISTERIA_LOG, BlockBehaviour.Properties.ofFullCopy(
+                Blocks.SPRUCE_LOG
+            )
+        )
 
-    public static final Supplier<PressurePlateBlock> WISTERIA_PRESSURE_PLATE = registerWithItem("wisteria_pressure_plate",
-            () -> new PressurePlateBlock(BlockSetType.SPRUCE, normalWoodProps.get()));
-    public static final Supplier<ButtonBlock> WISTERIA_BUTTON = registerWithItem("wisteria_button",
-            () -> new ButtonBlock(BlockSetType.SPRUCE, 30, normalWoodProps.get().noCollission()));
+        @JvmField
+        val WISTERIA_WOOD: Supplier<RotatedPillarBlock?> = registerStrippablePillarBlock(
+            "wisteria_wood", STRIPPED_WISTERIA_WOOD, BlockBehaviour.Properties.ofFullCopy(
+                Blocks.SPRUCE_WOOD
+            )
+        )
 
-    public static final Supplier<FenceBlock> WISTERIA_FENCE = registerWithItem("wisteria_fence",
-            () -> new FenceBlock(normalWoodProps.get()));
-    public static final Supplier<FenceGateBlock> WISTERIA_FENCE_GATE = registerWithItem("wisteria_fence_gate",
-            () -> new FenceGateBlock(WoodType.SPRUCE, normalWoodProps.get()));
+        @JvmField
+        val WISTERIA_PLANKS: Supplier<Block?> = registerWithItem<Block?>(
+            "wisteria_planks"
+        ) { FlammablePlanksBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_PLANKS)) }
 
-    public static final Supplier<DoorBlock> WISTERIA_DOOR = registerWithItem("wisteria_door",
-            () -> new DoorBlock(BlockSetType.SPRUCE, BlockBehaviour.Properties.of().strength(2F).noOcclusion().isValidSpawn(Blocks::never)));
-    public static final Supplier<TrapDoorBlock> WISTERIA_TRAPDOOR = registerWithItem("wisteria_trapdoor",
-            () -> new TrapDoorBlock(BlockSetType.SPRUCE, normalWoodProps.get().noOcclusion().isValidSpawn(Blocks::never)));
+        @JvmField
+        val WISTERIA_LEAVES: Supplier<Block?> = registerWithItem<Block?>(
+            "wisteria_leaves"
+        ) { WisteriaLeavesBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_LEAVES)) }
 
-    public static final Supplier<Block> PHLOX = registerWithItem("phlox",
-            () -> new PinkPetalsBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.PINK_PETALS)));
+        @JvmField
+        val WISTERIA_SAPLING: Supplier<Block?> = registerWithItem<Block?>(
+            "wisteria_sapling"
+        ) {
+            SaplingBlock(
+                ModTreeGrowers.WISTERIA_GROWER,
+                BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_SAPLING)
+            )
+        }
 
-    // mush
-    public static final Supplier<Block> REEDS = registerWithItem("reeds",
-            () -> new ReedsBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.ROSE_BUSH)));
+        @JvmField
+        val POTTED_WISTERIA_SAPLING: Supplier<FlowerPotBlock?> = registerFlowerPot(WISTERIA_SAPLING)
 
-    public static final Supplier<Block> RED_MINI_SHROOM_SPORELING = registerWithItem("red_mini_shroom_sporeling",
-            () -> new SaplingBlock(ModTreeGrowers.RED_MINI_SHROOM_GROWER,
-                    BlockBehaviour.Properties.of()
-                            .mapColor(MapColor.PLANT)
-                            .noCollission()
-                            .randomTicks()
-                            .instabreak()
-                            .sound(SoundType.MUD)
-                            .pushReaction(PushReaction.DESTROY)));
-    public static final Supplier<FlowerPotBlock> POTTED_RED_MINI_SHROOM_SPORELING = registerFlowerPot(RED_MINI_SHROOM_SPORELING);
+        // non-full block stuff
+        @JvmField
+        val WISTERIA_STAIRS: Supplier<StairBlock?> = registerWithItem<StairBlock?>(
+            "wisteria_stairs"
+        ) { StairBlock(WISTERIA_PLANKS.get()!!.defaultBlockState(), normalWoodProps.get()!!) }
 
-    public static final Supplier<Block> BROWN_MINI_SHROOM_SPORELING = registerWithItem("brown_mini_shroom_sporeling",
-            () -> new SaplingBlock(ModTreeGrowers.BROWN_MINI_SHROOM_GROWER,
-                    BlockBehaviour.Properties.of()
-                            .mapColor(MapColor.PLANT)
-                            .noCollission()
-                            .randomTicks()
-                            .instabreak()
-                            .sound(SoundType.MUD)
-                            .pushReaction(PushReaction.DESTROY)));
-    public static final Supplier<FlowerPotBlock> POTTED_BROWN_MINI_SHROOM_SPORELING = registerFlowerPot(BROWN_MINI_SHROOM_SPORELING);
+        @JvmField
+        val WISTERIA_SLAB: Supplier<SlabBlock?> = registerWithItem<SlabBlock?>(
+            "wisteria_slab"
+        ) { SlabBlock(normalWoodProps.get()!!) }
 
-    // witchy
-    public static final Supplier<Block> WITCHY_SAPLING = registerWithItem("witchy_sapling",
-            () -> new SaplingBlock(ModTreeGrowers.WITCHY_GROWER, BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_SAPLING)));
-    public static final Supplier<FlowerPotBlock> POTTED_WITCHY_SAPLING = registerFlowerPot(WITCHY_SAPLING);
+        @JvmField
+        val WISTERIA_PRESSURE_PLATE: Supplier<PressurePlateBlock?> = registerWithItem<PressurePlateBlock?>(
+            "wisteria_pressure_plate"
+        ) { PressurePlateBlock(BlockSetType.SPRUCE, normalWoodProps.get()!!) }
 
-    // lupine
-    public static final Supplier<Block> LUPINE = registerWithItem("lupine",
-            () -> new FlowerBlockNonShifting(MobEffects.POISON, 0.35F, BlockBehaviour.Properties.of()
+        @JvmField
+        val WISTERIA_BUTTON: Supplier<ButtonBlock?> = registerWithItem<ButtonBlock?>(
+            "wisteria_button"
+        ) { ButtonBlock(BlockSetType.SPRUCE, 30, normalWoodProps.get()!!.noCollission()) }
+
+        @JvmField
+        val WISTERIA_FENCE: Supplier<FenceBlock?> = registerWithItem<FenceBlock?>(
+            "wisteria_fence"
+        ) { FenceBlock(normalWoodProps.get()!!) }
+
+        @JvmField
+        val WISTERIA_FENCE_GATE: Supplier<FenceGateBlock?> = registerWithItem<FenceGateBlock?>(
+            "wisteria_fence_gate"
+        ) { FenceGateBlock(WoodType.SPRUCE, normalWoodProps.get()!!) }
+
+        @JvmField
+        val WISTERIA_DOOR: Supplier<DoorBlock?> = registerWithItem<DoorBlock?>(
+            "wisteria_door"
+        ) { doorFromSpruce() }
+
+        @JvmField
+        val WISTERIA_TRAPDOOR: Supplier<TrapDoorBlock?> = registerWithItem<TrapDoorBlock?>(
+            "wisteria_trapdoor"
+        ) {
+            trapdoorFromSpruce()
+        }
+
+        @JvmField
+        val PHLOX: Supplier<Block?> = registerWithItem<Block?>(
+            "phlox"
+        ) { PinkPetalsBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.PINK_PETALS)) }
+
+        // mush
+        @JvmField
+        val REEDS: Supplier<Block?> = registerWithItem<Block?>(
+            "reeds"
+        ) { ReedsBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.ROSE_BUSH)) }
+
+        @JvmField
+        val RED_MINI_SHROOM_SPORELING: Supplier<Block?> = registerWithItem<Block?>(
+            "red_mini_shroom_sporeling"
+        ) {
+            SaplingBlock(
+                ModTreeGrowers.RED_MINI_SHROOM_GROWER,
+                BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.PLANT)
+                    .noCollission()
+                    .randomTicks()
+                    .instabreak()
+                    .sound(SoundType.MUD)
+                    .pushReaction(PushReaction.DESTROY)
+            )
+        }
+
+        @JvmField
+        val POTTED_RED_MINI_SHROOM_SPORELING: Supplier<FlowerPotBlock?> = registerFlowerPot(RED_MINI_SHROOM_SPORELING)
+
+        @JvmField
+        val BROWN_MINI_SHROOM_SPORELING: Supplier<Block?> = registerWithItem<Block?>(
+            "brown_mini_shroom_sporeling"
+        ) {
+            SaplingBlock(
+                ModTreeGrowers.BROWN_MINI_SHROOM_GROWER,
+                BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.PLANT)
+                    .noCollission()
+                    .randomTicks()
+                    .instabreak()
+                    .sound(SoundType.MUD)
+                    .pushReaction(PushReaction.DESTROY)
+            )
+        }
+
+        @JvmField
+        val POTTED_BROWN_MINI_SHROOM_SPORELING: Supplier<FlowerPotBlock?> =
+            registerFlowerPot(BROWN_MINI_SHROOM_SPORELING)
+
+        // witchy
+        @JvmField
+        val WITCHY_SAPLING: Supplier<Block?> = registerWithItem<Block?>(
+            "witchy_sapling"
+        ) {
+            SaplingBlock(
+                ModTreeGrowers.WITCHY_GROWER,
+                BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_SAPLING)
+            )
+        }
+
+        @JvmField
+        val POTTED_WITCHY_SAPLING: Supplier<FlowerPotBlock?> = registerFlowerPot(WITCHY_SAPLING)
+
+        // lupine
+        @JvmField
+        val LUPINE: Supplier<Block?> = registerWithItem<Block?>(
+            "lupine"
+        ) {
+            FlowerBlockNonShifting(
+                MobEffects.POISON, 0.35f, BlockBehaviour.Properties.of()
                     .mapColor(MapColor.PLANT)
                     .noCollission()
                     .instabreak()
                     .sound(SoundType.GRASS)
                     .offsetType(BlockBehaviour.OffsetType.NONE)
-                    .pushReaction(PushReaction.DESTROY)));
-    public static final Supplier<FlowerPotBlock> POTTED_LUPINE = registerFlowerPot(LUPINE);
+                    .pushReaction(PushReaction.DESTROY)
+            )
+        }
 
-    // alpine
-    public static final Supplier<Block> ALPINE_SPRUCE_SAPLING = registerWithItem("alpine_spruce_sapling",
-            () -> new SaplingBlock(ModTreeGrowers.ALPINE_SPRUCE_GROWER, BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_SAPLING)));
-    public static final Supplier<FlowerPotBlock> POTTED_ALPINE_SPRUCE_SAPLING = registerFlowerPot(ALPINE_SPRUCE_SAPLING);
+        @JvmField
+        val POTTED_LUPINE: Supplier<FlowerPotBlock?> = registerFlowerPot(LUPINE)
 
-    // ashen
-    public static final Supplier<Block> VOLCANIC_ASH = registerWithItem("volcanic_ash",
-            () -> new ColoredFallingBlock(
-                    new ColorRGBA(2170911),
-                    BlockBehaviour.Properties.ofFullCopy(Blocks.SAND)));
+        // alpine
+        @JvmField
+        val ALPINE_SPRUCE_SAPLING: Supplier<Block?> = registerWithItem<Block?>(
+            "alpine_spruce_sapling"
+        ) {
+            SaplingBlock(
+                ModTreeGrowers.ALPINE_SPRUCE_GROWER,
+                BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_SAPLING)
+            )
+        }
 
-    // satis
-    public static final Supplier<Block> STRIPPED_SATISTREE_LOG = registerWithItem("stripped_satistree_log",
-            () -> new FlammableRotatedPillarBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STRIPPED_SPRUCE_LOG)));
-    public static final Supplier<RotatedPillarBlock> SATISTREE_LOG = registerStrippablePillarBlock("satistree_log",
-            STRIPPED_SATISTREE_LOG, BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_LOG));
-    public static final Supplier<Block> SATISTREE_WOOD = registerWithItem("satistree_wood",
-            () -> new FlammableRotatedPillarBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_WOOD)));
-    public static final Supplier<Block> STRIPPED_SATISTREE_WOOD = registerWithItem("stripped_satistree_wood",
-            () -> new FlammableRotatedPillarBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STRIPPED_SPRUCE_WOOD)));
+        @JvmField
+        val POTTED_ALPINE_SPRUCE_SAPLING: Supplier<FlowerPotBlock?> = registerFlowerPot(ALPINE_SPRUCE_SAPLING)
 
-    public static final Supplier<Block> SATISTREE_PLANKS = registerWithItem("satistree_planks",
-            () -> new FlammablePlanksBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_PLANKS)));
+        // ashen
+        @JvmField
+        val VOLCANIC_ASH: Supplier<Block?> = registerWithItem<Block?>(
+            "volcanic_ash"
+        ) {
+            ColoredFallingBlock(
+                ColorRGBA(2170911),
+                BlockBehaviour.Properties.ofFullCopy(Blocks.SAND)
+            )
+        }
 
-    public static final Supplier<Block> ALIEN_LEAVES = registerWithItem("alien_leaves",
-            () -> new AlienLeavesBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_LEAVES)));
+        // satis
+        @JvmField
+        val STRIPPED_SATISTREE_LOG: Supplier<Block?> = registerWithItem<Block?>(
+            "stripped_satistree_log"
+        ) { FlammableRotatedPillarBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STRIPPED_SPRUCE_LOG)) }
 
-    public static final Supplier<Block> SATISTREE_SAPLING = registerWithItem("satistree_sapling",
-            () -> new SaplingBlock(ModTreeGrowers.SATISTREE_GROWER, BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_SAPLING)));
-    public static final Supplier<FlowerPotBlock> POTTED_SATISTREE_SAPLING = registerFlowerPot(SATISTREE_SAPLING);
-    public static final Supplier<Block> GIGANTIC_SATISTREE_SPROUTS = registerWithItem("gigantic_satistree_sprouts",
-            () -> new SaplingBlock(ModTreeGrowers.GIGANTIC_SATISTREE_GROWER, BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_SAPLING)));
+        @JvmField
+        val SATISTREE_LOG: Supplier<RotatedPillarBlock?> = registerStrippablePillarBlock(
+            "satistree_log",
+            STRIPPED_SATISTREE_LOG, BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_LOG)
+        )
 
-    // non-full block stuff
-    public static final Supplier<StairBlock> SATISTREE_STAIRS = registerWithItem("satistree_stairs",
-            () -> new StairBlock(ModBlocks.SATISTREE_PLANKS.get().defaultBlockState(), normalWoodProps.get()));
-    public static final Supplier<SlabBlock> SATISTREE_SLAB = registerWithItem("satistree_slab",
-            () -> new SlabBlock(normalWoodProps.get()));
+        @JvmField
+        val SATISTREE_WOOD: Supplier<Block?> = registerWithItem<Block?>(
+            "satistree_wood"
+        ) { FlammableRotatedPillarBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_WOOD)) }
 
-    public static final Supplier<PressurePlateBlock> SATISTREE_PRESSURE_PLATE = registerWithItem("satistree_pressure_plate",
-            () -> new PressurePlateBlock(BlockSetType.SPRUCE, normalWoodProps.get()));
-    public static final Supplier<ButtonBlock> SATISTREE_BUTTON = registerWithItem("satistree_button",
-            () -> new ButtonBlock(BlockSetType.SPRUCE, 30, normalWoodProps.get().noCollission()));
+        @JvmField
+        val STRIPPED_SATISTREE_WOOD: Supplier<Block?> = registerWithItem<Block?>(
+            "stripped_satistree_wood"
+        ) { FlammableRotatedPillarBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STRIPPED_SPRUCE_WOOD)) }
 
-    public static final Supplier<FenceBlock> SATISTREE_FENCE = registerWithItem("satistree_fence",
-            () -> new FenceBlock(normalWoodProps.get()));
-    public static final Supplier<FenceGateBlock> SATISTREE_FENCE_GATE = registerWithItem("satistree_fence_gate",
-            () -> new FenceGateBlock(WoodType.SPRUCE, normalWoodProps.get()));
+        @JvmField
+        val SATISTREE_PLANKS: Supplier<Block?> = registerWithItem<Block?>(
+            "satistree_planks"
+        ) { FlammablePlanksBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_PLANKS)) }
 
-    public static final Supplier<DoorBlock> SATISTREE_DOOR = registerWithItem("satistree_door",
-            () -> new DoorBlock(BlockSetType.SPRUCE, BlockBehaviour.Properties.of().strength(2F).noOcclusion().isValidSpawn(Blocks::never)));
-    public static final Supplier<TrapDoorBlock> SATISTREE_TRAPDOOR = registerWithItem("satistree_trapdoor",
-            () -> new TrapDoorBlock(BlockSetType.SPRUCE, normalWoodProps.get().noOcclusion().isValidSpawn(Blocks::never)));
+        @JvmField
+        val ALIEN_LEAVES: Supplier<Block?> = registerWithItem<Block?>(
+            "alien_leaves"
+        ) { AlienLeavesBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_LEAVES)) }
 
-    public static final Supplier<Block> ALIEN_PHYLLOSTACHYS_SAPLING = registerWithItem("alien_phyllostachys_sapling",
-            () -> new AlienPhyllostachysSaplingBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.BAMBOO_SAPLING)));
-    public static final Supplier<Block> ALIEN_PHYLLOSTACHYS = registerWithItem("alien_phyllostachys",
-            () -> new AlienPhyllostachysStalkBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.BAMBOO)));
-    public static final Supplier<FlowerPotBlock> POTTED_ALIEN_PHYLLOSTACHYS = registerFlowerPot(ALIEN_PHYLLOSTACHYS);
-    public static final Supplier<Block> ALIEN_FENCE_PLANKS = registerWithItem("alien_fence_planks",
-            () -> new FlammablePlanksBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_PLANKS)));
-    // chewy on the inside!
-    public static final Supplier<FenceBlock> ALIEN_FENCE_PLANT = registerWithItem("alien_fence_plant",
-            () -> new FenceBlock(BlockBehaviour.Properties.of()
+        @JvmField
+        val SATISTREE_SAPLING: Supplier<Block?> = registerWithItem<Block?>(
+            "satistree_sapling"
+        ) {
+            SaplingBlock(
+                ModTreeGrowers.SATISTREE_GROWER,
+                BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_SAPLING)
+            )
+        }
+
+        @JvmField
+        val POTTED_SATISTREE_SAPLING: Supplier<FlowerPotBlock?> = registerFlowerPot(SATISTREE_SAPLING)
+
+        @JvmField
+        val GIGANTIC_SATISTREE_SPROUTS: Supplier<Block?> = registerWithItem<Block?>(
+            "gigantic_satistree_sprouts"
+        ) {
+            SaplingBlock(
+                ModTreeGrowers.GIGANTIC_SATISTREE_GROWER,
+                BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_SAPLING)
+            )
+        }
+
+        // non-full block stuff
+        @JvmField
+        val SATISTREE_STAIRS: Supplier<StairBlock?> = registerWithItem<StairBlock?>(
+            "satistree_stairs"
+        ) { StairBlock(SATISTREE_PLANKS.get()!!.defaultBlockState(), normalWoodProps.get()!!) }
+
+        @JvmField
+        val SATISTREE_SLAB: Supplier<SlabBlock?> = registerWithItem<SlabBlock?>(
+            "satistree_slab"
+        ) { SlabBlock(normalWoodProps.get()!!) }
+
+        @JvmField
+        val SATISTREE_PRESSURE_PLATE: Supplier<PressurePlateBlock?> = registerWithItem<PressurePlateBlock?>(
+            "satistree_pressure_plate"
+        ) { PressurePlateBlock(BlockSetType.SPRUCE, normalWoodProps.get()!!) }
+
+        @JvmField
+        val SATISTREE_BUTTON: Supplier<ButtonBlock?> = registerWithItem<ButtonBlock?>(
+            "satistree_button"
+        ) { ButtonBlock(BlockSetType.SPRUCE, 30, normalWoodProps.get()!!.noCollission()) }
+
+        @JvmField
+        val SATISTREE_FENCE: Supplier<FenceBlock?> = registerWithItem<FenceBlock?>(
+            "satistree_fence"
+        ) { FenceBlock(normalWoodProps.get()!!) }
+
+        @JvmField
+        val SATISTREE_FENCE_GATE: Supplier<FenceGateBlock?> = registerWithItem<FenceGateBlock?>(
+            "satistree_fence_gate"
+        ) { FenceGateBlock(WoodType.SPRUCE, normalWoodProps.get()!!) }
+
+        @JvmField
+        val SATISTREE_DOOR: Supplier<DoorBlock?> = registerWithItem<DoorBlock?>(
+            "satistree_door"
+        ) {
+            doorFromSpruce()
+        }
+
+        @JvmField
+        val SATISTREE_TRAPDOOR: Supplier<TrapDoorBlock?> = registerWithItem<TrapDoorBlock?>(
+            "satistree_trapdoor"
+        ) {
+            trapdoorFromSpruce()
+        }
+
+        @JvmField
+        val ALIEN_PHYLLOSTACHYS_SAPLING: Supplier<Block?> = registerWithItem<Block?>(
+            "alien_phyllostachys_sapling"
+        ) { AlienPhyllostachysSaplingBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.BAMBOO_SAPLING)) }
+
+        @JvmField
+        val ALIEN_PHYLLOSTACHYS: Supplier<Block?> = registerWithItem<Block?>(
+            "alien_phyllostachys"
+        ) { AlienPhyllostachysStalkBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.BAMBOO)) }
+
+        @JvmField
+        val POTTED_ALIEN_PHYLLOSTACHYS: Supplier<FlowerPotBlock?> = registerFlowerPot(ALIEN_PHYLLOSTACHYS)
+
+        @JvmField
+        val ALIEN_FENCE_PLANKS: Supplier<Block?> = registerWithItem<Block?>(
+            "alien_fence_planks"
+        ) { FlammablePlanksBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_PLANKS)) }
+
+        // chewy on the inside!
+        @JvmField
+        val ALIEN_FENCE_PLANT: Supplier<FenceBlock?> = registerWithItem<FenceBlock?>(
+            "alien_fence_plant"
+        ) {
+            FenceBlock(
+                BlockBehaviour.Properties.of()
                     .mapColor(MapColor.WOOD)
                     .instrument(NoteBlockInstrument.BANJO)
-                    .strength(2.0F, 3.0F)
+                    .strength(2.0f, 3.0f)
                     .sound(SoundType.WET_GRASS)
-                    .ignitedByLava()));
+                    .ignitedByLava()
+            )
+        }
 
-    public static final Supplier<Block> ALIEN_FENCE_PLANT_SAPLING = registerWithItem("alien_fence_plant_sapling",
-            () -> new SaplingBlock(ModTreeGrowers.ALIEN_FENCE_PLANT_GROWER,
-                    BlockBehaviour.Properties.of()
-                            .mapColor(MapColor.PLANT)
-                            .noCollission()
-                            .randomTicks()
-                            .instabreak()
-                            .sound(SoundType.WET_GRASS)
-                            .pushReaction(PushReaction.DESTROY)));
-    public static final Supplier<FlowerPotBlock> POTTED_ALIEN_FENCE_PLANT_SAPLING = registerFlowerPot(ALIEN_FENCE_PLANT_SAPLING);
+        @JvmField
+        val ALIEN_FENCE_PLANT_SAPLING: Supplier<Block?> = registerWithItem<Block?>(
+            "alien_fence_plant_sapling"
+        ) {
+            SaplingBlock(
+                ModTreeGrowers.ALIEN_FENCE_PLANT_GROWER,
+                BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.PLANT)
+                    .noCollission()
+                    .randomTicks()
+                    .instabreak()
+                    .sound(SoundType.WET_GRASS)
+                    .pushReaction(PushReaction.DESTROY)
+            )
+        }
 
-    // shrub
-    public static final Supplier<Block> SHRUB_SAPLING = registerWithItem("shrub_sapling",
-            () -> new SaplingBlock(ModTreeGrowers.SHRUB_GROWER, BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_SAPLING)));
-    public static final Supplier<FlowerPotBlock> POTTED_SHRUB_SAPLING = registerFlowerPot(SHRUB_SAPLING);
+        @JvmField
+        val POTTED_ALIEN_FENCE_PLANT_SAPLING: Supplier<FlowerPotBlock?> = registerFlowerPot(ALIEN_FENCE_PLANT_SAPLING)
 
-    private static Supplier<RotatedPillarBlock> registerStrippablePillarBlock(String name, Supplier<Block> stripped, BlockBehaviour.Properties props) {
-        Supplier<RotatedPillarBlock> memoized = Suppliers.memoize(Services.PLATFORM.createLoaderStrippableLog(props));
-        MOD_STRIPPABLES.put(memoized, stripped);
-        registerWithItem(name, memoized);
-        return memoized;
+        // shrub
+        @JvmField
+        val SHRUB_SAPLING: Supplier<Block?> = registerWithItem<Block?>(
+            "shrub_sapling"
+        ) {
+            SaplingBlock(
+                ModTreeGrowers.SHRUB_GROWER,
+                BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_SAPLING)
+            )
+        }
+
+        @JvmField
+        val POTTED_SHRUB_SAPLING: Supplier<FlowerPotBlock?> = registerFlowerPot(SHRUB_SAPLING)
+
+        private fun registerStrippablePillarBlock(
+            name: String?,
+            stripped: Supplier<Block?>?,
+            props: BlockBehaviour.Properties?
+        ): Supplier<RotatedPillarBlock?> {
+            val memoized = Suppliers.memoize<RotatedPillarBlock?>(Services.PLATFORM.createLoaderStrippableLog(props))
+            MOD_STRIPPABLES[memoized] = stripped
+            registerWithItem<RotatedPillarBlock?>(name, memoized)
+            return memoized
+        }
+
+        // friendly reminder to do this with Neo's methods too!
+        @JvmStatic
+        fun <B : Block?> registerFabricFlammability(block: Supplier<B?>?, burn: Int, spread: Int) {
+            FABRIC_MOD_FLAMMABLE_BLOCKS[block] = FlammabilityData(burn, spread)
+        }
+
+        private fun registerFlowerPot(plant: Supplier<Block?>): Supplier<FlowerPotBlock?> {
+            val plantName = Utils.findBlockIdByMap(plant)
+            val pot = register<FlowerPotBlock?>(
+                "potted_$plantName",
+                Suppliers.memoize {
+                    FlowerPotBlock(
+                        plant.get()!!, BlockBehaviour.Properties.ofFullCopy(
+                            Blocks.POTTED_SPRUCE_SAPLING
+                        )
+                    )
+                }
+            )
+            MOD_FLOWER_POTS[plant] = pot
+            return pot
+        }
+
+        fun <B : Block?> registerWithItem(key: String?, block: Supplier<B?>): Supplier<B?> {
+            val memoized = Suppliers.memoize(block)
+            BLOCK_MAP[key] = memoized
+            ModItems.register(key) { BlockItem(memoized.get()!!, Item.Properties()) }
+            return memoized
+        }
+
+        fun <B : Block?> register(key: String?, block: Supplier<B?>, ): Supplier<B?> {
+            val memoized = Suppliers.memoize<B?>(block)
+            BLOCK_MAP[key] = memoized
+            return memoized
+        }
+
     }
 
-    // friendly reminder to do this with Neo's methods too!
-    public static <B extends Block> void registerFabricFlammability(Supplier<B> block, int burn, int spread) {
-        FABRIC_MOD_FLAMMABLE_BLOCKS.put(block, new FlammabilityData(burn, spread));
-    }
-
-    private static Supplier<FlowerPotBlock> registerFlowerPot(Supplier<Block> plant) {
-        String plantName = Utils.findBlockIdByMap(plant);
-        Supplier<FlowerPotBlock> pot = register("potted_" + plantName,
-                Suppliers.memoize(() -> new FlowerPotBlock(plant.get(), BlockBehaviour.Properties.ofFullCopy(Blocks.POTTED_SPRUCE_SAPLING))));
-        MOD_FLOWER_POTS.put(plant, pot);
-        return pot;
-    }
-
-    public static <B extends Block> Supplier<B> registerWithItem(String key, Supplier<B> block) {
-        Supplier<B> memoized = Suppliers.memoize(block);
-        BLOCK_MAP.put(key, memoized);
-        ModItems.register(key, () -> new BlockItem(memoized.get(), new Item.Properties()));
-        return memoized;
-    }
-
-    public static <B extends Block> Supplier<B> register(String key, Supplier<B> block) {
-        Supplier<B> memoized = Suppliers.memoize(block);
-        BLOCK_MAP.put(key, memoized);
-        return memoized;
-    }
+    @JvmRecord
+    data class FlammabilityData(val burn: Int, val spread: Int)
 }

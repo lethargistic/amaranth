@@ -2,15 +2,11 @@ package dev.maksiks.amaranth;
 
 
 import com.mojang.logging.LogUtils;
-import dev.maksiks.amaranth.block.ModBlocks;
 import dev.maksiks.amaranth.entity.ModEntities;
 import dev.maksiks.amaranth.entity.client.ShroomBoiRenderer;
 import dev.maksiks.amaranth.item.ModItems;
-import dev.maksiks.amaranth.particle.ModParticles;
-import dev.maksiks.amaranth.sound.ModSounds;
 import dev.maksiks.amaranth.worldgen.biome.ModTerrablenderRegion;
 import dev.maksiks.amaranth.worldgen.biome.surface.ModSurfaceRules;
-import dev.maksiks.amaranth.worldgen.features.ModFeatures;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.neoforged.api.distmarker.Dist;
@@ -43,8 +39,6 @@ public class NeoAmaranth {
         // Note that this is necessary if and only if we want *this* class (amaranth) to respond directly to events.
         // Do not add this line if there are no @SubscribeEvent-annotated functions in this class, like onServerStarting() below.
         NeoForge.EVENT_BUS.register(this);
-
-        ModCreativeModeTabs.register(modEventBus);
 
         NeoModRegistries.register(modEventBus);
 

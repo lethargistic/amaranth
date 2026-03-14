@@ -21,6 +21,12 @@
         "value": "dev.maksiks.amaranth.FabricAmaranth"
       }
     ],
+    "client": [
+      {
+        "adapter": "kotlin",
+        "value": "dev.maksiks.amaranth.FabricModClient"
+      }
+    ],
     "terrablender": [
       "dev.maksiks.amaranth.FabricTerrablender"
     ]
@@ -39,6 +45,7 @@
     "fabric-language-kotlin": ">=${flk_version}",
     "forgeconfigapiport": ">=${fc_api_port_version}"
   },
+  "accessWidener" : "amaranth.classtweaker",
   "suggests": {
   }
 }

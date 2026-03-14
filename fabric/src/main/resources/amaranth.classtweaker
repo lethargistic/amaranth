@@ -1,0 +1,39 @@
+accessWidener v1 named
+
+# TODO newerv: move to class tweaker
+
+# Surface rules
+accessible class net/minecraft/world/level/levelgen/SurfaceRules$Context
+accessible class net/minecraft/world/level/levelgen/SurfaceRules$Context
+accessible field net/minecraft/world/level/levelgen/SurfaceRules$Context blockX I
+accessible field net/minecraft/world/level/levelgen/SurfaceRules$Context blockY I
+accessible field net/minecraft/world/level/levelgen/SurfaceRules$Context blockZ I
+accessible field net/minecraft/world/level/levelgen/SurfaceRules$Context chunk Lnet/minecraft/world/level/chunk/ChunkAccess;
+accessible class net/minecraft/world/level/levelgen/SurfaceRules$SurfaceRule
+
+accessible class net/minecraft/world/level/levelgen/SurfaceRules$Condition
+accessible method net/minecraft/core/particles/SimpleParticleType <init> (Z)V
+
+# OverworldBiomeBuilder
+accessible method net/minecraft/world/level/biome/OverworldBiomeBuilder pickBadlandsBiome (ILnet/minecraft/world/level/biome/Climate$Parameter;)Lnet/minecraft/resources/ResourceKey;
+accessible method net/minecraft/world/level/biome/OverworldBiomeBuilder pickPlateauBiome (IILnet/minecraft/world/level/biome/Climate$Parameter;)Lnet/minecraft/resources/ResourceKey;
+
+# Terrablender ones, unfortunately not transitive for some reason
+mutable field net/minecraft/world/level/biome/OverworldBiomeBuilder OCEANS [[Lnet/minecraft/resources/ResourceKey;
+mutable field net/minecraft/world/level/biome/OverworldBiomeBuilder MIDDLE_BIOMES [[Lnet/minecraft/resources/ResourceKey;
+mutable field net/minecraft/world/level/biome/OverworldBiomeBuilder MIDDLE_BIOMES_VARIANT [[Lnet/minecraft/resources/ResourceKey;
+mutable field net/minecraft/world/level/biome/OverworldBiomeBuilder PLATEAU_BIOMES [[Lnet/minecraft/resources/ResourceKey;
+mutable field net/minecraft/world/level/biome/OverworldBiomeBuilder PLATEAU_BIOMES_VARIANT [[Lnet/minecraft/resources/ResourceKey;
+mutable field net/minecraft/world/level/biome/OverworldBiomeBuilder SHATTERED_BIOMES [[Lnet/minecraft/resources/ResourceKey;
+accessible field net/minecraft/world/level/biome/OverworldBiomeBuilder FULL_RANGE Lnet/minecraft/world/level/biome/Climate$Parameter;
+accessible method net/minecraft/world/level/biome/OverworldBiomeBuilder addBiomes (Ljava/util/function/Consumer;)V
+accessible method net/minecraft/world/level/biome/OverworldBiomeBuilder pickBeachBiome (II)Lnet/minecraft/resources/ResourceKey;
+accessible method net/minecraft/world/level/biome/OverworldBiomeBuilder pickPeakBiome (IILnet/minecraft/world/level/biome/Climate$Parameter;)Lnet/minecraft/resources/ResourceKey;
+accessible method net/minecraft/world/level/biome/OverworldBiomeBuilder pickSlopeBiome (IILnet/minecraft/world/level/biome/Climate$Parameter;)Lnet/minecraft/resources/ResourceKey;
+extendable method net/minecraft/world/level/biome/OverworldBiomeBuilder pickBeachBiome (II)Lnet/minecraft/resources/ResourceKey;
+extendable method net/minecraft/world/level/biome/OverworldBiomeBuilder pickPeakBiome (IILnet/minecraft/world/level/biome/Climate$Parameter;)Lnet/minecraft/resources/ResourceKey;
+extendable method net/minecraft/world/level/biome/OverworldBiomeBuilder pickSlopeBiome (IILnet/minecraft/world/level/biome/Climate$Parameter;)Lnet/minecraft/resources/ResourceKey;
+accessible method net/minecraft/world/level/biome/OverworldBiomeBuilder addUndergroundBiomes (Ljava/util/function/Consumer;)V
+extendable method net/minecraft/world/level/biome/OverworldBiomeBuilder addUndergroundBiomes (Ljava/util/function/Consumer;)V
+accessible method net/minecraft/world/level/biome/OverworldBiomeBuilder addUndergroundBiome (Ljava/util/function/Consumer;Lnet/minecraft/world/level/biome/Climate$Parameter;Lnet/minecraft/world/level/biome/Climate$Parameter;Lnet/minecraft/world/level/biome/Climate$Parameter;Lnet/minecraft/world/level/biome/Climate$Parameter;Lnet/minecraft/world/level/biome/Climate$Parameter;FLnet/minecraft/resources/ResourceKey;)V
+accessible method net/minecraft/world/level/biome/OverworldBiomeBuilder addBottomBiome (Ljava/util/function/Consumer;Lnet/minecraft/world/level/biome/Climate$Parameter;Lnet/minecraft/world/level/biome/Climate$Parameter;Lnet/minecraft/world/level/biome/Climate$Parameter;Lnet/minecraft/world/level/biome/Climate$Parameter;Lnet/minecraft/world/level/biome/Climate$Parameter;FLnet/minecraft/resources/ResourceKey;)V

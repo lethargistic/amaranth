@@ -19,8 +19,12 @@
 - [ ] todo: make villages appear in shrublands and other relevant
 
 Multiloader moves:
-- [ ] todo: written down todos
+- [x] todo: written down todos
 - [x] fix: logs are not strippable
+Fabric:
+- [x] todo: registries
+- [x] todo: creative tab
+- [ ] todo: transparency n occlusion
 
 ### Moderate
 
