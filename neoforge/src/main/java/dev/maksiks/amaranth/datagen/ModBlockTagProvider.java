@@ -18,6 +18,9 @@ public class ModBlockTagProvider extends BlockTagsProvider {
         super(output, lookupProvider, Constants.MOD_ID, existingFileHelper);
     }
 
+    // TODO: refactor it all with ModBlocks utils and maps for everything
+    //  generic rather than forgetting to add this every time
+
     @Override
     protected void addTags(HolderLookup.Provider provider) {
         // misc
@@ -206,5 +209,8 @@ public class ModBlockTagProvider extends BlockTagsProvider {
         // shrub
         this.tag(BlockTags.SAPLINGS).add(ModBlocks.SHRUB_SAPLING.get());
         this.tag(BlockTags.FLOWER_POTS).add(ModBlocks.POTTED_SHRUB_SAPLING.get());
+
+        // other
+        this.tag(BlockTags.MINEABLE_WITH_HOE).addTag(BlockTags.LEAVES);
     }
 }
