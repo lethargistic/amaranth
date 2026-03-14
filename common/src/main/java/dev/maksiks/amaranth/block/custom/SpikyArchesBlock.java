@@ -32,8 +32,6 @@ public class SpikyArchesBlock extends Block implements BonemealableBlock {
         this.registerDefaultState(this.stateDefinition.any().setValue(VARIANT, 0));
     }
 
-    // TODO mov: check if loader-independent behaviour matches what i want
-
     ///  making them faster when sheared/dug with a sword
     @Override
     protected float getDestroyProgress(BlockState state, Player player, BlockGetter level, BlockPos pos) {
@@ -45,17 +43,10 @@ public class SpikyArchesBlock extends Block implements BonemealableBlock {
                 : super.getDestroyProgress(state, player, level, pos);
     }
 
-    ///
     /// So mobs dont walk in.
-    /// it's not as good as sweet berry bushes and idk how sweet berry bushes do this
-    /// did test it with /tick sprint 1d, and mobs didn't really die just get hurt until despawn
-    /// so no accidental mob/lag farms at least
-    ///
     public PathType getBlockPathType(BlockState state, BlockGetter level, BlockPos pos, @Nullable Mob entity) {
         return PathType.DAMAGE_OTHER;
     }
-
-    // TODO mov: figure out how to make mobs avoid
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {

@@ -8,9 +8,9 @@ import net.minecraft.world.level.pathfinder.PathType;
 
 public class FabricModRegistries {
     public static void init() {
-        // TODO mov: cook every registry on fabric
-        // TODO mov: make everything flammable on fabric
-        // TODO mov: figure out how to make everything burnable in furnance on fabric
+        // TODO fabrec: cook every registry on fabric
+        // TODO fabrec: check if everything flammable on fabric
+        // TODO fabrec: figure out how to make everything burnable in furnance on fabric
         LandPathNodeTypesRegistry.register(ModBlocks.SPIKY_ARCHES.get(), PathType.DAMAGE_OTHER, null);
 
         ModBlocks.FABRIC_MOD_FLAMMABLE_BLOCKS.forEach((block, data) ->

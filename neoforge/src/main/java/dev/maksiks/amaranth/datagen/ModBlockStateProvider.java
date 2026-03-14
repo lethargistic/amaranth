@@ -4,8 +4,8 @@ import com.google.common.base.Supplier;
 import dev.maksiks.amaranth.Constants;
 import dev.maksiks.amaranth.block.ModBlocks;
 import dev.maksiks.amaranth.block.custom.SpikyArchesBlock;
+import dev.maksiks.amaranth.util.Utils;
 import net.minecraft.core.Direction;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
@@ -262,7 +262,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
     }
 
     private void pottedPlantBlock(Supplier<FlowerPotBlock> pottedBlock, Supplier<Block> plantBlock) {
-        String pottedName = BuiltInRegistries.BLOCK.getKey(pottedBlock.get()).getPath();
+        String pottedName = Utils.findBlockId(pottedBlock);
         ResourceLocation plantTexture = blockTexture(plantBlock.get());
 
         ModelFile pottedModel = models()
@@ -273,15 +273,15 @@ public class ModBlockStateProvider extends BlockStateProvider {
         simpleBlock(pottedBlock.get(), pottedModel);
     }
 
-    private void thickPumpkinBlock(Supplier<Block> blockRegistryObject) {
-        Block block = blockRegistryObject.get();
-        String baseName = BuiltInRegistries.BLOCK.getKey(blockRegistryObject.get()).getPath();
+    private void thickPumpkinBlock(Supplier<Block> block) {
+        Block b = block.get();
+        String baseName = Utils.findBlockId(block);
 
         ResourceLocation side = modLoc("block/" + baseName + "_side");
         ResourceLocation end = modLoc("block/" + baseName + "_end");
         ResourceLocation inner = modLoc("block/thick_pumpkin_inner");
 
-        var builder = getMultipartBuilder(block);
+        var builder = getMultipartBuilder(b);
 
         for (Direction dir : Direction.values()) {
             ResourceLocation faceTex = (dir == Direction.UP || dir == Direction.DOWN) ? end : side;
@@ -326,7 +326,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
     }
 
     private void thickPumpkinBlockItem(Supplier<Block> block) {
-        String name = BuiltInRegistries.BLOCK.getKey(block.get()).getPath();
+        String name = Utils.findBlockId(block);
         ResourceLocation side = modLoc("block/thick_pumpkin_side");
         ResourceLocation end = modLoc("block/thick_pumpkin_end");
         ResourceLocation inner = modLoc("block/thick_pumpkin_inner");
@@ -342,10 +342,10 @@ public class ModBlockStateProvider extends BlockStateProvider {
         simpleBlockItem(block.get(), models().getExistingFile(modLoc(name)));
     }
 
-    private void randomVariantTwoPlaneCutout(Supplier<Block> blockRegistryObject, int variantCount) {
-        String baseName = BuiltInRegistries.BLOCK.getKey(blockRegistryObject.get()).getPath();
+    private void randomVariantTwoPlaneCutout(Supplier<Block> block, int variantCount) {
+        String baseName = Utils.findBlockId(block);
 
-        getVariantBuilder(blockRegistryObject.get()).forAllStates(state -> {
+        getVariantBuilder(block.get()).forAllStates(state -> {
             int variant = state.getValue(SpikyArchesBlock.VARIANT);
             return ConfiguredModel.builder()
                     .modelFile(models()
@@ -359,20 +359,19 @@ public class ModBlockStateProvider extends BlockStateProvider {
         }
     }
 
-    // TODO mov: fix the auto paths
-    private void twoPlanesCutoutBlock(Supplier<Block> blockRegistryObject) {
-        simpleBlock(blockRegistryObject.get(),
-                models().cross(BuiltInRegistries.BLOCK.getKey(blockRegistryObject.get()).getPath(), blockTexture(blockRegistryObject.get())).renderType("cutout"));
+    private void twoPlanesCutoutBlock(Supplier<Block> block) {
+        simpleBlock(block.get(),
+                models().cross(Utils.findBlockId(block), blockTexture(block.get())).renderType("cutout"));
     }
 
-    private void twoPlanesCutoutMippedBlock(Supplier<Block> blockRegistryObject) {
-        simpleBlock(blockRegistryObject.get(),
-                models().cross(BuiltInRegistries.BLOCK.getKey(blockRegistryObject.get()).getPath(), blockTexture(blockRegistryObject.get())).renderType("cutout_mipped"));
+    private void twoPlanesCutoutMippedBlock(Supplier<Block> block) {
+        simpleBlock(block.get(),
+                models().cross(Utils.findBlockId(block), blockTexture(block.get())).renderType("cutout_mipped"));
     }
 
     private void doubleFourPlaneCropBlock(Supplier<Block> block) {
         Block b = block.get();
-        String name = BuiltInRegistries.BLOCK.getKey(b).getPath();
+        String name = Utils.findBlockId(block);
 
         models().withExistingParent(name + "_bottom", mcLoc("block/crop"))
                 .texture("crop", modLoc("block/" + name + "_bottom"))
@@ -389,15 +388,15 @@ public class ModBlockStateProvider extends BlockStateProvider {
         });
     }
 
-    private void leavesBlock(Supplier<Block> blockRegistryObject) {
-        simpleBlockWithItem(blockRegistryObject.get(),
-                models().singleTexture(BuiltInRegistries.BLOCK.getKey(blockRegistryObject.get()).getPath(), ResourceLocation.parse("minecraft:block/leaves"),
-                        "all", blockTexture(blockRegistryObject.get())).renderType("cutout_mipped"));
+    private void leavesBlock(Supplier<Block> block) {
+        simpleBlockWithItem(block.get(),
+                models().singleTexture(Utils.findBlockId(block), ResourceLocation.parse("minecraft:block/leaves"),
+                        "all", blockTexture(block.get())).renderType("cutout_mipped"));
     }
 
     private void iceBlock(Supplier<Block> block) {
         simpleBlockWithItem(block.get(),
-                models().cubeAll(BuiltInRegistries.BLOCK.getKey(block.get()).getPath(), blockTexture(block.get())).renderType("translucent"));
+                models().cubeAll(Utils.findBlockId(block), blockTexture(block.get())).renderType("translucent"));
     }
 
     private void blockWithItem(Supplier<? extends Block> block) {
@@ -405,12 +404,10 @@ public class ModBlockStateProvider extends BlockStateProvider {
     }
 
     private void blockItem(Supplier<? extends Block> block) {
-        // TODO mov: check if block name is correct
-        simpleBlockItem(block.get(), new ModelFile.UncheckedModelFile("amaranth:block/" + BuiltInRegistries.BLOCK.getKey(block.get()).getPath()));
+        simpleBlockItem(block.get(), new ModelFile.UncheckedModelFile("amaranth:block/" + Utils.findBlockId(block)));
     }
 
     private void blockItem(Supplier<? extends Block> block, String appendix) {
-        // TODO mov: check if block name is correct
-        simpleBlockItem(block.get(), new ModelFile.UncheckedModelFile("amaranth:block/" + BuiltInRegistries.BLOCK.getKey(block.get()).getPath() + appendix));
+        simpleBlockItem(block.get(), new ModelFile.UncheckedModelFile("amaranth:block/" + Utils.findBlockId(block) + appendix));
     }
 }

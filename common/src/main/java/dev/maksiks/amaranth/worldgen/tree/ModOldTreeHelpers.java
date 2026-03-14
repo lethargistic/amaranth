@@ -246,7 +246,7 @@ public class ModOldTreeHelpers {
         };
     }
 
-    // TODO: add detached check to everything else
+    // tod0 old: add detached check to everything else
     public static LeafPlacer bigSplatDistributed(
             RandomSource random,
             BiConsumer<BlockPos, RandomSource> tryPlaceLeaf,

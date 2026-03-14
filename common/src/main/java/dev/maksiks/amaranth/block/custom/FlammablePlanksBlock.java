@@ -13,7 +13,6 @@ public class FlammablePlanksBlock extends Block {
         ModBlocks.registerFabricFlammability(() -> this, 20, 5);
     }
 
-    // TODO mov: check if works
     public boolean isFlammable(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
         return true;
     }

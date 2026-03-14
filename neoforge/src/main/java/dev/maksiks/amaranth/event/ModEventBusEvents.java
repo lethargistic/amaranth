@@ -53,7 +53,6 @@ public class ModEventBusEvents {
         event.enqueueWork(() -> {
             MOD_FLOWER_POTS.forEach((plant, pot) -> {
                 ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(
-                        // TODO mov: check if path works correctlyx
                         ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, Utils.findBlockId(plant)),
                         pot
                 );

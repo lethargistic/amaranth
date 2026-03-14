@@ -80,7 +80,6 @@ public class ModBlocks {
     public static final Supplier<FenceGateBlock> MYSTIC_FENCE_GATE = registerWithItem("mystic_fence_gate",
             () -> new FenceGateBlock(WoodType.SPRUCE, normalWoodProps.get()));
 
-    // TODO mov: fix for common
     // TODO fabrec: no occlusion?
     public static final Supplier<DoorBlock> MYSTIC_DOOR = registerWithItem("mystic_door",
             () -> new DoorBlock(BlockSetType.SPRUCE, BlockBehaviour.Properties.of().strength(2F).noOcclusion().isValidSpawn(Blocks::never)));
@@ -394,12 +393,7 @@ public static final Supplier<Block> STRIPPED_WISTERIA_LOG = registerWithItem("st
     }
 
     private static Supplier<FlowerPotBlock> registerFlowerPot(Supplier<Block> plant) {
-        List<String> keys = Utils.getMapKeys(BLOCK_MAP, plant).toList();
-
-        if (keys.isEmpty()) throw new IllegalStateException("Amaranth: block not in BLOCK_MAP: " + plant);
-        if (keys.size() > 1) throw new IllegalStateException("Amaranth: couldn't resolve flower pot id (there's multiple): " + plant);
-        String plantName = keys.getFirst();
-
+        String plantName = Utils.findBlockIdByMap(plant);
         Supplier<FlowerPotBlock> pot = register("potted_" + plantName,
                 Suppliers.memoize(() -> new FlowerPotBlock(plant.get(), BlockBehaviour.Properties.ofFullCopy(Blocks.POTTED_SPRUCE_SAPLING))));
         MOD_FLOWER_POTS.put(plant, pot);

@@ -53,7 +53,6 @@ public class ModItemModelProvider extends ItemModelProvider {
         // orderly
         splatBlockItem(ModBlocks.TRIMMED_TREE_SAPLING);
 
-        // TODO mov: check if get id check is the same
         withExistingParent(findItemId(ModItems.SHROOM_BOI_SPAWN_EGG), mcLoc("item/template_spawn_egg"));
 
         // shroom
@@ -125,8 +124,6 @@ public class ModItemModelProvider extends ItemModelProvider {
         splatBlockItem(ModBlocks.SHRUB_SAPLING);
 
     }
-    // TODO mov: check if get id check is the same
-
     private void splatBlockItem(Supplier<Block> block) {
         withExistingParent(findBlockId(block),
                 ResourceLocation.parse("item/generated")).texture("layer0",

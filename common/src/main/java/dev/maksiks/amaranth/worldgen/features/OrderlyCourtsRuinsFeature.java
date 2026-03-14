@@ -154,7 +154,7 @@ public class OrderlyCourtsRuinsFeature extends Feature<NoneFeatureConfiguration>
         StructureTemplate template = templateManager.getOrCreate(structureLocation);
 
         if (template.getSize().getX() == 0 || template.getSize().getZ() == 0) {
-            Constants.LOG.error("Heat death of structure: {}", structureLocation);
+            Constants.LOG.error("Amaranth: Heat death of structure: {}", structureLocation);
             return false;
         }
 

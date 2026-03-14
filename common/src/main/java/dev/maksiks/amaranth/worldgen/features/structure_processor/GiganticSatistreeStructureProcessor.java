@@ -20,7 +20,6 @@ public class GiganticSatistreeStructureProcessor extends StructureProcessor {
     public static final MapCodec<GiganticSatistreeStructureProcessor> CODEC =
             MapCodec.unit(() -> INSTANCE);
 
-    // TODO mov: check if works the same
     @Nullable
     @Override
     public StructureTemplate.StructureBlockInfo processBlock(

@@ -69,6 +69,4 @@ public class ModItems {
         ITEM_MAP.put(key, memoized);
         return memoized;
     }
-
-    // TODO mov: figure eggs out
 }

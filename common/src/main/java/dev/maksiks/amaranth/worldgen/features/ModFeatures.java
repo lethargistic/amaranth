@@ -14,7 +14,6 @@ import java.util.HashMap;
 public class ModFeatures {
     public static final HashMap<String, Supplier<? extends Feature<?>>> FEATURE_MAP = new HashMap<>();
 
-    // TODO mov: originally used DeferredHolder unlike other registries, investigate if i still have type safety
     public static final Supplier<Feature<NoneFeatureConfiguration>> DESOLATE_SPIKE_FEATURE =
             register("desolate_spike",
                     () -> new DesolateSpikeFeature(NoneFeatureConfiguration.CODEC));
