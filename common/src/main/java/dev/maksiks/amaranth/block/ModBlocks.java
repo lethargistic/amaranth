@@ -6,9 +6,9 @@ import dev.maksiks.amaranth.block.custom.*;
 import dev.maksiks.amaranth.block.custom.leaves.*;
 import dev.maksiks.amaranth.item.ModItems;
 import dev.maksiks.amaranth.platform.Services;
+import dev.maksiks.amaranth.util.Utils;
 import dev.maksiks.amaranth.worldgen.tree.ModTreeGrowers;
 import net.minecraft.util.ColorRGBA;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -21,6 +21,7 @@ import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ModBlocks {
@@ -392,11 +393,14 @@ public static final Supplier<Block> STRIPPED_WISTERIA_LOG = registerWithItem("st
         FABRIC_MOD_FLAMMABLE_BLOCKS.put(block, new FlammabilityData(burn, spread));
     }
 
-    // TODO mov: yoink neo's util if it doesnt work
-    // TODO mov: fix greg
     private static Supplier<FlowerPotBlock> registerFlowerPot(Supplier<Block> plant) {
-//        String plantName = BuiltInRegistries.BLOCK.getKey(plant.get()).getPath();
-        Supplier<FlowerPotBlock> pot = register("potted_" + "greg" + RandomSource.create().nextInt(10000),
+        List<String> keys = Utils.getMapKeys(BLOCK_MAP, plant).toList();
+
+        if (keys.isEmpty()) throw new IllegalStateException("Amaranth: block not in BLOCK_MAP: " + plant);
+        if (keys.size() > 1) throw new IllegalStateException("Amaranth: couldn't resolve flower pot id (there's multiple): " + plant);
+        String plantName = keys.getFirst();
+
+        Supplier<FlowerPotBlock> pot = register("potted_" + plantName,
                 Suppliers.memoize(() -> new FlowerPotBlock(plant.get(), BlockBehaviour.Properties.ofFullCopy(Blocks.POTTED_SPRUCE_SAPLING))));
         MOD_FLOWER_POTS.put(plant, pot);
         return pot;

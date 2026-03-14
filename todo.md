@@ -20,7 +20,7 @@
 
 Multiloader moves:
 - [ ] todo: written down todos
-- [ ] fix: logs are not strippable
+- [x] fix: logs are not strippable
 
 ### Moderate
 

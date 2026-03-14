@@ -35,8 +35,8 @@ import java.util.OptionalInt;
  * I'm in your walls.
  */
 
-// TODO mov: check if IShearable was actually necessary on leaves (neo sources have it there ???)
-
+// Neo sources had IShearable on leaves, I assume that is to match with their systems
+// and not functional since they work with shears anyway
 public class AlienLeavesBlock extends Block implements SimpleWaterloggedBlock, IFlammableLeaves {
     public static final MapCodec<AlienLeavesBlock> CODEC = simpleCodec(AlienLeavesBlock::new);
     public static final int DECAY_DISTANCE = 10;
