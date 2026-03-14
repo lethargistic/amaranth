@@ -16,8 +16,14 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
+import net.neoforged.neoforge.client.model.generators.ModelBuilder;
 import net.neoforged.neoforge.client.model.generators.ModelFile;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
+
+import java.lang.reflect.Field;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 public class ModBlockStateProvider extends BlockStateProvider {
     public ModBlockStateProvider(PackOutput output, ExistingFileHelper exFileHelper) {
@@ -30,8 +36,8 @@ public class ModBlockStateProvider extends BlockStateProvider {
         blockWithItem(ModBlocks.MARBLE);
 
         // mystic
-        logBlock(((RotatedPillarBlock) ModBlocks.MYSTIC_LOG.get()));
-        axisBlock(((RotatedPillarBlock) ModBlocks.MYSTIC_WOOD.get()), blockTexture(ModBlocks.MYSTIC_LOG.get()), blockTexture(ModBlocks.MYSTIC_LOG.get()));
+        logBlock(( ModBlocks.MYSTIC_LOG.get()));
+        axisBlock(( ModBlocks.MYSTIC_WOOD.get()), blockTexture(ModBlocks.MYSTIC_LOG.get()), blockTexture(ModBlocks.MYSTIC_LOG.get()));
 
         logBlock(((RotatedPillarBlock) ModBlocks.STRIPPED_MYSTIC_LOG.get()));
         axisBlock(((RotatedPillarBlock) ModBlocks.STRIPPED_MYSTIC_WOOD.get()), blockTexture(ModBlocks.STRIPPED_MYSTIC_LOG.get()), blockTexture(ModBlocks.STRIPPED_MYSTIC_LOG.get()));
@@ -99,8 +105,8 @@ public class ModBlockStateProvider extends BlockStateProvider {
         pottedPlantBlock(ModBlocks.POTTED_TRIMMED_TREE_SAPLING, ModBlocks.TRIMMED_TREE_SAPLING);
 
         // anthocyanin
-        logBlock(((RotatedPillarBlock) ModBlocks.ANTHOCYANIN_LOG.get()));
-        axisBlock(((RotatedPillarBlock) ModBlocks.ANTHOCYANIN_WOOD.get()), blockTexture(ModBlocks.ANTHOCYANIN_LOG.get()), blockTexture(ModBlocks.ANTHOCYANIN_LOG.get()));
+        logBlock((ModBlocks.ANTHOCYANIN_LOG.get()));
+        axisBlock((ModBlocks.ANTHOCYANIN_WOOD.get()), blockTexture(ModBlocks.ANTHOCYANIN_LOG.get()), blockTexture(ModBlocks.ANTHOCYANIN_LOG.get()));
 
         logBlock(((RotatedPillarBlock) ModBlocks.STRIPPED_ANTHOCYANIN_LOG.get()));
         axisBlock(((RotatedPillarBlock) ModBlocks.STRIPPED_ANTHOCYANIN_WOOD.get()), blockTexture(ModBlocks.STRIPPED_ANTHOCYANIN_LOG.get()), blockTexture(ModBlocks.STRIPPED_ANTHOCYANIN_LOG.get()));
@@ -153,9 +159,9 @@ public class ModBlockStateProvider extends BlockStateProvider {
         pottedPlantBlock(ModBlocks.POTTED_SPEARY_SAPLING, ModBlocks.SPEARY_SAPLING);
 
         // pastel
-        axisBlock((RotatedPillarBlock) ModBlocks.JUICY_WISTERIA_LOG.get(), modLoc("block/wisteria_log"), modLoc("block/juicy_wisteria_log_top"));
-        logBlock(((RotatedPillarBlock) ModBlocks.WISTERIA_LOG.get()));
-        axisBlock(((RotatedPillarBlock) ModBlocks.WISTERIA_WOOD.get()), blockTexture(ModBlocks.WISTERIA_LOG.get()), blockTexture(ModBlocks.WISTERIA_LOG.get()));
+        axisBlock(ModBlocks.JUICY_WISTERIA_LOG.get(), modLoc("block/wisteria_log"), modLoc("block/juicy_wisteria_log_top"));
+        logBlock(ModBlocks.WISTERIA_LOG.get());
+        axisBlock((ModBlocks.WISTERIA_WOOD.get()), blockTexture(ModBlocks.WISTERIA_LOG.get()), blockTexture(ModBlocks.WISTERIA_LOG.get()));
 
         logBlock(((RotatedPillarBlock) ModBlocks.STRIPPED_WISTERIA_LOG.get()));
         axisBlock(((RotatedPillarBlock) ModBlocks.STRIPPED_WISTERIA_WOOD.get()), blockTexture(ModBlocks.STRIPPED_WISTERIA_LOG.get()), blockTexture(ModBlocks.STRIPPED_WISTERIA_LOG.get()));
@@ -213,7 +219,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
         blockWithItem(ModBlocks.VOLCANIC_ASH);
 
         // satis
-        logBlock(((RotatedPillarBlock) ModBlocks.SATISTREE_LOG.get()));
+        logBlock((ModBlocks.SATISTREE_LOG.get()));
         axisBlock(((RotatedPillarBlock) ModBlocks.SATISTREE_WOOD.get()), blockTexture(ModBlocks.SATISTREE_LOG.get()), blockTexture(ModBlocks.SATISTREE_LOG.get()));
 
         logBlock(((RotatedPillarBlock) ModBlocks.STRIPPED_SATISTREE_LOG.get()));
@@ -355,13 +361,13 @@ public class ModBlockStateProvider extends BlockStateProvider {
         });
 
         for (int i = 0; i < variantCount; i++) {
-            models().cross(baseName + "_" + i, modLoc("block/" + baseName + "_" + i)).renderType("cutout");
+            models().cross(baseName + "_" + i, modLoc("block/" + baseName + "_" + i));
         }
     }
 
     private void twoPlanesCutoutBlock(Supplier<Block> block) {
         simpleBlock(block.get(),
-                models().cross(Utils.findBlockId(block), blockTexture(block.get())).renderType("cutout"));
+                models().cross(Utils.findBlockId(block), blockTexture(block.get())));
     }
 
     private void twoPlanesCutoutMippedBlock(Supplier<Block> block) {
@@ -409,5 +415,41 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
     private void blockItem(Supplier<? extends Block> block, String appendix) {
         simpleBlockItem(block.get(), new ModelFile.UncheckedModelFile("amaranth:block/" + Utils.findBlockId(block) + appendix));
+    }
+
+    private static final Map<List<Supplier<Block>>, String> RENDER_TYPE_LISTS = Map.of(
+            ModBlocks.MOD_CUTOUT_BLOCKS, "cutout",
+            ModBlocks.MOD_CUTOUT_MIPPED_BLOCKS, "cutout_mipped",
+            ModBlocks.MOD_TRANSLUCENT_BLOCKS, "translucent"
+    );
+
+    @Override
+    public void simpleBlock(Block block, ModelFile model) {
+        super.simpleBlock(block, applyRenderType(block, model));
+    }
+
+    /// render types are partially spliced in from the ModBlocks maps (which are also used for fabric)
+    /// tho if using the builder directly those need to be added manually,
+    /// and it's fine hardcoding the render type in this class too
+    private ModelFile applyRenderType(Block block, ModelFile model) {
+        return RENDER_TYPE_LISTS.entrySet().stream()
+                .filter(e -> e.getKey().stream().filter(Objects::nonNull).anyMatch(s -> s.get() == block))
+                .findFirst()
+                .map(e -> (ModelFile) models().getBuilder(Utils.findBlockId(block))
+                        .parent(getParent(model))
+                        .renderType(e.getValue()))
+                .orElse(model);
+    }
+
+    private static ModelFile getParent(ModelFile model) {
+        try {
+            Field parentField = ModelBuilder.class.getDeclaredField("parent");
+            parentField.setAccessible(true);
+            ModelFile parent = (ModelFile) parentField.get(model);
+            return parent != null ? parent : model;
+        } catch (ReflectiveOperationException e) {
+            Constants.LOG.error("Amaranth: Failed to get parent of model of: {}", model);
+            return model;
+        }
     }
 }

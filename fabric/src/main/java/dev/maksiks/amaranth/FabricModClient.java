@@ -12,7 +12,16 @@ public class FabricModClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         ModBlocks.MOD_CUTOUT_BLOCKS.forEach((block) -> {
+            assert block != null;
             BlockRenderLayerMap.INSTANCE.putBlock(block.get(), RenderType.cutout());
+        });
+        ModBlocks.MOD_CUTOUT_MIPPED_BLOCKS.forEach((block) -> {
+            assert block != null;
+            BlockRenderLayerMap.INSTANCE.putBlock(block.get(), RenderType.cutoutMipped());
+        });
+        ModBlocks.MOD_TRANSLUCENT_BLOCKS.forEach((block) -> {
+            assert block != null;
+            BlockRenderLayerMap.INSTANCE.putBlock(block.get(), RenderType.translucent());
         });
     }
 }

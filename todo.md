@@ -24,7 +24,9 @@ Multiloader moves:
 Fabric:
 - [x] todo: registries
 - [x] todo: creative tab
-- [ ] todo: transparency n occlusion
+- [x] todo: transparency n occlusion
+- [ ] todo very: events
+- [x] fix minor: sorrow ice is not actually translucent, or just doens't seem like it? ; that's too much coding for today i forgor to replace it
 
 ### Moderate
 

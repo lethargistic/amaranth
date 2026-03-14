@@ -26,6 +26,10 @@ import net.minecraft.world.level.material.PushReaction
 
 class ModBlocks {
     companion object {
+        enum class RenderType {
+            CUTOUT, CUTOUT_MIPPED, TRANSLUCENT, NONE
+        }
+
         @JvmField
         val BLOCK_MAP: HashMap<String?, Supplier<out Block?>?> = HashMap<String?, Supplier<out Block?>?>()
 
@@ -35,6 +39,10 @@ class ModBlocks {
 
         @JvmField
         var MOD_CUTOUT_BLOCKS: MutableList<Supplier<Block?>?> = ArrayList<Supplier<Block?>?>()
+        @JvmField
+        var MOD_CUTOUT_MIPPED_BLOCKS: MutableList<Supplier<Block?>?> = ArrayList<Supplier<Block?>?>()
+        @JvmField
+        var MOD_TRANSLUCENT_BLOCKS: MutableList<Supplier<Block?>?> = ArrayList<Supplier<Block?>?>()
 
         @JvmField
         var FABRIC_MOD_FLAMMABLE_BLOCKS: HashMap<Supplier<out Block?>?, FlammabilityData?> =
@@ -122,7 +130,7 @@ class ModBlocks {
 
         @JvmField
         val MYSTIC_SAPLING: Supplier<Block?> = registerWithItem<Block?>(
-            "mystic_sapling"
+            "mystic_sapling", renderType = RenderType.CUTOUT
         ) {
             SaplingBlock(
                 ModTreeGrowers.MYSTIC_GROWER,
@@ -167,14 +175,14 @@ class ModBlocks {
         // TODO fabrec: no occlusion?
         @JvmField
         val MYSTIC_DOOR: Supplier<DoorBlock?> = registerWithItem<DoorBlock?>(
-            "mystic_door"
+            "mystic_door", renderType = RenderType.CUTOUT
         ) {
             doorFromSpruce()
         }
 
         @JvmField
         val MYSTIC_TRAPDOOR: Supplier<TrapDoorBlock?> = registerWithItem<TrapDoorBlock?>(
-            "mystic_trapdoor"
+            "mystic_trapdoor", renderType = RenderType.CUTOUT
         ) {
             trapdoorFromSpruce()
         }
@@ -186,7 +194,7 @@ class ModBlocks {
         // stubby
         @JvmField
         val STUBBY_SAPLING: Supplier<Block?> = registerWithItem<Block?>(
-            "stubby_sapling"
+            "stubby_sapling", renderType = RenderType.CUTOUT
         ) {
             SaplingBlock(
                 ModTreeGrowers.STUBBY_GROWER,
@@ -215,7 +223,7 @@ class ModBlocks {
 
         @JvmField
         val SILVER_BIRCH_SAPLING: Supplier<Block?> = registerWithItem<Block?>(
-            "silver_birch_sapling"
+            "silver_birch_sapling", renderType = RenderType.CUTOUT
         ) {
             SaplingBlock(
                 ModTreeGrowers.SILVER_BIRCH_GROWER,
@@ -228,13 +236,13 @@ class ModBlocks {
 
         @JvmField
         val GOLDEN_LEAF_LITTER: Supplier<Block?> = registerWithItem<Block?>(
-            "golden_leaf_litter"
+            "golden_leaf_litter", renderType = RenderType.CUTOUT
         ) { GoldenLeafLitterBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.PINK_PETALS)) }
 
         // desolate ice fields
         @JvmField
         val SORROW_ICE: Supplier<Block?> = registerWithItem<Block?>(
-            "sorrow_ice"
+            "sorrow_ice", renderType = RenderType.TRANSLUCENT,
         ) { IceBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.ICE)) }
 
         @JvmField
@@ -260,7 +268,7 @@ class ModBlocks {
 
         @JvmField
         val PURPLE_MIXED_OAK_SAPLING: Supplier<Block?> = registerWithItem<Block?>(
-            "purple_mixed_oak_sapling"
+            "purple_mixed_oak_sapling", renderType = RenderType.CUTOUT
         ) {
             SaplingBlock(
                 ModTreeGrowers.PURPLE_MIXED_OAK_GROWER,
@@ -273,7 +281,7 @@ class ModBlocks {
 
         @JvmField
         val RED_MIXED_OAK_SAPLING: Supplier<Block?> = registerWithItem<Block?>(
-            "red_mixed_oak_sapling"
+            "red_mixed_oak_sapling", renderType = RenderType.CUTOUT
         ) {
             SaplingBlock(
                 ModTreeGrowers.RED_MIXED_OAK_GROWER,
@@ -286,7 +294,7 @@ class ModBlocks {
 
         @JvmField
         val YELLOW_MIXED_OAK_SAPLING: Supplier<Block?> = registerWithItem<Block?>(
-            "yellow_mixed_oak_sapling"
+            "yellow_mixed_oak_sapling", renderType = RenderType.CUTOUT
         ) {
             SaplingBlock(
                 ModTreeGrowers.YELLOW_MIXED_OAK_GROWER,
@@ -300,7 +308,7 @@ class ModBlocks {
         // orderly courts
         @JvmField
         val TRIMMED_TREE_SAPLING: Supplier<Block?> = registerWithItem<Block?>(
-            "trimmed_tree_sapling"
+            "trimmed_tree_sapling", renderType = RenderType.CUTOUT
         ) {
             SaplingBlock(
                 ModTreeGrowers.TRIMMED_TREE_GROWER,
@@ -353,7 +361,7 @@ class ModBlocks {
 
         @JvmField
         val ANTHOCYANIN_SAPLING: Supplier<Block?> = registerWithItem<Block?>(
-            "anthocyanin_sapling"
+            "anthocyanin_sapling", renderType = RenderType.CUTOUT
         ) {
             SaplingBlock(
                 ModTreeGrowers.ANTHOCYANIN_GROWER,
@@ -397,35 +405,35 @@ class ModBlocks {
 
         @JvmField
         val ANTHOCYANIN_DOOR: Supplier<DoorBlock?> = registerWithItem<DoorBlock?>(
-            "anthocyanin_door"
+            "anthocyanin_door", renderType = RenderType.CUTOUT
         ) {
             doorFromSpruce()
         }
 
         @JvmField
         val ORNAMENTED_ANTHOCYANIN_DOOR: Supplier<DoorBlock?> = registerWithItem<DoorBlock?>(
-            "ornamented_anthocyanin_door"
+            "ornamented_anthocyanin_door", renderType = RenderType.CUTOUT
         ) {
             doorFromSpruce()
         }
 
         @JvmField
         val ANTHOCYANIN_TRAPDOOR: Supplier<TrapDoorBlock?> = registerWithItem<TrapDoorBlock?>(
-            "anthocyanin_trapdoor"
+            "anthocyanin_trapdoor", renderType = RenderType.CUTOUT
         ) {
             trapdoorFromSpruce()
         }
 
         @JvmField
         val ORNAMENTED_ANTHOCYANIN_TRAPDOOR: Supplier<TrapDoorBlock?> = registerWithItem<TrapDoorBlock?>(
-            "ornamented_anthocyanin_trapdoor"
+            "ornamented_anthocyanin_trapdoor", renderType = RenderType.CUTOUT
         ) {
             trapdoorFromSpruce()
         }
 
         @JvmField
         val MALACHITE_VIPERS_BUGLOSS: Supplier<Block?> = registerWithItem<Block?>(
-            "malachite_vipers_bugloss"
+            "malachite_vipers_bugloss", renderType = RenderType.CUTOUT
         ) { FlowerBlock(MobEffects.POISON, 0.35f, BlockBehaviour.Properties.ofFullCopy(Blocks.POPPY)) }
 
         @JvmField
@@ -434,7 +442,7 @@ class ModBlocks {
         // pain
         @JvmField
         val SPIKY_ARCHES: Supplier<Block?> = registerWithItem<Block?>(
-            "spiky_arches"
+            "spiky_arches", renderType = RenderType.CUTOUT
         ) {
             SpikyArchesBlock(
                 BlockBehaviour.Properties.ofFullCopy(Blocks.SWEET_BERRY_BUSH).forceSolidOn().strength(4.0f)
@@ -451,7 +459,7 @@ class ModBlocks {
         // speary
         @JvmField
         val SPEARY_SAPLING: Supplier<Block?> = registerWithItem<Block?>(
-            "speary_sapling"
+            "speary_sapling", renderType = RenderType.CUTOUT
         ) {
             SaplingBlock(
                 ModTreeGrowers.SPEARY_GROWER,
@@ -506,7 +514,7 @@ class ModBlocks {
 
         @JvmField
         val WISTERIA_SAPLING: Supplier<Block?> = registerWithItem<Block?>(
-            "wisteria_sapling"
+            "wisteria_sapling", renderType = RenderType.CUTOUT
         ) {
             SaplingBlock(
                 ModTreeGrowers.WISTERIA_GROWER,
@@ -550,30 +558,30 @@ class ModBlocks {
 
         @JvmField
         val WISTERIA_DOOR: Supplier<DoorBlock?> = registerWithItem<DoorBlock?>(
-            "wisteria_door"
+            "wisteria_door", renderType = RenderType.CUTOUT
         ) { doorFromSpruce() }
 
         @JvmField
         val WISTERIA_TRAPDOOR: Supplier<TrapDoorBlock?> = registerWithItem<TrapDoorBlock?>(
-            "wisteria_trapdoor"
+            "wisteria_trapdoor", renderType = RenderType.CUTOUT
         ) {
             trapdoorFromSpruce()
         }
 
         @JvmField
         val PHLOX: Supplier<Block?> = registerWithItem<Block?>(
-            "phlox"
+            "phlox", renderType = RenderType.CUTOUT
         ) { PinkPetalsBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.PINK_PETALS)) }
 
         // mush
         @JvmField
         val REEDS: Supplier<Block?> = registerWithItem<Block?>(
-            "reeds"
+            "reeds", RenderType.CUTOUT_MIPPED
         ) { ReedsBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.ROSE_BUSH)) }
 
         @JvmField
         val RED_MINI_SHROOM_SPORELING: Supplier<Block?> = registerWithItem<Block?>(
-            "red_mini_shroom_sporeling"
+            "red_mini_shroom_sporeling", renderType = RenderType.CUTOUT
         ) {
             SaplingBlock(
                 ModTreeGrowers.RED_MINI_SHROOM_GROWER,
@@ -592,7 +600,7 @@ class ModBlocks {
 
         @JvmField
         val BROWN_MINI_SHROOM_SPORELING: Supplier<Block?> = registerWithItem<Block?>(
-            "brown_mini_shroom_sporeling"
+            "brown_mini_shroom_sporeling", renderType = RenderType.CUTOUT
         ) {
             SaplingBlock(
                 ModTreeGrowers.BROWN_MINI_SHROOM_GROWER,
@@ -613,7 +621,7 @@ class ModBlocks {
         // witchy
         @JvmField
         val WITCHY_SAPLING: Supplier<Block?> = registerWithItem<Block?>(
-            "witchy_sapling"
+            "witchy_sapling", renderType = RenderType.CUTOUT
         ) {
             SaplingBlock(
                 ModTreeGrowers.WITCHY_GROWER,
@@ -627,7 +635,7 @@ class ModBlocks {
         // lupine
         @JvmField
         val LUPINE: Supplier<Block?> = registerWithItem<Block?>(
-            "lupine"
+            "lupine", renderType = RenderType.CUTOUT_MIPPED
         ) {
             FlowerBlockNonShifting(
                 MobEffects.POISON, 0.35f, BlockBehaviour.Properties.of()
@@ -646,7 +654,7 @@ class ModBlocks {
         // alpine
         @JvmField
         val ALPINE_SPRUCE_SAPLING: Supplier<Block?> = registerWithItem<Block?>(
-            "alpine_spruce_sapling"
+            "alpine_spruce_sapling", renderType = RenderType.CUTOUT
         ) {
             SaplingBlock(
                 ModTreeGrowers.ALPINE_SPRUCE_GROWER,
@@ -702,7 +710,7 @@ class ModBlocks {
 
         @JvmField
         val SATISTREE_SAPLING: Supplier<Block?> = registerWithItem<Block?>(
-            "satistree_sapling"
+            "satistree_sapling", renderType = RenderType.CUTOUT
         ) {
             SaplingBlock(
                 ModTreeGrowers.SATISTREE_GROWER,
@@ -715,7 +723,7 @@ class ModBlocks {
 
         @JvmField
         val GIGANTIC_SATISTREE_SPROUTS: Supplier<Block?> = registerWithItem<Block?>(
-            "gigantic_satistree_sprouts"
+            "gigantic_satistree_sprouts", renderType = RenderType.CUTOUT
         ) {
             SaplingBlock(
                 ModTreeGrowers.GIGANTIC_SATISTREE_GROWER,
@@ -756,21 +764,21 @@ class ModBlocks {
 
         @JvmField
         val SATISTREE_DOOR: Supplier<DoorBlock?> = registerWithItem<DoorBlock?>(
-            "satistree_door"
+            "satistree_door", renderType = RenderType.CUTOUT
         ) {
             doorFromSpruce()
         }
 
         @JvmField
         val SATISTREE_TRAPDOOR: Supplier<TrapDoorBlock?> = registerWithItem<TrapDoorBlock?>(
-            "satistree_trapdoor"
+            "satistree_trapdoor", renderType = RenderType.CUTOUT
         ) {
             trapdoorFromSpruce()
         }
 
         @JvmField
         val ALIEN_PHYLLOSTACHYS_SAPLING: Supplier<Block?> = registerWithItem<Block?>(
-            "alien_phyllostachys_sapling"
+            "alien_phyllostachys_sapling", renderType = RenderType.CUTOUT
         ) { AlienPhyllostachysSaplingBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.BAMBOO_SAPLING)) }
 
         @JvmField
@@ -803,7 +811,7 @@ class ModBlocks {
 
         @JvmField
         val ALIEN_FENCE_PLANT_SAPLING: Supplier<Block?> = registerWithItem<Block?>(
-            "alien_fence_plant_sapling"
+            "alien_fence_plant_sapling", renderType = RenderType.CUTOUT
         ) {
             SaplingBlock(
                 ModTreeGrowers.ALIEN_FENCE_PLANT_GROWER,
@@ -823,7 +831,7 @@ class ModBlocks {
         // shrub
         @JvmField
         val SHRUB_SAPLING: Supplier<Block?> = registerWithItem<Block?>(
-            "shrub_sapling"
+            "shrub_sapling", renderType = RenderType.CUTOUT
         ) {
             SaplingBlock(
                 ModTreeGrowers.SHRUB_GROWER,
@@ -841,7 +849,7 @@ class ModBlocks {
         ): Supplier<RotatedPillarBlock?> {
             val memoized = Suppliers.memoize<RotatedPillarBlock?>(Services.PLATFORM.createLoaderStrippableLog(props))
             MOD_STRIPPABLES[memoized] = stripped
-            registerWithItem<RotatedPillarBlock?>(name, memoized)
+            registerWithItem<RotatedPillarBlock?>(name, block = memoized)
             return memoized
         }
 
@@ -854,8 +862,8 @@ class ModBlocks {
         private fun registerFlowerPot(plant: Supplier<Block?>): Supplier<FlowerPotBlock?> {
             val plantName = Utils.findBlockIdByMap(plant)
             val pot = register<FlowerPotBlock?>(
-                "potted_$plantName",
-                Suppliers.memoize {
+                "potted_$plantName", renderType = RenderType.CUTOUT,
+                block = Suppliers.memoize {
                     FlowerPotBlock(
                         plant.get()!!, BlockBehaviour.Properties.ofFullCopy(
                             Blocks.POTTED_SPRUCE_SAPLING
@@ -867,15 +875,20 @@ class ModBlocks {
             return pot
         }
 
-        fun <B : Block?> registerWithItem(key: String?, block: Supplier<B?>): Supplier<B?> {
+        fun <B : Block?> registerWithItem(key: String?, renderType: RenderType = RenderType.NONE, block: Supplier<B?>): Supplier<B?> {
             val memoized = Suppliers.memoize(block)
-            BLOCK_MAP[key] = memoized
+            register(key, renderType, memoized)
             ModItems.register(key) { BlockItem(memoized.get()!!, Item.Properties()) }
             return memoized
         }
 
-        fun <B : Block?> register(key: String?, block: Supplier<B?>, ): Supplier<B?> {
-            val memoized = Suppliers.memoize<B?>(block)
+        @Suppress("UNCHECKED_CAST")
+        fun <B : Block?> register(key: String?, renderType: RenderType = RenderType.NONE, block: Supplier<B?>): Supplier<B?> {
+            if (renderType == RenderType.CUTOUT) MOD_CUTOUT_BLOCKS.add(block as Supplier<Block?>)
+            if (renderType == RenderType.CUTOUT_MIPPED) MOD_CUTOUT_MIPPED_BLOCKS.add(block as Supplier<Block?>)
+            if (renderType == RenderType.TRANSLUCENT) MOD_TRANSLUCENT_BLOCKS.add(block as Supplier<Block?>)
+
+            val memoized = Suppliers.memoize(block)
             BLOCK_MAP[key] = memoized
             return memoized
         }
