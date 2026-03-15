@@ -30,6 +30,7 @@ class ModBlocks {
             CUTOUT, CUTOUT_MIPPED, TRANSLUCENT, NONE
         }
 
+        // functional stores
         @JvmField
         val BLOCK_MAP: HashMap<String?, Supplier<out Block?>?> = HashMap<String?, Supplier<out Block?>?>()
 
@@ -39,8 +40,10 @@ class ModBlocks {
 
         @JvmField
         var MOD_CUTOUT_BLOCKS: MutableList<Supplier<Block?>?> = ArrayList<Supplier<Block?>?>()
+
         @JvmField
         var MOD_CUTOUT_MIPPED_BLOCKS: MutableList<Supplier<Block?>?> = ArrayList<Supplier<Block?>?>()
+
         @JvmField
         var MOD_TRANSLUCENT_BLOCKS: MutableList<Supplier<Block?>?> = ArrayList<Supplier<Block?>?>()
 
@@ -52,6 +55,11 @@ class ModBlocks {
         var MOD_STRIPPABLES: MutableMap<Supplier<out Block?>?, Supplier<Block?>?> =
             HashMap<Supplier<out Block?>?, Supplier<Block?>?>()
 
+        // group stores
+        @JvmField
+        var MOD_LEAVES: MutableList<Supplier<Block?>?> = ArrayList<Supplier<Block?>?>()
+
+
         private val normalWoodProps = Supplier {
             BlockBehaviour.Properties.of()
                 .mapColor(MapColor.WOOD)
@@ -61,7 +69,7 @@ class ModBlocks {
                 .ignitedByLava()
         }
 
-        fun doorFromSpruce(): DoorBlock = DoorBlock(
+        fun doorBasedOnSpruce(): DoorBlock = DoorBlock(
             BlockSetType.SPRUCE,
             BlockBehaviour.Properties.of().strength(2f).noOcclusion()
                 .isValidSpawn { state: BlockState?, blockGetter: BlockGetter?, pos: BlockPos?, entity: EntityType<*>? ->
@@ -73,6 +81,7 @@ class ModBlocks {
                     )
                 }
         )
+
         fun trapdoorFromSpruce(): TrapDoorBlock = TrapDoorBlock(
             BlockSetType.SPRUCE,
             normalWoodProps.get()!!.noOcclusion()
@@ -124,9 +133,7 @@ class ModBlocks {
         ) { FlammablePlanksBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_PLANKS)) }
 
         @JvmField
-        val MYSTIC_LEAVES: Supplier<Block?> = registerWithItem<Block?>(
-            "mystic_leaves"
-        ) { FlammableLeavesBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_LEAVES)) }
+        val MYSTIC_LEAVES: Supplier<Block?> = registerLeaves("mystic_leaves")
 
         @JvmField
         val MYSTIC_SAPLING: Supplier<Block?> = registerWithItem<Block?>(
@@ -177,7 +184,7 @@ class ModBlocks {
         val MYSTIC_DOOR: Supplier<DoorBlock?> = registerWithItem<DoorBlock?>(
             "mystic_door", renderType = RenderType.CUTOUT
         ) {
-            doorFromSpruce()
+            doorBasedOnSpruce()
         }
 
         @JvmField
@@ -207,19 +214,16 @@ class ModBlocks {
 
         // silver birch
         @JvmField
-        val SILVERY_SILVER_BIRCH_LEAVES: Supplier<Block?> = registerWithItem<Block?>(
-            "silvery_silver_birch_leaves"
-        ) { SilverBirchLeavesBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_LEAVES)) }
+        val SILVERY_SILVER_BIRCH_LEAVES: Supplier<Block?> = registerLeaves("silvery_silver_birch_leaves",
+            constructor = ::SilverBirchLeavesBlock)
 
         @JvmField
-        val LIGHT_SILVER_BIRCH_LEAVES: Supplier<Block?> = registerWithItem<Block?>(
-            "light_silver_birch_leaves"
-        ) { SilverBirchLeavesBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_LEAVES)) }
+        val LIGHT_SILVER_BIRCH_LEAVES: Supplier<Block?> = registerLeaves("light_silver_birch_leaves",
+            constructor = ::SilverBirchLeavesBlock)
 
         @JvmField
-        val DARK_SILVER_BIRCH_LEAVES: Supplier<Block?> = registerWithItem<Block?>(
-            "dark_silver_birch_leaves"
-        ) { SilverBirchLeavesBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_LEAVES)) }
+        val DARK_SILVER_BIRCH_LEAVES: Supplier<Block?> = registerLeaves("dark_silver_birch_leaves",
+            constructor = ::SilverBirchLeavesBlock)
 
         @JvmField
         val SILVER_BIRCH_SAPLING: Supplier<Block?> = registerWithItem<Block?>(
@@ -255,6 +259,7 @@ class ModBlocks {
         val PURPLE_MIXED_OAK_LEAVES: Supplier<Block?> = registerWithItem<Block?>(
             "purple_mixed_oak_leaves"
         ) { FlammableLeavesBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES)) }
+        val PURPLE_MIXED_OAK_LEAVES: Supplier<Block?> = registerLeaves("purple_mixed_oak_leaves")
 
         @JvmField
         val YELLOW_MIXED_OAK_LEAVES: Supplier<Block?> = registerWithItem<Block?>(
@@ -407,14 +412,14 @@ class ModBlocks {
         val ANTHOCYANIN_DOOR: Supplier<DoorBlock?> = registerWithItem<DoorBlock?>(
             "anthocyanin_door", renderType = RenderType.CUTOUT
         ) {
-            doorFromSpruce()
+            doorBasedOnSpruce()
         }
 
         @JvmField
         val ORNAMENTED_ANTHOCYANIN_DOOR: Supplier<DoorBlock?> = registerWithItem<DoorBlock?>(
             "ornamented_anthocyanin_door", renderType = RenderType.CUTOUT
         ) {
-            doorFromSpruce()
+            doorBasedOnSpruce()
         }
 
         @JvmField
@@ -509,7 +514,7 @@ class ModBlocks {
 
         @JvmField
         val WISTERIA_LEAVES: Supplier<Block?> = registerWithItem<Block?>(
-            "wisteria_leaves"
+            "wisteria_leaves", renderType = RenderType.CUTOUT
         ) { WisteriaLeavesBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_LEAVES)) }
 
         @JvmField
@@ -559,7 +564,7 @@ class ModBlocks {
         @JvmField
         val WISTERIA_DOOR: Supplier<DoorBlock?> = registerWithItem<DoorBlock?>(
             "wisteria_door", renderType = RenderType.CUTOUT
-        ) { doorFromSpruce() }
+        ) { doorBasedOnSpruce() }
 
         @JvmField
         val WISTERIA_TRAPDOOR: Supplier<TrapDoorBlock?> = registerWithItem<TrapDoorBlock?>(
@@ -766,7 +771,7 @@ class ModBlocks {
         val SATISTREE_DOOR: Supplier<DoorBlock?> = registerWithItem<DoorBlock?>(
             "satistree_door", renderType = RenderType.CUTOUT
         ) {
-            doorFromSpruce()
+            doorBasedOnSpruce()
         }
 
         @JvmField
@@ -842,6 +847,20 @@ class ModBlocks {
         @JvmField
         val POTTED_SHRUB_SAPLING: Supplier<FlowerPotBlock?> = registerFlowerPot(SHRUB_SAPLING)
 
+        // methods
+
+        private fun registerLeaves(
+            key: String, props:
+            BlockBehaviour.Properties = BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_LEAVES),
+            constructor: (BlockBehaviour.Properties) -> LeavesBlock = ::FlammableLeavesBlock
+        ): Supplier<Block?> {
+            val leaves: Supplier<Block?> = registerWithItem<Block?>(
+                key, renderType = RenderType.CUTOUT_MIPPED) { constructor(props) }
+
+            MOD_LEAVES.add(leaves);
+            return leaves;
+        }
+
         private fun registerStrippablePillarBlock(
             name: String?,
             stripped: Supplier<Block?>?,
@@ -875,7 +894,11 @@ class ModBlocks {
             return pot
         }
 
-        fun <B : Block?> registerWithItem(key: String?, renderType: RenderType = RenderType.NONE, block: Supplier<B?>): Supplier<B?> {
+        fun <B : Block?> registerWithItem(
+            key: String?,
+            renderType: RenderType = RenderType.NONE,
+            block: Supplier<B?>
+        ): Supplier<B?> {
             val memoized = Suppliers.memoize(block)
             register(key, renderType, memoized)
             ModItems.register(key) { BlockItem(memoized.get()!!, Item.Properties()) }
@@ -883,7 +906,11 @@ class ModBlocks {
         }
 
         @Suppress("UNCHECKED_CAST")
-        fun <B : Block?> register(key: String?, renderType: RenderType = RenderType.NONE, block: Supplier<B?>): Supplier<B?> {
+        fun <B : Block?> register(
+            key: String?,
+            renderType: RenderType = RenderType.NONE,
+            block: Supplier<B?>
+        ): Supplier<B?> {
             if (renderType == RenderType.CUTOUT) MOD_CUTOUT_BLOCKS.add(block as Supplier<Block?>)
             if (renderType == RenderType.CUTOUT_MIPPED) MOD_CUTOUT_MIPPED_BLOCKS.add(block as Supplier<Block?>)
             if (renderType == RenderType.TRANSLUCENT) MOD_TRANSLUCENT_BLOCKS.add(block as Supplier<Block?>)

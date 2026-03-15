@@ -24,8 +24,12 @@ Multiloader moves:
 Fabric:
 - [x] todo: registries
 - [x] todo: creative tab
-- [x] todo: transparency n occlusion
-- [ ] todo very: events
+- [x] todo: transparency
+- [x] todo: occlusion ; finally learnt it's culling occlusion and not ambient occlusion
+- [ ] todo very: events ; cfg to test 
+- [ ] todo very: terrablender
+- [ ] todo: inner todos
+- [x] todo: test flammability and burning ; logs, saplings, bamboo, planks work just fine, leaves do neither ; vanilla leaves dont work in furnace, aho
 - [x] fix minor: sorrow ice is not actually translucent, or just doens't seem like it? ; that's too much coding for today i forgor to replace it
 
 ### Moderate
@@ -65,6 +69,7 @@ Fabric:
 - [ ] fix: maybe try fixing the grass color for silver birch again?? ; sodium mixin makes it hard
 - [ ] todo maybe: unrelated but make like an actually good color picker website cuz im annoyed ; so real
 - [ ] feat twig maybe: leaf check for structures
+- [ ] fix: shroom boi needs datafixer apparently
 
 ***
 
@@ -651,3 +656,4 @@ tutorial:
 tree tutorial:
 
 - hot module swapping op
+- vanilla leaves are cutout mipped

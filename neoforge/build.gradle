@@ -20,6 +20,9 @@ dependencies {
     implementation "maven.modrinth:twigonometry:mc${project.minecraft_version}-${project.twigonometry_version}-neoforge"
 }
 
+def isJBR = System.getProperty("java.vm.name", "").contains("JBR") ||
+        System.getProperty("java.vendor", "").contains("JetBrains")
+
 neoForge {
     version = neoforge_version
     // Automatically enable neoforge AccessTransformers if the file exists
@@ -38,6 +41,11 @@ neoForge {
         }
         client {
             client()
+
+            if (isJBR) {
+                // cooler jbr hotswap
+                jvmArguments.add("-XX:+AllowEnhancedClassRedefinition")
+            }
         }
         data {
             data()

@@ -1,5 +1,6 @@
 package dev.maksiks.amaranth.block.custom.leaves;
 
+import dev.maksiks.amaranth.block.ModBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;
@@ -9,6 +10,7 @@ import net.minecraft.world.level.block.state.BlockState;
 public class FlammableLeavesBlock extends LeavesBlock implements IFlammableLeaves {
     public FlammableLeavesBlock(Properties properties) {
         super(properties);
+        ModBlocks.registerFabricFlammability(() -> this, 60, 30);
     }
 
     @Override

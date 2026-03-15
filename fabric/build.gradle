@@ -34,7 +34,12 @@ loom {
             setConfigName('Fabric Client')
             ideConfigGenerated(true)
             runDir('runs/client')
+
+            // cant seem to add vm args on fabric for some reason
+            // so just adding -XX:+AllowEnhancedClassRedefinition
+            // manually to the run config
         }
+
         server {
             server()
             setConfigName('Fabric Server')
