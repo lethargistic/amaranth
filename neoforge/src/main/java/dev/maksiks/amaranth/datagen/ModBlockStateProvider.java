@@ -32,6 +32,15 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
     @Override
     protected void registerStatesAndModels() {
+        // stores
+
+        ModBlocks.MOD_LEAVES.forEach(pair -> {
+            Supplier<Block> leaves = pair.getFirst();
+            if (leaves != null) {
+                leavesBlock(leaves);
+            }
+        });
+
         // misc
         blockWithItem(ModBlocks.MARBLE);
 
@@ -50,7 +59,6 @@ public class ModBlockStateProvider extends BlockStateProvider {
         blockWithItem(ModBlocks.MYSTIC_PLANKS);
         twoPlanesCutoutBlock(ModBlocks.MYSTIC_SAPLING);
         pottedPlantBlock(ModBlocks.POTTED_MYSTIC_SAPLING, ModBlocks.MYSTIC_SAPLING);
-        leavesBlock(ModBlocks.MYSTIC_LEAVES);
 
         stairsBlock(ModBlocks.MYSTIC_STAIRS.get(), blockTexture(ModBlocks.MYSTIC_PLANKS.get()));
         slabBlock(ModBlocks.MYSTIC_SLAB.get(), blockTexture(ModBlocks.MYSTIC_PLANKS.get()), blockTexture(ModBlocks.MYSTIC_PLANKS.get()));
@@ -74,11 +82,6 @@ public class ModBlockStateProvider extends BlockStateProvider {
         twoPlanesCutoutBlock(ModBlocks.STUBBY_SAPLING);
         pottedPlantBlock(ModBlocks.POTTED_STUBBY_SAPLING, ModBlocks.STUBBY_SAPLING);
 
-        // silver
-        leavesBlock(ModBlocks.SILVERY_SILVER_BIRCH_LEAVES);
-        leavesBlock(ModBlocks.LIGHT_SILVER_BIRCH_LEAVES);
-        leavesBlock(ModBlocks.DARK_SILVER_BIRCH_LEAVES);
-
         // leaf litter is made manually
         twoPlanesCutoutBlock(ModBlocks.SILVER_BIRCH_SAPLING);
         pottedPlantBlock(ModBlocks.POTTED_SILVER_BIRCH_SAPLING, ModBlocks.SILVER_BIRCH_SAPLING);
@@ -87,11 +90,6 @@ public class ModBlockStateProvider extends BlockStateProvider {
         iceBlock(ModBlocks.SORROW_ICE);
         blockItem(ModBlocks.SORROW_ICE);
         blockWithItem(ModBlocks.REMNANT_SORROW_ICE);
-
-        // mixed
-        leavesBlock(ModBlocks.PURPLE_MIXED_OAK_LEAVES);
-        leavesBlock(ModBlocks.RED_MIXED_OAK_LEAVES);
-        leavesBlock(ModBlocks.YELLOW_MIXED_OAK_LEAVES);
 
         twoPlanesCutoutBlock(ModBlocks.PURPLE_MIXED_OAK_SAPLING);
         pottedPlantBlock(ModBlocks.POTTED_PURPLE_MIXED_OAK_SAPLING, ModBlocks.PURPLE_MIXED_OAK_SAPLING);
@@ -119,8 +117,6 @@ public class ModBlockStateProvider extends BlockStateProvider {
         blockWithItem(ModBlocks.ANTHOCYANIN_PLANKS);
         twoPlanesCutoutBlock(ModBlocks.ANTHOCYANIN_SAPLING);
         pottedPlantBlock(ModBlocks.POTTED_ANTHOCYANIN_SAPLING, ModBlocks.ANTHOCYANIN_SAPLING);
-        leavesBlock(ModBlocks.ANTHOCYANIN_LEAVES);
-        leavesBlock(ModBlocks.BLOOMING_ANTHOCYANIN_LEAVES);
 
         stairsBlock(ModBlocks.ANTHOCYANIN_STAIRS.get(), blockTexture(ModBlocks.ANTHOCYANIN_PLANKS.get()));
         slabBlock(ModBlocks.ANTHOCYANIN_SLAB.get(), blockTexture(ModBlocks.ANTHOCYANIN_PLANKS.get()), blockTexture(ModBlocks.ANTHOCYANIN_PLANKS.get()));
@@ -175,7 +171,6 @@ public class ModBlockStateProvider extends BlockStateProvider {
         blockWithItem(ModBlocks.WISTERIA_PLANKS);
         twoPlanesCutoutBlock(ModBlocks.WISTERIA_SAPLING);
         pottedPlantBlock(ModBlocks.POTTED_WISTERIA_SAPLING, ModBlocks.WISTERIA_SAPLING);
-        leavesBlock(ModBlocks.WISTERIA_LEAVES);
 
         stairsBlock(ModBlocks.WISTERIA_STAIRS.get(), blockTexture(ModBlocks.WISTERIA_PLANKS.get()));
         slabBlock(ModBlocks.WISTERIA_SLAB.get(), blockTexture(ModBlocks.WISTERIA_PLANKS.get()), blockTexture(ModBlocks.WISTERIA_PLANKS.get()));
@@ -234,7 +229,6 @@ public class ModBlockStateProvider extends BlockStateProvider {
         twoPlanesCutoutBlock(ModBlocks.SATISTREE_SAPLING);
         pottedPlantBlock(ModBlocks.POTTED_SATISTREE_SAPLING, ModBlocks.SATISTREE_SAPLING);
         twoPlanesCutoutBlock(ModBlocks.GIGANTIC_SATISTREE_SPROUTS);
-        leavesBlock(ModBlocks.ALIEN_LEAVES);
 
         stairsBlock(ModBlocks.SATISTREE_STAIRS.get(), blockTexture(ModBlocks.SATISTREE_PLANKS.get()));
         slabBlock(ModBlocks.SATISTREE_SLAB.get(), blockTexture(ModBlocks.SATISTREE_PLANKS.get()), blockTexture(ModBlocks.SATISTREE_PLANKS.get()));
@@ -397,7 +391,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
     private void leavesBlock(Supplier<Block> block) {
         simpleBlockWithItem(block.get(),
                 models().singleTexture(Utils.findBlockId(block), ResourceLocation.parse("minecraft:block/leaves"),
-                        "all", blockTexture(block.get())).renderType("cutout_mipped"));
+                        "all", blockTexture(block.get())));
     }
 
     private void iceBlock(Supplier<Block> block) {

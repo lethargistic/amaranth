@@ -1,11 +1,13 @@
 package dev.maksiks.amaranth.datagen;
 
+import com.google.common.base.Supplier;
 import dev.maksiks.amaranth.Constants;
 import dev.maksiks.amaranth.block.ModBlocks;
 import dev.maksiks.amaranth.tags.ModTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
@@ -23,6 +25,17 @@ public class ModBlockTagProvider extends BlockTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.Provider provider) {
+        // groups
+
+        ModBlocks.MOD_LEAVES.forEach(pair -> {
+            Supplier<Block> leaves = pair.getFirst();
+
+            assert leaves != null;
+            this.tag(BlockTags.LEAVES).add(leaves.get());
+
+        });
+        this.tag(BlockTags.MINEABLE_WITH_HOE).addTag(BlockTags.LEAVES);
+
         // misc
         this.tag(BlockTags.MINEABLE_WITH_PICKAXE)
                 .add(ModBlocks.MARBLE.get());
@@ -46,7 +59,6 @@ public class ModBlockTagProvider extends BlockTagsProvider {
         this.tag(BlockTags.WOODEN_STAIRS).add(ModBlocks.MYSTIC_STAIRS.get());
         this.tag(BlockTags.WOODEN_BUTTONS).add(ModBlocks.MYSTIC_BUTTON.get());
         this.tag(BlockTags.WOODEN_PRESSURE_PLATES).add(ModBlocks.MYSTIC_PRESSURE_PLATE.get());
-        this.tag(BlockTags.LEAVES).add(ModBlocks.MYSTIC_LEAVES.get());
         this.tag(BlockTags.SAPLINGS).add(ModBlocks.MYSTIC_SAPLING.get());
         this.tag(BlockTags.FLOWER_POTS).add(ModBlocks.POTTED_MYSTIC_SAPLING.get());
         this.tag(BlockTags.WOODEN_FENCES).add(ModBlocks.MYSTIC_FENCE.get());
@@ -59,9 +71,6 @@ public class ModBlockTagProvider extends BlockTagsProvider {
         this.tag(BlockTags.FLOWER_POTS).add(ModBlocks.POTTED_STUBBY_SAPLING.get());
 
         // silver
-        this.tag(BlockTags.LEAVES).add(ModBlocks.SILVERY_SILVER_BIRCH_LEAVES.get());
-        this.tag(BlockTags.LEAVES).add(ModBlocks.DARK_SILVER_BIRCH_LEAVES.get());
-        this.tag(BlockTags.LEAVES).add(ModBlocks.LIGHT_SILVER_BIRCH_LEAVES.get());
         this.tag(BlockTags.SAPLINGS).add(ModBlocks.SILVER_BIRCH_SAPLING.get());
         this.tag(BlockTags.FLOWER_POTS).add(ModBlocks.POTTED_SILVER_BIRCH_SAPLING.get());
 
@@ -70,10 +79,6 @@ public class ModBlockTagProvider extends BlockTagsProvider {
         this.tag(BlockTags.ICE).add(ModBlocks.REMNANT_SORROW_ICE.get());
 
         // mixed
-        this.tag(BlockTags.LEAVES).add(ModBlocks.PURPLE_MIXED_OAK_LEAVES.get());
-        this.tag(BlockTags.LEAVES).add(ModBlocks.RED_MIXED_OAK_LEAVES.get());
-        this.tag(BlockTags.LEAVES).add(ModBlocks.YELLOW_MIXED_OAK_LEAVES.get());
-
         this.tag(BlockTags.SAPLINGS).add(ModBlocks.PURPLE_MIXED_OAK_SAPLING.get());
         this.tag(BlockTags.FLOWER_POTS).add(ModBlocks.POTTED_PURPLE_MIXED_OAK_SAPLING.get());
         this.tag(BlockTags.SAPLINGS).add(ModBlocks.RED_MIXED_OAK_SAPLING.get());
@@ -101,8 +106,6 @@ public class ModBlockTagProvider extends BlockTagsProvider {
         this.tag(BlockTags.WOODEN_STAIRS).add(ModBlocks.ANTHOCYANIN_STAIRS.get());
         this.tag(BlockTags.WOODEN_BUTTONS).add(ModBlocks.ANTHOCYANIN_BUTTON.get());
         this.tag(BlockTags.WOODEN_PRESSURE_PLATES).add(ModBlocks.ANTHOCYANIN_PRESSURE_PLATE.get());
-        this.tag(BlockTags.LEAVES).add(ModBlocks.ANTHOCYANIN_LEAVES.get());
-        this.tag(BlockTags.LEAVES).add(ModBlocks.BLOOMING_ANTHOCYANIN_LEAVES.get());
         this.tag(BlockTags.SAPLINGS).add(ModBlocks.ANTHOCYANIN_SAPLING.get());
         this.tag(BlockTags.FLOWER_POTS).add(ModBlocks.POTTED_ANTHOCYANIN_SAPLING.get());
         this.tag(BlockTags.WOODEN_DOORS).add(ModBlocks.ANTHOCYANIN_DOOR.get());
@@ -139,7 +142,6 @@ public class ModBlockTagProvider extends BlockTagsProvider {
         this.tag(BlockTags.WOODEN_STAIRS).add(ModBlocks.WISTERIA_STAIRS.get());
         this.tag(BlockTags.WOODEN_BUTTONS).add(ModBlocks.WISTERIA_BUTTON.get());
         this.tag(BlockTags.WOODEN_PRESSURE_PLATES).add(ModBlocks.WISTERIA_PRESSURE_PLATE.get());
-        this.tag(BlockTags.LEAVES).add(ModBlocks.WISTERIA_LEAVES.get());
         this.tag(BlockTags.SAPLINGS).add(ModBlocks.WISTERIA_SAPLING.get());
         this.tag(BlockTags.FLOWER_POTS).add(ModBlocks.POTTED_WISTERIA_SAPLING.get());
         this.tag(BlockTags.WOODEN_DOORS).add(ModBlocks.WISTERIA_DOOR.get());
@@ -185,7 +187,6 @@ public class ModBlockTagProvider extends BlockTagsProvider {
         this.tag(BlockTags.WOODEN_STAIRS).add(ModBlocks.SATISTREE_STAIRS.get());
         this.tag(BlockTags.WOODEN_BUTTONS).add(ModBlocks.SATISTREE_BUTTON.get());
         this.tag(BlockTags.WOODEN_PRESSURE_PLATES).add(ModBlocks.SATISTREE_PRESSURE_PLATE.get());
-        this.tag(BlockTags.LEAVES).add(ModBlocks.ALIEN_LEAVES.get());
         this.tag(BlockTags.SAPLINGS).add(ModBlocks.SATISTREE_SAPLING.get());
         this.tag(BlockTags.FLOWER_POTS).add(ModBlocks.POTTED_SATISTREE_SAPLING.get());
         this.tag(BlockTags.SAPLINGS).add(ModBlocks.GIGANTIC_SATISTREE_SPROUTS.get());
@@ -209,8 +210,5 @@ public class ModBlockTagProvider extends BlockTagsProvider {
         // shrub
         this.tag(BlockTags.SAPLINGS).add(ModBlocks.SHRUB_SAPLING.get());
         this.tag(BlockTags.FLOWER_POTS).add(ModBlocks.POTTED_SHRUB_SAPLING.get());
-
-        // other
-        this.tag(BlockTags.MINEABLE_WITH_HOE).addTag(BlockTags.LEAVES);
     }
 }

@@ -3,8 +3,8 @@ package dev.maksiks.amaranth.datagen;
 import com.google.common.base.Supplier;
 import dev.maksiks.amaranth.block.ModBlocks;
 import dev.maksiks.amaranth.item.ModItems;
+import dev.maksiks.amaranth.util.Utils;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
-import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.loot.BlockLootSubProvider;
@@ -14,6 +14,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DoublePlantBlock;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.block.state.properties.Property;
@@ -26,6 +27,7 @@ import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePrope
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 
+import java.util.Objects;
 import java.util.Set;
 
 public class ModBlockLootTableProvider extends BlockLootSubProvider {
@@ -36,6 +38,34 @@ public class ModBlockLootTableProvider extends BlockLootSubProvider {
     @Override
     protected void generate() {
         HolderLookup.RegistryLookup<Enchantment> enchantmentRegistryLookup = this.registries.lookupOrThrow(Registries.ENCHANTMENT);
+
+        // groups
+
+        ModBlocks.MOD_LEAVES.forEach(pair -> {
+            Supplier<Block> leaves = pair.getFirst();
+            assert leaves != null;
+            Supplier<Block> sapling = pair.getSecond();
+
+            // exceptions
+            if (Utils.findBlockId(leaves).equals("mystic_leaves")) {
+                if (sapling == null) return;
+                this.add(leaves.get(),
+                        block -> createFruitOrExtraLeavesDrops(leaves.get(), sapling.get(), ModItems.HEXFRUIT.get(), NORMAL_LEAVES_SAPLING_CHANCES));
+                return;
+            }
+            if (Utils.findBlockId(leaves).equals("alien_leaves")) {
+                if (sapling == null) return;
+                this.add(ModBlocks.ALIEN_LEAVES.get(),
+                        block -> createFruitOrExtraLeavesDrops(ModBlocks.ALIEN_LEAVES.get(), ModBlocks.SATISTREE_SAPLING.get(), ModBlocks.ALIEN_FENCE_PLANT_SAPLING.get().asItem(), NORMAL_LEAVES_SAPLING_CHANCES));
+                return;
+            }
+
+
+            Supplier<Block> trueSapling;
+            trueSapling = Objects.requireNonNullElseGet(sapling, () -> () -> Blocks.AIR);
+            this.add(leaves.get(),
+                    block -> createLeavesDrops(leaves.get(), trueSapling.get(), NORMAL_LEAVES_SAPLING_CHANCES));
+        });
 
         // misc
         this.dropSelf(ModBlocks.MARBLE.get());
@@ -49,9 +79,6 @@ public class ModBlockLootTableProvider extends BlockLootSubProvider {
         this.dropSelf(ModBlocks.MYSTIC_SAPLING.get());
         this.add(ModBlocks.POTTED_MYSTIC_SAPLING.get(),
                 block -> createPotFlowerItemTable(ModBlocks.MYSTIC_SAPLING.get()));
-
-        this.add(ModBlocks.MYSTIC_LEAVES.get(),
-                block -> createFruitOrExtraLeavesDrops(ModBlocks.MYSTIC_LEAVES.get(), ModBlocks.MYSTIC_SAPLING.get(), ModItems.HEXFRUIT.get(), NORMAL_LEAVES_SAPLING_CHANCES));
 
         this.dropSelf(ModBlocks.MYSTIC_STAIRS.get());
         this.add(ModBlocks.MYSTIC_SLAB.get(),
@@ -72,17 +99,6 @@ public class ModBlockLootTableProvider extends BlockLootSubProvider {
         this.add(ModBlocks.POTTED_STUBBY_SAPLING.get(),
                 block -> createPotFlowerItemTable(ModBlocks.STUBBY_SAPLING.get()));
 
-        // silver birch
-        this.add(ModBlocks.SILVERY_SILVER_BIRCH_LEAVES.get(),
-                block -> createLeavesDrops(ModBlocks.SILVERY_SILVER_BIRCH_LEAVES.get(), ModBlocks.SILVER_BIRCH_SAPLING.get(), NORMAL_LEAVES_SAPLING_CHANCES));
-
-        this.add(ModBlocks.LIGHT_SILVER_BIRCH_LEAVES.get(),
-                block -> createLeavesDrops(ModBlocks.LIGHT_SILVER_BIRCH_LEAVES.get(), ModBlocks.SILVER_BIRCH_SAPLING.get(), NORMAL_LEAVES_SAPLING_CHANCES));
-
-        this.add(ModBlocks.DARK_SILVER_BIRCH_LEAVES.get(),
-                block -> createLeavesDrops(ModBlocks.DARK_SILVER_BIRCH_LEAVES.get(), ModBlocks.SILVER_BIRCH_SAPLING.get(), NORMAL_LEAVES_SAPLING_CHANCES));
-
-
         this.dropSelf(ModBlocks.SILVER_BIRCH_SAPLING.get());
         this.add(ModBlocks.POTTED_SILVER_BIRCH_SAPLING.get(),
                 block -> createPotFlowerItemTable(ModBlocks.SILVER_BIRCH_SAPLING.get()));
@@ -95,16 +111,6 @@ public class ModBlockLootTableProvider extends BlockLootSubProvider {
                 block -> createSilkTouchOnlyTable(ModBlocks.SORROW_ICE.get()));
         this.add(ModBlocks.REMNANT_SORROW_ICE.get(),
                 block -> createSilkTouchOnlyTable(ModBlocks.REMNANT_SORROW_ICE.get()));
-
-        // mixed
-        this.add(ModBlocks.PURPLE_MIXED_OAK_LEAVES.get(),
-                block -> createLeavesDrops(ModBlocks.PURPLE_MIXED_OAK_LEAVES.get(), ModBlocks.PURPLE_MIXED_OAK_SAPLING.get(), NORMAL_LEAVES_SAPLING_CHANCES));
-
-        this.add(ModBlocks.RED_MIXED_OAK_LEAVES.get(),
-                block -> createLeavesDrops(ModBlocks.RED_MIXED_OAK_LEAVES.get(), ModBlocks.RED_MIXED_OAK_SAPLING.get(), NORMAL_LEAVES_SAPLING_CHANCES));
-
-        this.add(ModBlocks.YELLOW_MIXED_OAK_LEAVES.get(),
-                block -> createLeavesDrops(ModBlocks.YELLOW_MIXED_OAK_LEAVES.get(), ModBlocks.YELLOW_MIXED_OAK_SAPLING.get(), NORMAL_LEAVES_SAPLING_CHANCES));
 
         this.dropSelf(ModBlocks.PURPLE_MIXED_OAK_SAPLING.get());
         this.add(ModBlocks.POTTED_PURPLE_MIXED_OAK_SAPLING.get(),
@@ -131,11 +137,6 @@ public class ModBlockLootTableProvider extends BlockLootSubProvider {
         this.add(ModBlocks.POTTED_ANTHOCYANIN_SAPLING.get(),
                 block -> createPotFlowerItemTable(ModBlocks.ANTHOCYANIN_SAPLING.get()));
 
-        this.add(ModBlocks.ANTHOCYANIN_LEAVES.get(),
-                block -> createLeavesDrops(ModBlocks.ANTHOCYANIN_LEAVES.get(), ModBlocks.ANTHOCYANIN_SAPLING.get(), NORMAL_LEAVES_SAPLING_CHANCES));
-        this.add(ModBlocks.BLOOMING_ANTHOCYANIN_LEAVES.get(),
-                block -> createLeavesDrops(ModBlocks.BLOOMING_ANTHOCYANIN_LEAVES.get(), ModBlocks.ANTHOCYANIN_SAPLING.get(), NORMAL_LEAVES_SAPLING_CHANCES));
-
         this.dropSelf(ModBlocks.ANTHOCYANIN_STAIRS.get());
         this.add(ModBlocks.ANTHOCYANIN_SLAB.get(),
                 block -> createSlabItemTable(ModBlocks.ANTHOCYANIN_SLAB.get()));
@@ -161,7 +162,7 @@ public class ModBlockLootTableProvider extends BlockLootSubProvider {
         this.add(ModBlocks.SPIKY_ARCHES.get(),
                 block -> createSilkTouchOrShearsDispatchTable(ModBlocks.SPIKY_ARCHES.get(),
                         LootItem.lootTableItem(ModItems.THORN.get())
-                        .when(BonusLevelTableCondition.bonusLevelFlatChance(enchantmentRegistryLookup.getOrThrow(Enchantments.FORTUNE), 0.33F, 0.55F, 0.77F, 1.0F))
+                                .when(BonusLevelTableCondition.bonusLevelFlatChance(enchantmentRegistryLookup.getOrThrow(Enchantments.FORTUNE), 0.33F, 0.55F, 0.77F, 1.0F))
                 ));
 
         // thrumletons
@@ -182,9 +183,6 @@ public class ModBlockLootTableProvider extends BlockLootSubProvider {
         this.dropSelf(ModBlocks.WISTERIA_SAPLING.get());
         this.add(ModBlocks.POTTED_WISTERIA_SAPLING.get(),
                 block -> createPotFlowerItemTable(ModBlocks.WISTERIA_SAPLING.get()));
-
-        this.add(ModBlocks.WISTERIA_LEAVES.get(),
-                block -> createLeavesDrops(ModBlocks.WISTERIA_LEAVES.get(), ModBlocks.WISTERIA_SAPLING.get(), NORMAL_LEAVES_SAPLING_CHANCES));
 
         this.dropSelf(ModBlocks.WISTERIA_STAIRS.get());
         this.add(ModBlocks.WISTERIA_SLAB.get(),
@@ -241,9 +239,6 @@ public class ModBlockLootTableProvider extends BlockLootSubProvider {
         this.add(ModBlocks.POTTED_SATISTREE_SAPLING.get(),
                 block -> createPotFlowerItemTable(ModBlocks.SATISTREE_SAPLING.get()));
         this.dropSelf(ModBlocks.GIGANTIC_SATISTREE_SPROUTS.get());
-
-        this.add(ModBlocks.ALIEN_LEAVES.get(),
-                block -> createFruitOrExtraLeavesDrops(ModBlocks.ALIEN_LEAVES.get(), ModBlocks.SATISTREE_SAPLING.get(), ModBlocks.ALIEN_FENCE_PLANT_SAPLING.get().asItem(), NORMAL_LEAVES_SAPLING_CHANCES));
 
         this.dropSelf(ModBlocks.SATISTREE_STAIRS.get());
         this.add(ModBlocks.SATISTREE_SLAB.get(),

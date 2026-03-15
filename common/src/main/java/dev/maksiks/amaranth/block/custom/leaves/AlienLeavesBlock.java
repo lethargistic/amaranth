@@ -35,10 +35,13 @@ import java.util.OptionalInt;
  * I'm in your walls.
  */
 
+// TODO fabrec: check if decay works; fuck it didnt
+
 // Neo sources had IShearable on leaves, I assume that is to match with their systems
 // and not functional since they work with shears anyway
 public class AlienLeavesBlock extends Block implements SimpleWaterloggedBlock, IFlammableLeaves {
     public static final MapCodec<AlienLeavesBlock> CODEC = simpleCodec(AlienLeavesBlock::new);
+    // main change here
     public static final int DECAY_DISTANCE = 10;
     public static final IntegerProperty DISTANCE = IntegerProperty.create("distance", 1, DECAY_DISTANCE);
     public static final BooleanProperty PERSISTENT = BlockStateProperties.PERSISTENT;
