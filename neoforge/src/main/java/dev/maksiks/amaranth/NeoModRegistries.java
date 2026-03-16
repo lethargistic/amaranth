@@ -1,5 +1,6 @@
 package dev.maksiks.amaranth;
 
+import com.google.common.base.Supplier;
 import dev.maksiks.amaranth.block.ModBlocks;
 import dev.maksiks.amaranth.entity.ModEntities;
 import dev.maksiks.amaranth.item.ModItems;

@@ -28,7 +28,9 @@ Fabric:
 - [x] todo: occlusion ; finally learnt it's culling occlusion and not ambient occlusion
 - [ ] todo very: events ; cfg to test 
 - [ ] todo very: terrablender
-- [ ] todo: particles need to be registered
+- [ ] todo: shroom boi renderer
+- [ ] todo: surface rule mngr
+- [x] todo: particles need to be registered
 - [ ] todo: inner todos
 - [x] todo: test flammability and burning ; logs, saplings, bamboo, planks work just fine, leaves do neither ; vanilla leaves dont work in furnace, aho
 - [x] fix minor: sorrow ice is not actually translucent, or just doens't seem like it? ; that's too much coding for today i forgor to replace it

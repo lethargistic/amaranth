@@ -24,7 +24,6 @@ public class SilverBirchLeavesBlock extends FlammableLeavesBlock {
 
     @Override
     public void animateTick(BlockState p_272714_, Level p_272837_, BlockPos p_273218_, RandomSource p_273360_) {
-        Constants.LOG.info("birchin: amarant");
         super.animateTick(p_272714_, p_272837_, p_273218_, p_273360_);
         if (p_273360_.nextInt(10) == 0) {
             BlockPos blockpos = p_273218_.below();

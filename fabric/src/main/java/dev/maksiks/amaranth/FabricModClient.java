@@ -1,11 +1,16 @@
 package dev.maksiks.amaranth;
 
 import dev.maksiks.amaranth.block.ModBlocks;
+import dev.maksiks.amaranth.particle.AnthocyaninParticles;
+import dev.maksiks.amaranth.particle.ModParticles;
+import dev.maksiks.amaranth.particle.SilverBirchParticles;
+import dev.maksiks.amaranth.particle.WisteriaParticles;
 import fuzs.forgeconfigapiport.fabric.api.neoforge.v4.NeoForgeConfigRegistry;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
+import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.minecraft.client.renderer.RenderType;
 import net.neoforged.fml.config.ModConfig;
 
@@ -13,6 +18,7 @@ import net.neoforged.fml.config.ModConfig;
 public class FabricModClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
+        // render types
         ModBlocks.MOD_CUTOUT_BLOCKS.forEach((block) -> {
             assert block != null;
             BlockRenderLayerMap.INSTANCE.putBlock(block.get(), RenderType.cutout());
@@ -26,6 +32,14 @@ public class FabricModClient implements ClientModInitializer {
             BlockRenderLayerMap.INSTANCE.putBlock(block.get(), RenderType.translucent());
         });
 
-        NeoForgeConfigRegistry.INSTANCE.register(Constants.MOD_ID, ModConfig.Type.CLIENT, ClientConfig.SPEC, "amaranth/amaranth-client.toml"); }
+        // particles
 
+        // absolutely failed to automate this with a Provider reference, so let's just keep it manual
+        ParticleFactoryRegistry.getInstance().register(ModParticles.SILVER_BIRCH_PARTICLES.get(), SilverBirchParticles.Provider::new);
+        ParticleFactoryRegistry.getInstance().register(ModParticles.ANTHOCYANIN_PARTICLES.get(), AnthocyaninParticles.Provider::new);
+        ParticleFactoryRegistry.getInstance().register(ModParticles.WISTERIA_PARTICLES.get(), WisteriaParticles.Provider::new);
+
+        // config
+        NeoForgeConfigRegistry.INSTANCE.register(Constants.MOD_ID, ModConfig.Type.CLIENT, ClientConfig.SPEC, "amaranth/amaranth-client.toml");
+    }
 }

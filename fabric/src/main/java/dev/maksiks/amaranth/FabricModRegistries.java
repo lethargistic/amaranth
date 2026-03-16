@@ -15,6 +15,7 @@ import net.fabricmc.fabric.api.registry.LandPathNodeTypesRegistry;
 import net.fabricmc.fabric.api.registry.StrippableBlockRegistry;
 import net.minecraft.core.DefaultedRegistry;
 import net.minecraft.core.Registry;
+import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
@@ -57,8 +58,8 @@ public class FabricModRegistries {
     }
 
     private static <T, R extends Registry<? super T>> void registerUsualEach(HashMap<String, ? extends Supplier<? extends T>> things, R registry) {
-        things.forEach((String path, Supplier<? extends T> thing) -> {
-            registerUsual(path, thing, registry);
+        things.forEach((String key, Supplier<? extends T> thing) -> {
+            registerUsual(key, thing, registry);
         });
     }
 }

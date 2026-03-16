@@ -77,7 +77,6 @@ public class NeoAmaranth {
         }
     }
 
-    // You can use SubscribeEvent and let the Event Bus discover methods to call
     @SubscribeEvent
     public void onServerStarting(ServerStartingEvent event) {
         // TODO: remove this when they get mad at me for spamming the log
