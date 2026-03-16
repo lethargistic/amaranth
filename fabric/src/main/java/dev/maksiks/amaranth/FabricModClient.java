@@ -17,6 +17,9 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.SpawnPlacementTypes;
+import net.minecraft.world.entity.SpawnPlacements;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.neoforged.fml.config.ModConfig;
 
 @Environment(EnvType.CLIENT)
@@ -53,5 +56,15 @@ public class FabricModClient implements ClientModInitializer {
             EntityRendererProvider<Entity> r = (EntityRendererProvider<Entity>) entry.renderer();
             EntityRenderers.register((EntityType<? extends Entity>) entry.entity().get(), r);
         });
+
+        // spawn placements (even if i only have a placeholder lol)
+        SpawnPlacements.register(
+                ModEntities.SHROOM_BOI.get(),
+                SpawnPlacementTypes.ON_GROUND,
+                Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                (entityType, level, reason, pos, random) -> {
+                    return true;
+                }
+        );
     }
 }

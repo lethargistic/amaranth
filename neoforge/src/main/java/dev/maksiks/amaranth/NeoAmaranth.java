@@ -4,11 +4,9 @@ package dev.maksiks.amaranth;
 import com.mojang.logging.LogUtils;
 import dev.maksiks.amaranth.entity.ModEntities;
 import dev.maksiks.amaranth.entity.client.ShroomBoiRenderer;
-import dev.maksiks.amaranth.item.ModItems;
 import dev.maksiks.amaranth.worldgen.biome.ModTerrablenderRegion;
 import dev.maksiks.amaranth.worldgen.biome.surface.ModSurfaceRules;
 import net.minecraft.client.renderer.entity.EntityRenderers;
-import net.minecraft.world.item.CreativeModeTabs;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -19,7 +17,6 @@ import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
-import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import org.slf4j.Logger;
 import terrablender.api.SurfaceRuleManager;
@@ -43,9 +40,6 @@ public class NeoAmaranth {
         NeoModRegistries.register(modEventBus);
 
         ModTerrablenderRegion.init();
-        
-        // Register the item to a creative tab
-        modEventBus.addListener(this::addCreative);
 
         // Register our mod's ModConfigSpec so that FML can create and load the config file for us
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC, "amaranth/amaranth-common.toml");
@@ -58,24 +52,7 @@ public class NeoAmaranth {
         SurfaceRuleManager.addSurfaceRules(SurfaceRuleManager.RuleCategory.OVERWORLD, MOD_ID, ModSurfaceRules.makeRules());
     }
 
-    // TODO fabrec: add to vanilla tabs
-    private void addCreative(BuildCreativeModeTabContentsEvent event) {
-        if (event.getTabKey() == CreativeModeTabs.COMBAT) {
-            event.accept(ModItems.MAFIA_BLOB.get());
-            event.accept(ModItems.BEANIE_BLOB.get());
-        }
-
-        if (event.getTabKey() == CreativeModeTabs.SPAWN_EGGS) {
-            event.accept(ModItems.SHROOM_BOI_SPAWN_EGG.get());
-        }
-
-        // not putting much stuff into vanilla tabs because you can just find it in the mod tab
-        // and thus less thinking for me
-
-        if (event.getTabKey() == CreativeModeTabs.FOOD_AND_DRINKS) {
-            event.accept(ModItems.HEXFRUIT.get());
-        }
-    }
+    // TODO maybe: add to vanilla tabs
 
     @SubscribeEvent
     public void onServerStarting(ServerStartingEvent event) {

@@ -29,7 +29,7 @@ Fabric:
 - [ ] todo very: events ; cfg to test 
 - [ ] todo very: terrablender
 - [x] todo: shroom boi renderer ; and more that i forgot apparently
-- [ ] todo: surface rule mngr
+- [x] todo: surface rule mngr
 - [x] todo: particles need to be registered
 - [ ] todo: inner todos
 - [x] todo: test flammability and burning ; logs, saplings, bamboo, planks work just fine, leaves do neither ; vanilla leaves dont work in furnace, aho
@@ -66,6 +66,7 @@ Fabric:
 - [ ] todo maybe: actually put marble in somewhere
 - [ ] improve: pumpkin
 - [ ] cleanup: linked biome configs
+- [ ] todo maybe: add items to vanilla tabs
 
 ### Whatever
 

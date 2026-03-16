@@ -1,10 +1,12 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "dev.makisks.amaranth.mixin",
+  "package": "dev.maksiks.amaranth.mixin",
   "refmap": "${mod_id}.refmap.json",
   "compatibilityLevel": "JAVA_21",
-  "mixins": [],
+  "mixins": [
+    "LivingEntityMixin"
+  ],
   "client": [
   ],
   "server": [],

@@ -1,12 +1,15 @@
 package dev.maksiks.amaranth;
 
 import dev.maksiks.amaranth.block.ModBlocks;
+import dev.maksiks.amaranth.event.ModFabricEvents;
+import dev.maksiks.amaranth.worldgen.biome.surface.ModSurfaceRules;
 import fuzs.forgeconfigapiport.fabric.api.neoforge.v4.NeoForgeConfigRegistry;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
 import net.fabricmc.fabric.api.registry.LandPathNodeTypesRegistry;
 import net.minecraft.world.level.pathfinder.PathType;
 import net.neoforged.fml.config.ModConfig;
+import terrablender.api.SurfaceRuleManager;
 
 public class FabricAmaranth implements ModInitializer {
     
@@ -21,6 +24,10 @@ public class FabricAmaranth implements ModInitializer {
 
         FabricModRegistries.init();
 
+        SurfaceRuleManager.addSurfaceRules(SurfaceRuleManager.RuleCategory.OVERWORLD, Constants.MOD_ID, ModSurfaceRules.makeRules());
+
         NeoForgeConfigRegistry.INSTANCE.register(Constants.MOD_ID, ModConfig.Type.COMMON, Config.SPEC, "amaranth/amaranth-common.toml");
+
+        ModFabricEvents.init();
     }
 }
