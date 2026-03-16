@@ -37,3 +37,6 @@ accessible method net/minecraft/world/level/biome/OverworldBiomeBuilder addUnder
 extendable method net/minecraft/world/level/biome/OverworldBiomeBuilder addUndergroundBiomes (Ljava/util/function/Consumer;)V
 accessible method net/minecraft/world/level/biome/OverworldBiomeBuilder addUndergroundBiome (Ljava/util/function/Consumer;Lnet/minecraft/world/level/biome/Climate$Parameter;Lnet/minecraft/world/level/biome/Climate$Parameter;Lnet/minecraft/world/level/biome/Climate$Parameter;Lnet/minecraft/world/level/biome/Climate$Parameter;Lnet/minecraft/world/level/biome/Climate$Parameter;FLnet/minecraft/resources/ResourceKey;)V
 accessible method net/minecraft/world/level/biome/OverworldBiomeBuilder addBottomBiome (Ljava/util/function/Consumer;Lnet/minecraft/world/level/biome/Climate$Parameter;Lnet/minecraft/world/level/biome/Climate$Parameter;Lnet/minecraft/world/level/biome/Climate$Parameter;Lnet/minecraft/world/level/biome/Climate$Parameter;Lnet/minecraft/world/level/biome/Climate$Parameter;FLnet/minecraft/resources/ResourceKey;)V
+
+# Entity renderer reg
+accessible method net/minecraft/client/renderer/entity/EntityRenderers register (Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V

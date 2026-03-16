@@ -28,7 +28,7 @@ Fabric:
 - [x] todo: occlusion ; finally learnt it's culling occlusion and not ambient occlusion
 - [ ] todo very: events ; cfg to test 
 - [ ] todo very: terrablender
-- [ ] todo: shroom boi renderer
+- [x] todo: shroom boi renderer ; and more that i forgot apparently
 - [ ] todo: surface rule mngr
 - [x] todo: particles need to be registered
 - [ ] todo: inner todos

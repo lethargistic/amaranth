@@ -10,17 +10,16 @@ import dev.maksiks.amaranth.worldgen.features.ModFeatures;
 import dev.maksiks.amaranth.worldgen.features.structure_processor.ModStructureProcessorTypes;
 import dev.maksiks.amaranth.worldgen.tree.foliage_placer.ModFoliagePlacerTypes;
 import dev.maksiks.amaranth.worldgen.tree.trunk_placer.ModTrunkPlacerTypes;
+import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
+import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
 import net.fabricmc.fabric.api.registry.LandPathNodeTypesRegistry;
 import net.fabricmc.fabric.api.registry.StrippableBlockRegistry;
-import net.minecraft.core.DefaultedRegistry;
 import net.minecraft.core.Registry;
-import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.CreativeModeTabs;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.pathfinder.PathType;
 
 import java.util.HashMap;
@@ -44,13 +43,25 @@ public class FabricModRegistries {
         registerUsualEach(ModFeatures.FEATURE_MAP, BuiltInRegistries.FEATURE);
         registerUsualEach(ModStructureProcessorTypes.STRUCTURE_PROCESSOR_TYPE_MAP, BuiltInRegistries.STRUCTURE_PROCESSOR);
 
-        // Fabric specific
+        // Fabric specific / other
         LandPathNodeTypesRegistry.register(ModBlocks.SPIKY_ARCHES.get(), PathType.DAMAGE_OTHER, null);
 
         ModBlocks.FABRIC_MOD_FLAMMABLE_BLOCKS.forEach((block, data) ->
                 FlammableBlockRegistry.getDefaultInstance().add(block.get(), data.burn(), data.spread()));
         ModBlocks.MOD_STRIPPABLES.forEach((strippable, stripped) ->
                 StrippableBlockRegistry.register(strippable.get(), stripped.get()));
+
+        // TODO rn: NEO
+        ModEntities.ENTITY_MODELS.forEach((entry)
+                -> EntityModelLayerRegistry.registerModelLayer(entry.loc(), entry.def()::get)
+        );
+        // TODO rn: NEO
+        // noinspection unchecked
+        ModEntities.ENTITY_ATTRIBUTES.forEach((entry)
+                -> FabricDefaultAttributeRegistry.register((EntityType<? extends LivingEntity>) entry.entity().get(), entry.attributes().get())
+        );
+
+        // more in client
     }
 
     private static <T> void registerUsual(String path, Supplier<T> thing, Registry<? super T> registry) {

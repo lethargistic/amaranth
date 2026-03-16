@@ -3,11 +3,11 @@ package dev.maksiks.amaranth.event;
 import dev.maksiks.amaranth.Constants;
 import dev.maksiks.amaranth.block.ModBlocks;
 import dev.maksiks.amaranth.entity.ModEntities;
-import dev.maksiks.amaranth.entity.client.ShroomBoiModel;
-import dev.maksiks.amaranth.entity.custom.ShroomBoiEntity;
 import dev.maksiks.amaranth.item.ModItems;
 import dev.maksiks.amaranth.util.Utils;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.SpawnPlacementTypes;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Blocks;
@@ -27,12 +27,16 @@ import static dev.maksiks.amaranth.block.ModBlocks.MOD_FLOWER_POTS;
 public class ModEventBusEvents {
     @SubscribeEvent
     public static void registerLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
-        event.registerLayerDefinition(ShroomBoiModel.LAYER_LOCATION, ShroomBoiModel::createBodyLayer);
+        ModEntities.ENTITY_MODELS.forEach((entry) -> {
+            event.registerLayerDefinition(entry.loc(), entry.def());
+        });
     }
 
     @SubscribeEvent
     public static void registerAttributes(EntityAttributeCreationEvent event) {
-        event.put(ModEntities.SHROOM_BOI.get(), ShroomBoiEntity.createAttributes().build());
+        // noinspection unchecked
+        ModEntities.ENTITY_ATTRIBUTES.forEach((entry)
+                -> event.put((EntityType<? extends LivingEntity>) entry.entity().get(), entry.attributes().get().build()));
     }
 
     @SubscribeEvent

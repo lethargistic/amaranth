@@ -2,12 +2,14 @@ package dev.maksiks.amaranth.event;
 
 import dev.maksiks.amaranth.Constants;
 import dev.maksiks.amaranth.entity.ModEntities;
-import dev.maksiks.amaranth.entity.client.ShroomBoiRenderer;
 import dev.maksiks.amaranth.particle.AnthocyaninParticles;
 import dev.maksiks.amaranth.particle.ModParticles;
 import dev.maksiks.amaranth.particle.SilverBirchParticles;
 import dev.maksiks.amaranth.particle.WisteriaParticles;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.EntityRenderers;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -17,8 +19,11 @@ import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
 @EventBusSubscriber(modid = Constants.MOD_ID, value = Dist.CLIENT)
 public class ModNeoClientEvents {
     @SubscribeEvent
-    public static void onClientSetup(FMLClientSetupEvent event) {
-        EntityRenderers.register(ModEntities.SHROOM_BOI.get(), ShroomBoiRenderer::new);
+    public static <T extends Entity> void onClientSetup(FMLClientSetupEvent event) {
+        ModEntities.ENTITY_RENDERERS.forEach((entry) -> {
+            // noinspection unchecked
+            EntityRenderers.register((EntityType<? extends T>) entry.entity().get(), (EntityRendererProvider<T>) entry.renderer());
+        });
     }
 
     @SubscribeEvent
