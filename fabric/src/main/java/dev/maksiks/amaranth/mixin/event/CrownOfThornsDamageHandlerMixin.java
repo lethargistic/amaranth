@@ -1,4 +1,4 @@
-package dev.maksiks.amaranth.mixin;
+package dev.maksiks.amaranth.mixin.event;
 
 import dev.maksiks.amaranth.event.ModSharedEvents;
 import net.minecraft.world.damagesource.DamageSource;
@@ -10,10 +10,15 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 // recreating Neo's hook
 @Mixin(LivingEntity.class)
-public abstract class LivingEntityMixin {
-
-    @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;isSleeping()Z", ordinal = 0), method = "hurt")
+public abstract class CrownOfThornsDamageHandlerMixin {
+    @Inject(
+            method = "hurt",
+            at = @At(value = "INVOKE",
+                    target = "Lnet/minecraft/world/entity/LivingEntity;isSleeping()Z",
+                    ordinal = 0
+            )
+    )
     private void onLivingIncomingDamage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
-        ModSharedEvents.doLivingIncomingDamageEvent((LivingEntity)(Object) this, source);
+        ModSharedEvents.doLivingIncomingDamageEvent((LivingEntity) (Object) this, source);
     }
 }

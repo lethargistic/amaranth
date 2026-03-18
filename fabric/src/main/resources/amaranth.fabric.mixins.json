@@ -5,9 +5,12 @@
   "refmap": "${mod_id}.refmap.json",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "LivingEntityMixin"
+    "event.CrownOfThornsDamageHandlerMixin",
+    "event.MelonHelmetCraftHandlerMixin"
   ],
   "client": [
+    "event.CustomFogHandlerMixin",
+    "event.SorrowIceBlockHighlightHandlerMixin"
   ],
   "server": [],
   "injectors": {
