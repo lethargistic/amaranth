@@ -19,7 +19,6 @@ public class MelonHelmetCraftHandlerMixin {
     @Shadow
     private Player player;
 
-    // TODO fig: i kinda wonder why is At.Shift sometimes fragile and sometimes not need to research that at home
     @Inject(
             method = "checkTakeAchievements",
             at = @At(

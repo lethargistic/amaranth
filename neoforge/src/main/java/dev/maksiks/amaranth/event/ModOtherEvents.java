@@ -19,7 +19,6 @@ import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent;
 
 import static dev.maksiks.amaranth.block.ModBlocks.MOD_FLOWER_POTS;
 
-// TODO fabrec: check if done
 @EventBusSubscriber(modid = Constants.MOD_ID)
 public class ModOtherEvents {
     @SubscribeEvent

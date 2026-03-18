@@ -12,7 +12,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 
-// TODO fabrec: test events heavy!!!
 // recreating Neo's hook
 @Mixin(FogRenderer.class)
 public class CustomFogHandlerMixin {

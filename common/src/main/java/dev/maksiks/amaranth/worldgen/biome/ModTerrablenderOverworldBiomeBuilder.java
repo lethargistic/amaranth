@@ -11,6 +11,7 @@ import terrablender.api.TerrablenderOverworldBiomeBuilder;
 
 import java.util.function.Consumer;
 
+// TODO clean: all of biome code is a bit of a mess
 public class ModTerrablenderOverworldBiomeBuilder extends TerrablenderOverworldBiomeBuilder {
     private final Integer regionId;
 

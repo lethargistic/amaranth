@@ -179,7 +179,6 @@ class ModBlocks {
             "mystic_fence_gate"
         ) { FenceGateBlock(WoodType.SPRUCE, normalWoodProps.get()!!) }
 
-        // TODO fabrec: no occlusion?
         @JvmField
         val MYSTIC_DOOR: Supplier<DoorBlock?> = registerWithItem<DoorBlock?>(
             "mystic_door", renderType = RenderType.CUTOUT

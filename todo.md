@@ -2,8 +2,9 @@
 
 - [x] prod: remove dev biomes, clean up
 - [x] todo very: melon helmet
-- [x] fix: melon helmet tooltip isn't actually multiline lol
-- [ ] fix: melon helmet regeneration doesnt acutally work ; or maybe i should keep it as a primordial evil that i am rofl
+- [x] fix: melon helmet tooltip isn't actually multiline lol ; again
+- [ ] fix: melon helmet regeneration doesn't actually work ; or maybe i should keep it as a primordial evil that i am rofl
+- [ ] fix maybe: setblock in far chunk vanilla log spam, im fairly certain it's ok
 - [x] cfg: worldgen balancing ; double x
 - [x] fix: look into isSolid vs isFaceSturdy
 - [x] fix: make disc obtainable ; any loot table chest? ; or dungeons ; in desolate loot table, the contrast, WOO
@@ -28,13 +29,13 @@ Fabric:
 - [x] todo: creative tab
 - [x] todo: transparency
 - [x] todo: occlusion ; finally learnt it's culling occlusion and not ambient occlusion
-- [ ] todo very: events ; cfg to test 
-- [ ] todo very: hide biome leaf particles config is broken
-- [ ] todo very: terrablender
+- [x] todo very: events ; cfg to test 
+- [x] todo very: hide biome leaf particles config is broken
+- [x] todo very: terrablender ; for fabrec i meant ; i bet it has some kinda fabric-only bug or quirk that i cant test properly wewrwrwrrw
 - [x] todo: shroom boi renderer ; and more that i forgot apparently
 - [x] todo: surface rule mngr
 - [x] todo: particles need to be registered
-- [ ] todo: inner todos
+- [x] todo: inner todos
 - [x] todo: test flammability and burning ; logs, saplings, bamboo, planks work just fine, leaves do neither ; vanilla leaves dont work in furnace, aho
 - [x] fix minor: sorrow ice is not actually translucent, or just doens't seem like it? ; that's too much coding for today i forgor to replace it
 
