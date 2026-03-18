@@ -1,8 +1,8 @@
 package dev.maksiks.amaranth.mixin.event;
 
+import dev.maksiks.amaranth.event.JuiceCraftHandlerSharedEvent;
 import dev.maksiks.amaranth.event.MelonHelmetCraftHandlerSharedEvent;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.inventory.ResultSlot;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Final;
@@ -14,12 +14,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 // recreating Neo's hook
 @Mixin(ResultSlot.class)
-public class MelonHelmetCraftHandlerMixin {
+public class JuiceCraftHandlerMixin {
     @Final
     @Shadow
     private Player player;
 
-    // TODO fig: i kinda wonder why is At.Shift sometimes fragile and sometimes not need to research that at home
     @Inject(
             method = "checkTakeAchievements",
             at = @At(
@@ -29,6 +28,6 @@ public class MelonHelmetCraftHandlerMixin {
             )
     )
     private void onItemCrafted(ItemStack stack, CallbackInfo ci) {
-        MelonHelmetCraftHandlerSharedEvent.itemCrafted(this.player, stack);
+        JuiceCraftHandlerSharedEvent.itemCrafted(this.player, stack);
     }
 }

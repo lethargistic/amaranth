@@ -14,6 +14,23 @@ public class CommonClass {
     // write the majority of your code here and load it from your loader specific projects. This example has some
     // code that gets invoked by the entry point of the loader specific projects.
     public static void init() {
-        //
+        // TODO: remove this when they get mad at me for spamming the log
+        Constants.LOG.info("TODO: remove this when they get mad at me for spamming the log");
+        Constants.LOG.info("""
+                
+                           (\\ __ /)
+                             (UwU)   ✧
+                          ＿ノ ヽ ノ＼＿ 
+                        /　`/ ⌒Ｙ⌒ Ｙ \\ \\ '\\
+                      ( 　 (三ヽ人　   /　|  |
+                     |　ﾉ⌒＼ ￣￣ヽ　 ノ  |
+                      ヽ＿＿＿＞､＿＿／'
+                          ｜( 王 ﾉ〈 
+                           /ﾐ`ー―彡\\ 
+                          |╰      ╯|   
+                          |   /\\   |
+                          |  /  \\  |
+                          | /    \\ |
+                """);
     }
 }

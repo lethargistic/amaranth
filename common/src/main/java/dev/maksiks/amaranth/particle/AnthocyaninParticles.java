@@ -8,7 +8,8 @@ import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.util.Mth;
 import org.jetbrains.annotations.Nullable;
 
-import static dev.maksiks.amaranth.ClientConfig.*;
+import static dev.maksiks.amaranth.ClientConfig.HIDE_ALL_BIOME_PARTICLES;
+import static dev.maksiks.amaranth.ClientConfig.HIDE_BIOME_AMBIENCE_PARTICLES;
 
 public class AnthocyaninParticles extends TextureSheetParticle {
 
@@ -32,6 +33,12 @@ public class AnthocyaninParticles extends TextureSheetParticle {
         this.friction = 0.96F;
     }
 
+    private static boolean checkIfDisallowed(ParticleStatus setting) {
+        return setting == ParticleStatus.MINIMAL ||
+                HIDE_BIOME_AMBIENCE_PARTICLES.getAsBoolean() ||
+                HIDE_ALL_BIOME_PARTICLES.getAsBoolean();
+    }
+
     @Override
     public void tick() {
         super.tick();
@@ -41,9 +48,7 @@ public class AnthocyaninParticles extends TextureSheetParticle {
         // if you have minimal particles, you won't see these
         // i think the override being false should remove them but uhm, I guess it doesn't?
         // + config
-        if (setting == ParticleStatus.MINIMAL ||
-                HIDE_BIOME_AMBIENCE_PARTICLES.getAsBoolean() ||
-                HIDE_ALL_BIOME_PARTICLES.getAsBoolean()) {
+        if (checkIfDisallowed(setting)) {
             /// also see the minimize one in {@link dev.maksiks.amaranth.block.custom.leaves.AnthocyaninLeavesBlock}
             this.remove();
         }
@@ -78,6 +83,8 @@ public class AnthocyaninParticles extends TextureSheetParticle {
         public Particle createParticle(SimpleParticleType type, ClientLevel level,
                                        double x, double y, double z,
                                        double vx, double vy, double vz) {
+            ParticleStatus setting = Minecraft.getInstance().options.particles().get();
+            if (checkIfDisallowed(setting)) return null;
             return new AnthocyaninParticles(level, x, y, z, vx, vy, vz, sprites);
         }
     }

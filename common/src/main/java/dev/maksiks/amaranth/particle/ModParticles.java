@@ -2,14 +2,10 @@ package dev.maksiks.amaranth.particle;
 
 import com.google.common.base.Supplier;
 import com.google.common.base.Suppliers;
-import com.mojang.datafixers.util.Pair;
-import net.minecraft.client.particle.ParticleProvider;
-import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.particles.SimpleParticleType;
 
 import java.util.HashMap;
-import java.util.function.Function;
 
 public class ModParticles {
 

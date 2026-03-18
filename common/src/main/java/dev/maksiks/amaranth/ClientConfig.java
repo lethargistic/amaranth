@@ -11,7 +11,7 @@ public class ClientConfig {
 
     public static final ModConfigSpec.BooleanValue HIDE_ALL_BIOME_PARTICLES = BUILDER
             .comment("")
-            .comment(" Noooo MY PRETTY PARTICLES HOW RUDE (jk).")
+            .comment(" Noooo my pretty particle-e-es. How rude.")
             .define("hideAllBiomeParticles", false);
 
     public static final ModConfigSpec.BooleanValue HIDE_BIOME_LEAF_PARTICLES = BUILDER

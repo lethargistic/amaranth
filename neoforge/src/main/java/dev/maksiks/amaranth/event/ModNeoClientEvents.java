@@ -28,7 +28,6 @@ public class ModNeoClientEvents {
 
     @SubscribeEvent
     public static void registerParticleFactories(RegisterParticleProvidersEvent event) {
-
         // absolutely failed to automate this with a Provider reference, so let's just keep it manual
         event.registerSpriteSet(ModParticles.SILVER_BIRCH_PARTICLES.get(), SilverBirchParticles.Provider::new);
         event.registerSpriteSet(ModParticles.ANTHOCYANIN_PARTICLES.get(), AnthocyaninParticles.Provider::new);

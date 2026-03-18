@@ -64,7 +64,7 @@ public class SilverBirchParticles extends TextureSheetParticle {
         // if you have minimal particles, you won't see these
         // i think the override being false should remove them but uhm, I guess it doesn't?
         // + config
-        if (setting == ParticleStatus.MINIMAL || HIDE_BIOME_LEAF_PARTICLES.getAsBoolean() || HIDE_ALL_BIOME_PARTICLES.getAsBoolean()) {
+        if (checkIfDisallowed(setting)) {
             this.remove();
         }
 
@@ -78,8 +78,8 @@ public class SilverBirchParticles extends TextureSheetParticle {
         if (!this.removed) {
             float f = (float)(INITIAL_LIFETIME - this.lifetime);
             float f1 = Math.min(f / (float)INITIAL_LIFETIME, 1.0F);
-            double d0 = Math.cos(Math.toRadians((double)(this.particleRandom * 60.0F))) * 2.0 * Math.pow((double)f1, 1.25);
-            double d1 = Math.sin(Math.toRadians((double)(this.particleRandom * 60.0F))) * 2.0 * Math.pow((double)f1, 1.25);
+            double d0 = Math.cos(Math.toRadians(this.particleRandom * 60.0F)) * 2.0 * Math.pow((double)f1, 1.25);
+            double d1 = Math.sin(Math.toRadians(this.particleRandom * 60.0F)) * 2.0 * Math.pow((double)f1, 1.25);
 
             double wind = getGlobalWindFactor(this.level);
 
@@ -110,6 +110,10 @@ public class SilverBirchParticles extends TextureSheetParticle {
         }
     }
 
+    private static boolean checkIfDisallowed(ParticleStatus setting) {
+        return setting == ParticleStatus.MINIMAL || HIDE_BIOME_LEAF_PARTICLES.getAsBoolean() || HIDE_ALL_BIOME_PARTICLES.getAsBoolean();
+    }
+
     public static class Provider implements ParticleProvider<SimpleParticleType> {
         private final SpriteSet spriteSet;
 
@@ -121,6 +125,8 @@ public class SilverBirchParticles extends TextureSheetParticle {
         @Override
         public Particle createParticle(SimpleParticleType simpleParticleType, ClientLevel clientLevel,
                                        double pX, double pY, double pZ, double pXSpeed, double pYSpeed, double pZSpeed) {
+            ParticleStatus setting = Minecraft.getInstance().options.particles().get();
+            if (checkIfDisallowed(setting)) return null;
             return new SilverBirchParticles(clientLevel, pX, pY, pZ, this.spriteSet, pXSpeed, pYSpeed, pZSpeed);
         }
     }

@@ -26,10 +26,6 @@ import java.util.HashMap;
 
 public class FabricModRegistries {
     public static void init() {
-        // TODO fabrec: cook every registry on fabric
-        // TODO fabrec: check if everything flammable on fabric
-        // TODO fabrec: figure out how to make everything burnable in furnance on fabric
-
         // creative tabs register themselves because life is cruel
         ModCreativeTabs.init();
         registerUsualEach(ModBlocks.BLOCK_MAP, BuiltInRegistries.BLOCK);
@@ -51,11 +47,9 @@ public class FabricModRegistries {
         ModBlocks.MOD_STRIPPABLES.forEach((strippable, stripped) ->
                 StrippableBlockRegistry.register(strippable.get(), stripped.get()));
 
-        // TODO rn: NEO
         ModEntities.ENTITY_MODELS.forEach((entry)
                 -> EntityModelLayerRegistry.registerModelLayer(entry.loc(), entry.def()::get)
         );
-        // TODO rn: NEO
         // noinspection unchecked
         ModEntities.ENTITY_ATTRIBUTES.forEach((entry)
                 -> FabricDefaultAttributeRegistry.register((EntityType<? extends LivingEntity>) entry.entity().get(), entry.attributes().get())

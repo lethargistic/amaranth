@@ -25,11 +25,10 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-// TODO fabrec: check if works HEAVIEST !!!
 // a bit different from Neo because my cancel was cancelling the whole thing
 // so instead i mixin'd into the method for it directly and cancel that
 // I assume Neo just has a thing for that or something but i really should learn how
-// is it that Neo's cancel only cancels the correct if block/method and whatnot?
+// is it that Neo's cancel only cancels the correct if block/method (?) and whatnot?
 @Mixin(LevelRenderer.class)
 public class SorrowIceBlockHighlightHandlerMixin {
     @Final

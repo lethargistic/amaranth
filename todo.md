@@ -2,6 +2,8 @@
 
 - [x] prod: remove dev biomes, clean up
 - [x] todo very: melon helmet
+- [x] fix: melon helmet tooltip isn't actually multiline lol
+- [ ] fix: melon helmet regeneration doesnt acutally work ; or maybe i should keep it as a primordial evil that i am rofl
 - [x] cfg: worldgen balancing ; double x
 - [x] fix: look into isSolid vs isFaceSturdy
 - [x] fix: make disc obtainable ; any loot table chest? ; or dungeons ; in desolate loot table, the contrast, WOO
@@ -27,6 +29,7 @@ Fabric:
 - [x] todo: transparency
 - [x] todo: occlusion ; finally learnt it's culling occlusion and not ambient occlusion
 - [ ] todo very: events ; cfg to test 
+- [ ] todo very: hide biome leaf particles config is broken
 - [ ] todo very: terrablender
 - [x] todo: shroom boi renderer ; and more that i forgot apparently
 - [x] todo: surface rule mngr
@@ -58,6 +61,7 @@ Fabric:
 - [ ] todo maybe: revisit some biomes ; witchy ; satisforest
 - [ ] todo: block that disables possibly annoying visual effects for biome
 - [ ] todo: add some custom soils (for at least a few at once, not just 1)
+- [ ] todo maybe: make leaf particles only appear on naturally generated ones ; leaf particler staffe
 
 ### Should, but would?
 

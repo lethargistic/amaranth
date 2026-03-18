@@ -1,15 +1,12 @@
 package dev.maksiks.amaranth.event;
 
 import dev.maksiks.amaranth.Constants;
-import dev.maksiks.amaranth.block.ModBlocks;
 import dev.maksiks.amaranth.entity.ModEntities;
-import dev.maksiks.amaranth.item.ModItems;
 import dev.maksiks.amaranth.util.Utils;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.SpawnPlacementTypes;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FlowerPotBlock;
 import net.minecraft.world.level.levelgen.Heightmap;
@@ -19,13 +16,12 @@ import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent;
-import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 
 import static dev.maksiks.amaranth.block.ModBlocks.MOD_FLOWER_POTS;
 
 // TODO fabrec: check if done
 @EventBusSubscriber(modid = Constants.MOD_ID)
-public class ModEventBusEvents {
+public class ModOtherEvents {
     @SubscribeEvent
     public static void registerLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
         ModEntities.ENTITY_MODELS.forEach((entry) -> {
@@ -40,6 +36,7 @@ public class ModEventBusEvents {
                 -> event.put((EntityType<? extends LivingEntity>) entry.entity().get(), entry.attributes().get().build()));
     }
 
+    // note currently not on fabric since i dont use it yet anyway
     @SubscribeEvent
     public static void registerSpawnPlacements(RegisterSpawnPlacementsEvent event) {
         event.register(
@@ -55,23 +52,13 @@ public class ModEventBusEvents {
 
     @SubscribeEvent
     public static void onCommonSetup(FMLCommonSetupEvent event) {
-        event.enqueueWork(() -> {
-            MOD_FLOWER_POTS.forEach((plant, pot) -> {
-                ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(
-                        ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, Utils.findBlockId(plant)),
-                        pot
-                );
-            });
-        });
-    }
-
-    @SubscribeEvent
-    public static void onCrafted(PlayerEvent.ItemCraftedEvent event) {
-        if (event.getCrafting().is(ModBlocks.WISTERIA_LOG.get().asItem())) {
-            ItemStack secondary = new ItemStack(ModItems.WISTERIA_JUICE.get().asItem());
-            if (!event.getEntity().getInventory().add(secondary)) {
-                event.getEntity().drop(secondary, false);
-            }
-        }
+        // note: fairly certain you don't need to do this on fabric (it works)
+        // but im confused as to why you do on Neo then
+        event.enqueueWork(() -> MOD_FLOWER_POTS.forEach((plant, pot) -> {
+            ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(
+                    ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, Utils.findBlockId(plant)),
+                    pot
+            );
+        }));
     }
 }

@@ -13,7 +13,9 @@ import net.minecraft.world.phys.BlockHitResult;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 
-// TODO fabrec: test
+
+// technically fixes a vanilla bug on translucent blocks where you can kinda xray a little through the highlight
+// it's not a big deal on vanilla ice cause it's light but on my ice it was highly visible
 // i remember this was a pain to make and ended up pretty bad
 // edit: it looks good just as the vanilla one what is my inner monologue talking about
 // edit 2: this was such an overkill perfectionistic thing why did i do it, but it looks cool

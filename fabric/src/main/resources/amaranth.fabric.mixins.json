@@ -6,6 +6,7 @@
   "compatibilityLevel": "JAVA_21",
   "mixins": [
     "event.CrownOfThornsDamageHandlerMixin",
+    "event.JuiceCraftHandlerMixin",
     "event.MelonHelmetCraftHandlerMixin"
   ],
   "client": [
