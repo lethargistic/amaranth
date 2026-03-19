@@ -1,8 +1,8 @@
 plugins {
     id 'multiloader-loader'
     id 'net.neoforged.moddev'
-    id 'org.jetbrains.kotlin.jvm' version '2.2.20'
-    id 'org.jetbrains.kotlin.plugin.serialization' version '2.2.20'
+    id 'org.jetbrains.kotlin.jvm' version '2.0.0'
+    id 'org.jetbrains.kotlin.plugin.serialization' version '2.0.0'
 }
 
 repositories {
@@ -15,7 +15,7 @@ repositories {
 
 dependencies {
     implementation "com.github.glitchfiend:TerraBlender-neoforge:${minecraft_version}-${terrablender_version}"
-    implementation 'thedarkcolour:kotlinforforge-neoforge:5.10.0'
+    implementation 'thedarkcolour:kotlinforforge-neoforge:5.4.0'
 
     implementation "maven.modrinth:twigonometry:mc${project.minecraft_version}-${project.twigonometry_version}-neoforge"
 }

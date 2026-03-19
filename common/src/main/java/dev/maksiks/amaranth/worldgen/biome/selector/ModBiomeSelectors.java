@@ -18,7 +18,7 @@ import static dev.maksiks.amaranth.worldgen.biome.selector.ModBiomeSelectorUtils
  * oceans               - Appearing on terrain below sea level, here is the "ocean_biomes" layout:
  * [ DEEP-ICY, DEEP-COLD, DEEP-NEUTRAL, DEEP-WARM, DEEP-HOT ]
  * [ SHALLOW-ICY, SHALLOW-COLD, SHALLOW-NEUTRAL, SHALLOW-WARM, SHALLOW-HOT ],
- * <p>
+ * </p>
  * middleBiomes         - Appearing on terrain BELOW weirdness 0 or in unfilled("NULL(nothing)") spots in "middle_biomes_variants", here is the "middle_biomes" layout:
  * middleBiomesVariant  - Appearing on terrain ABOVE weirdness 0, here is the "middle_biomes_variant" layout:
  *                        Null values may be passed in, the equivalent biome at the equivalent temperature/humidity index in the middleBiomes array will be used.
@@ -39,7 +39,7 @@ import static dev.maksiks.amaranth.worldgen.biome.selector.ModBiomeSelectorUtils
  * [ ARID-NEUTRAL, DRY-NEUTRAL, NEUTRAL-NEUTRAL, WET-NEUTRAL, HUMID-NEUTRAL ],
  * [ ARID-WARM, DRY-WARM, NEUTRAL-WARM, WET-WARM, HUMID-WARM ],
  * [ ARID-HOT, DRY-HOT, NEUTRAL-HOT, WET-HOT, HUMID-HOT ]
- * <p>
+ * </p>
  */
 
 ///

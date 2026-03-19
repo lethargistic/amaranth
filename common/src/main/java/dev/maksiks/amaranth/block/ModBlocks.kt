@@ -781,7 +781,7 @@ class ModBlocks {
 
         @JvmField
         val ALIEN_PHYLLOSTACHYS: Supplier<Block?> = registerWithItem<Block?>(
-            "alien_phyllostachys"
+            "alien_phyllostachys", renderType = RenderType.CUTOUT
         ) { AlienPhyllostachysStalkBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.BAMBOO)) }
 
         @JvmField
@@ -851,8 +851,8 @@ class ModBlocks {
             val leaves: Supplier<Block?> = registerWithItem<Block?>(
                 key, renderType = RenderType.CUTOUT_MIPPED) { constructor(trueProps) }
 
-            MOD_LEAVES.add(Pair(leaves, sapling));
-            return leaves;
+            MOD_LEAVES.add(Pair(leaves, sapling))
+            return leaves
         }
 
         private fun registerStrippablePillarBlock(

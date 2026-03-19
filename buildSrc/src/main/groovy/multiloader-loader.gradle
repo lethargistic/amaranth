@@ -48,3 +48,8 @@ tasks.named('compileKotlin') {
     dependsOn(configurations.commonJava)
     source(configurations.commonJava)
 }
+
+// i dont need them so whatever
+tasks.named("javadoc") {
+    exclude("**/*.kt")
+}

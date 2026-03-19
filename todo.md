@@ -3,49 +3,57 @@
 - [x] prod: remove dev biomes, clean up
 - [x] todo very: melon helmet
 - [x] fix: melon helmet tooltip isn't actually multiline lol ; again
-- [ ] fix: melon helmet regeneration doesn't actually work ; or maybe i should keep it as a primordial evil that i am rofl
-- [ ] fix maybe: setblock in far chunk vanilla log spam, im fairly certain it's ok
+- [ ] fix: melon helmet regeneration doesn't actually work ; or maybe i should keep it as a primordial evil that i am
+  rofl
+- [ ] fix maybe: setblock in far chunk vanilla log spam, im fairly certain it's harmless tho
 - [x] cfg: worldgen balancing ; double x
 - [x] fix: look into isSolid vs isFaceSturdy
 - [x] fix: make disc obtainable ; any loot table chest? ; or dungeons ; in desolate loot table, the contrast, WOO
 - [x] todo: add teaser hut structure
 - [x] cfg: config
-- [ ] todo very: full config, region weights + change biome selectors
+- [ ] todo very: full config, region weights + change biome selectors ; did individual biome config
 - [x] todo maybe: specify access transformers for some instead of wildcards. tho no conflicts as far as i can see
 - [ ] todo very: add base biome for every climate zone
 - [x] todo: "subtle" for desc? ; no but actually yes
 - [x] todo: vivid shrubland has too consistent rocks
 - [x] todo: publish on Modrinth
 - [x] todo: publish on Curseforge
-- [ ] todo: add Curseforge id to metadata later
+- [x] todo: add Curseforge id to metadata later
 - [ ] todo: make satisforest a lot less rare
 - [ ] todo: make villages appear in shrublands and other relevant
+- [x] fix very: flk version mismatch
+- [ ] pain: do a 50/50 on some biomes if that would work reasonably ??? ; couldnt with current terrablender rip
+  ; on my Christmas wishlist
+  ; one very promising direction is to re-register the regions before Terrablender does it's thing with them when the
+  seed is already available, so like some event that happens right before the world loads or whatever mixin Terrablender
+  runs
+  ; got it to work but requires a world restart and it sounds like a pain to ask the player to relog tho
+  ; if i do this i beat Terrablender (the boss)
 
 Multiloader moves:
 - [x] todo: written down todos
 - [x] fix: logs are not strippable
-Fabric:
+  Fabric:
 - [x] todo: registries
 - [x] todo: creative tab
 - [x] todo: transparency
 - [x] todo: occlusion ; finally learnt it's culling occlusion and not ambient occlusion
-- [x] todo very: events ; cfg to test 
+- [x] todo very: events ; cfg to test
 - [x] todo very: hide biome leaf particles config is broken
-- [x] todo very: terrablender ; for fabrec i meant ; i bet it has some kinda fabric-only bug or quirk that i cant test properly wewrwrwrrw
+- [x] todo very: terrablender ; for fabrec i meant ; i bet it has some kinda fabric-only bug or quirk that i cant test
+  properly wewrwrwrrw
 - [x] todo: shroom boi renderer ; and more that i forgot apparently
 - [x] todo: surface rule mngr
 - [x] todo: particles need to be registered
 - [x] todo: inner todos
-- [x] todo: test flammability and burning ; logs, saplings, bamboo, planks work just fine, leaves do neither ; vanilla leaves dont work in furnace, aho
-- [x] fix minor: sorrow ice is not actually translucent, or just doens't seem like it? ; that's too much coding for today i forgor to replace it
+- [x] todo: test flammability and burning ; logs, saplings, bamboo, planks work just fine, leaves do neither ; vanilla
+  leaves dont work in furnace, aho
+- [x] fix minor: sorrow ice is not actually translucent, or just doens't seem like it? ; that's too much coding for
+  today i forgor to replace it
 
 ### Moderate
+- 
 
-- [ ] pain: do a 50/50 on some biomes if that would work reasonably ??? ; couldnt with current terrablender rip
-  ; on my Christmas wishlist
-  ; one very promising direction is to re-register the regions before Terrablender does it's thing with them when the
-  seed is already available, so like some event that happens right before the world loads or whatever mixin Terrablender runs
-  ; got it to work but requires a world restart and it sounds like a pain to ask the player to relog tho
 - [ ] todo maybe: report VanillaParameterOverlayBuilder mob spawn issue if it's still a thing in latest
 - [ ] todo fun: a mod that makes players edible
 - [ ] todo very: a minecraft biome and terrablender biome guide, no one has to suffer through this shit again ; also
@@ -642,7 +650,9 @@ IDEAS:
 
 ### cherry + snow
 ----------------------
+
 - [ ] the concept of blood on snow doesn't leave my head so might as well
+
 ----------------------
 
 
