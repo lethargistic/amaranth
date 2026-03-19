@@ -3,8 +3,7 @@
 - [x] prod: remove dev biomes, clean up
 - [x] todo very: melon helmet
 - [x] fix: melon helmet tooltip isn't actually multiline lol ; again
-- [ ] fix: melon helmet regeneration doesn't actually work ; or maybe i should keep it as a primordial evil that i am
-  rofl
+- [ ] fix: melon helmet regeneration doesn't actually work ; or maybe i should keep it as a primordial evil that i am rofl
 - [ ] fix maybe: setblock in far chunk vanilla log spam, im fairly certain it's harmless tho
 - [x] cfg: worldgen balancing ; double x
 - [x] fix: look into isSolid vs isFaceSturdy
