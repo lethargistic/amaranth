@@ -15,7 +15,7 @@ repositories {
 
 dependencies {
     implementation "com.github.glitchfiend:TerraBlender-neoforge:${minecraft_version}-${terrablender_version}"
-    implementation 'thedarkcolour:kotlinforforge-neoforge:5.4.0'
+    implementation "thedarkcolour:kotlinforforge-neoforge:${kff_version}"
 
     implementation "maven.modrinth:twigonometry:mc${project.minecraft_version}-${project.twigonometry_version}-neoforge"
 }

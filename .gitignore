@@ -27,3 +27,5 @@ runs
 /l-mods/
 /common/src/generated/*
 /.kotlin/errors/errors-1770710885003.log
+/rel/
+/rel/*
