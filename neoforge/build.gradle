@@ -1,8 +1,8 @@
 plugins {
     id 'multiloader-loader'
     id 'net.neoforged.moddev'
-    id 'org.jetbrains.kotlin.jvm' version '2.0.0'
-    id 'org.jetbrains.kotlin.plugin.serialization' version '2.0.0'
+    id 'org.jetbrains.kotlin.jvm' version "${kotlin_version}"
+    id 'org.jetbrains.kotlin.plugin.serialization' version "${kotlin_version}"
 }
 
 repositories {
@@ -65,8 +65,6 @@ neoForge {
     }
 }
 
-sourceSets.main.resources { srcDir '../common/src/generated/resources' }
-
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 // Making the compiler complain when I'm misusing a @Nullable in Kotlin
@@ -76,3 +74,5 @@ tasks.withType(KotlinCompile).configureEach {
         freeCompilerArgs.add("-Xjsr305=strict")
     }
 }
+
+sourceSets.main.resources { srcDir '../common/src/generated/resources' }

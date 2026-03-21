@@ -1,6 +1,7 @@
 package dev.maksiks.amaranth;
 
 
+import dev.maksiks.amaranth.datagen.DataGenerators;
 import dev.maksiks.amaranth.worldgen.biome.ModTerrablenderRegion;
 import dev.maksiks.amaranth.worldgen.biome.surface.ModSurfaceRules;
 import net.neoforged.bus.api.IEventBus;
@@ -37,6 +38,9 @@ public class NeoAmaranth {
         modContainer.registerConfig(ModConfig.Type.CLIENT, ClientConfig.SPEC, "amaranth/amaranth-client.toml");
 
         CommonClass.init();
+
+        // because it doesn't see the annotation apparently
+        modEventBus.register(DataGenerators.class);
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {
