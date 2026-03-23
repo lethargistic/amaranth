@@ -7,6 +7,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BiomeDefaultFeatures;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.data.worldgen.placement.CavePlacements;
+import net.minecraft.data.worldgen.placement.MiscOverworldPlacements;
 import net.minecraft.data.worldgen.placement.OrePlacements;
 import net.minecraft.data.worldgen.placement.VegetationPlacements;
 import net.minecraft.resources.ResourceKey;
@@ -19,6 +20,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.biome.*;
 import net.minecraft.world.level.levelgen.GenerationStep;
+import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import terrablender.api.ParameterUtils;
 
 import org.jetbrains.annotations.Nullable;
@@ -57,6 +59,7 @@ public class ModBiomes {
     public static final ResourceKey<Biome> SATISFOREST = registerOverworld("satisforest");
     public static final ResourceKey<Biome> SHRUBLAND = registerOverworld("shrubland");
     public static final ResourceKey<Biome> VIVID_SHRUBLAND = registerOverworld("vivid_shrubland");
+    public static final ResourceKey<Biome> BLEEDING_EDGE = registerOverworld("bleeding_edge");
 
     // underground
     // public static final ResourceKey<Biome> DWARVEN_LEFTOVERS = registerDev("dwarven_leftovers");
@@ -116,6 +119,7 @@ public class ModBiomes {
         ctx.register(SATISFOREST, satisForest(ctx));
         ctx.register(SHRUBLAND, shrublands(ctx, false));
         ctx.register(VIVID_SHRUBLAND, shrublands(ctx, true));
+        ctx.register(BLEEDING_EDGE, bleedingEdge(ctx));
 
         // underground
 //        ctx.register(DWARVEN_LEFTOVERS, dwarvenLeftovers(ctx));
@@ -1248,6 +1252,44 @@ public class ModBiomes {
                         .fogColor(12638463)
                         .skyColor(7972607)
                         .backgroundMusic(NORMAL_MUSIC)
+                        .ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS)
+                        .build())
+                .build();
+    }
+
+    // bleeding edge
+    public static Biome bleedingEdge(BootstrapContext<Biome> context) {
+        MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder();
+
+        spawnBuilder.creatureGenerationProbability(0.07F);
+        BiomeDefaultFeatures.snowySpawns(spawnBuilder);
+
+        BiomeGenerationSettings.Builder biomeBuilder = new BiomeGenerationSettings.Builder(context.lookup(Registries.PLACED_FEATURE), context.lookup(Registries.CONFIGURED_CARVER));
+        // friendly reminder to not cause feature order cycle
+        globalOverworldGeneration(biomeBuilder);
+        BiomeDefaultFeatures.addDefaultOres(biomeBuilder);
+        BiomeDefaultFeatures.addDefaultSoftDisks(biomeBuilder);
+
+        BiomeDefaultFeatures.addSnowyTrees(biomeBuilder);
+        BiomeDefaultFeatures.addDefaultFlowers(biomeBuilder);
+        BiomeDefaultFeatures.addDefaultGrass(biomeBuilder);
+
+        //
+
+        BiomeDefaultFeatures.addDefaultMushrooms(biomeBuilder);
+        BiomeDefaultFeatures.addDefaultExtraVegetation(biomeBuilder);
+
+        return new Biome.BiomeBuilder()
+                .hasPrecipitation(true)
+                .temperature(0.0F)
+                .downfall(0.5f)
+                .generationSettings(biomeBuilder.build())
+                .mobSpawnSettings(spawnBuilder.build())
+                .specialEffects((new BiomeSpecialEffects.Builder())
+                        .waterColor(FAIRLY_NORMAL_WATER_COLOR)
+                        .waterFogColor(FAILRY_NORMAL_WATER_FOG_COLOR)
+                        .skyColor(7972607)
+                        .fogColor(12638463)
                         .ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS)
                         .build())
                 .build();

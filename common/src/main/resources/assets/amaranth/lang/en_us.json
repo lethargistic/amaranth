@@ -175,6 +175,9 @@
   "block.amaranth.shrub_sapling": "Shrub Sapling",
   "block.amaranth.potted_shrub_sapling": "Potted Shrub Sapling",
 
+  "block.amaranth.cresset_flower": "Cresset Flower",
+  "tooltip.amaranth.cresset_flower.tooltip": "§8§oParasitic flower targeting cherries rich in certain semi-magical crystals due to frost churning. And nutrients, cherry trees are tasty, I'd eat one.§r",
+
   "entity.amaranth.shroom_boi": "Shroom Boi",
 
   "sounds.amaranth.arctic_wind_throngled": "Intense Wind"

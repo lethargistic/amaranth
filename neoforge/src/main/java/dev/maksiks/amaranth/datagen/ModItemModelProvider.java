@@ -123,6 +123,9 @@ public class ModItemModelProvider extends ItemModelProvider {
         // shrub
         splatBlockItem(ModBlocks.SHRUB_SAPLING);
 
+        // bleed
+        basicItem(ModBlocks.CRESSET_FLOWER.get().asItem());
+
     }
     private void splatBlockItem(Supplier<Block> block) {
         withExistingParent(findBlockId(block),

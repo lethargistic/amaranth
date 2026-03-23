@@ -223,16 +223,22 @@ class ModBlocks {
         }
 
         @JvmField
-        val SILVERY_SILVER_BIRCH_LEAVES: Supplier<Block?> = registerLeaves("silvery_silver_birch_leaves",
-            constructor = ::SilverBirchLeavesBlock, sapling = SILVER_BIRCH_SAPLING)
+        val SILVERY_SILVER_BIRCH_LEAVES: Supplier<Block?> = registerLeaves(
+            "silvery_silver_birch_leaves",
+            constructor = ::SilverBirchLeavesBlock, sapling = SILVER_BIRCH_SAPLING
+        )
 
         @JvmField
-        val LIGHT_SILVER_BIRCH_LEAVES: Supplier<Block?> = registerLeaves("light_silver_birch_leaves",
-            constructor = ::SilverBirchLeavesBlock, sapling = SILVER_BIRCH_SAPLING)
+        val LIGHT_SILVER_BIRCH_LEAVES: Supplier<Block?> = registerLeaves(
+            "light_silver_birch_leaves",
+            constructor = ::SilverBirchLeavesBlock, sapling = SILVER_BIRCH_SAPLING
+        )
 
         @JvmField
-        val DARK_SILVER_BIRCH_LEAVES: Supplier<Block?> = registerLeaves("dark_silver_birch_leaves",
-            constructor = ::SilverBirchLeavesBlock, sapling = SILVER_BIRCH_SAPLING)
+        val DARK_SILVER_BIRCH_LEAVES: Supplier<Block?> = registerLeaves(
+            "dark_silver_birch_leaves",
+            constructor = ::SilverBirchLeavesBlock, sapling = SILVER_BIRCH_SAPLING
+        )
 
         @JvmField
         val POTTED_SILVER_BIRCH_SAPLING: Supplier<FlowerPotBlock?> = registerFlowerPot(SILVER_BIRCH_SAPLING)
@@ -293,7 +299,8 @@ class ModBlocks {
             registerLeaves("yellow_mixed_oak_leaves", sapling = YELLOW_MIXED_OAK_SAPLING)
 
         @JvmField
-        val RED_MIXED_OAK_LEAVES: Supplier<Block?> = registerLeaves("red_mixed_oak_leaves", sapling = RED_MIXED_OAK_SAPLING)
+        val RED_MIXED_OAK_LEAVES: Supplier<Block?> =
+            registerLeaves("red_mixed_oak_leaves", sapling = RED_MIXED_OAK_SAPLING)
 
 
         @JvmField
@@ -301,7 +308,6 @@ class ModBlocks {
 
         @JvmField
         val POTTED_RED_MIXED_OAK_SAPLING: Supplier<FlowerPotBlock?> = registerFlowerPot(RED_MIXED_OAK_SAPLING)
-
 
 
         @JvmField
@@ -367,7 +373,11 @@ class ModBlocks {
 
         @JvmField
         val BLOOMING_ANTHOCYANIN_LEAVES: Supplier<Block?> =
-            registerLeaves("blooming_anthocyanin_leaves", constructor = ::AnthocyaninLeavesBlock, sapling = ANTHOCYANIN_SAPLING)
+            registerLeaves(
+                "blooming_anthocyanin_leaves",
+                constructor = ::AnthocyaninLeavesBlock,
+                sapling = ANTHOCYANIN_SAPLING
+            )
 
         @JvmField
         val POTTED_ANTHOCYANIN_SAPLING: Supplier<FlowerPotBlock?> = registerFlowerPot(ANTHOCYANIN_SAPLING)
@@ -840,6 +850,25 @@ class ModBlocks {
         @JvmField
         val POTTED_SHRUB_SAPLING: Supplier<FlowerPotBlock?> = registerFlowerPot(SHRUB_SAPLING)
 
+        // bleeding
+        // TODO cur: non temp item texture
+        @JvmField
+        val CRESSET_FLOWER: Supplier<CressetFlowerBlock?> = registerWithItem<CressetFlowerBlock?>(
+            "cresset_flower", renderType = RenderType.CUTOUT
+        ) {
+            CressetFlowerBlock(
+                BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.COLOR_PINK)
+                    .noCollission()
+                    .randomTicks()
+                    .instabreak()
+                    .sound(SoundType.GRASS)
+                    .offsetType(BlockBehaviour.OffsetType.XZ)
+                    .pushReaction(PushReaction.DESTROY)
+                    .lightLevel { 10 }
+            )
+        }
+
         // methods
 
         private fun registerLeaves(
@@ -849,7 +878,8 @@ class ModBlocks {
         ): Supplier<Block?> {
             val trueProps = props ?: BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_LEAVES)
             val leaves: Supplier<Block?> = registerWithItem<Block?>(
-                key, renderType = RenderType.CUTOUT_MIPPED) { constructor(trueProps) }
+                key, renderType = RenderType.CUTOUT_MIPPED
+            ) { constructor(trueProps) }
 
             MOD_LEAVES.add(Pair(leaves, sapling))
             return leaves

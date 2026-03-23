@@ -259,6 +259,8 @@ public class ModBlockStateProvider extends BlockStateProvider {
         // shrub
         twoPlanesCutoutBlock(ModBlocks.SHRUB_SAPLING);
         pottedPlantBlock(ModBlocks.POTTED_SHRUB_SAPLING, ModBlocks.SHRUB_SAPLING);
+
+        // cresset flower manually
     }
 
     private void pottedPlantBlock(Supplier<FlowerPotBlock> pottedBlock, Supplier<Block> plantBlock) {

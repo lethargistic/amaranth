@@ -78,6 +78,7 @@ public class ModCreativeTabs {
         // flowers
         MAIN_CREATIVE_MODE_ITEM_MAP.add(ModBlocks.MALACHITE_VIPERS_BUGLOSS);
         MAIN_CREATIVE_MODE_ITEM_MAP.add(ModBlocks.LUPINE);
+        MAIN_CREATIVE_MODE_ITEM_MAP.add(ModBlocks.CRESSET_FLOWER);
 
         // full biome vegetation blocks
         MAIN_CREATIVE_MODE_ITEM_MAP.add(ModBlocks.THICK_PUMPKIN);

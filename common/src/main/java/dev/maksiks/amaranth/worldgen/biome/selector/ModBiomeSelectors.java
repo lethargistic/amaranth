@@ -102,7 +102,7 @@ public class ModBiomeSelectors {
     );
 
     public static final List<List<ResourceKey<Biome>>> MOD_PLATEAU_BIOMES = ModBiomeSelectorUtils.create("plateau_biomes/mod_plateau_biomes", "",
-            List.of(P, P, P, P, P),
+            List.of(P, P, BLEEDING_EDGE, P, P),
             List.of(P, P, P, P, P),
             List.of(P, P, SPARSEY_SPEARS, ORDERLY_COURTS, P),
             List.of(P, P, P, P, P),

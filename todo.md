@@ -3,6 +3,7 @@
 - [x] prod: remove dev biomes, clean up
 - [x] todo very: melon helmet
 - [ ] fix minor: game logs missing item for alien bamboo sapling
+- [ ] todo: sparsey spears need a rework, they're nice but just too homegenous (also not sparsey and moutain-e)
 - [ ] todo: snowy biome ; blood on snow
 - [x] fix: melon helmet tooltip isn't actually multiline lol ; again
 - [ ] fix: melon helmet regeneration doesn't actually work ; or maybe i should keep it as a primordial evil that i am rofl

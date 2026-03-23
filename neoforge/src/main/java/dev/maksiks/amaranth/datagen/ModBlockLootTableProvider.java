@@ -270,6 +270,8 @@ public class ModBlockLootTableProvider extends BlockLootSubProvider {
         this.add(ModBlocks.POTTED_SHRUB_SAPLING.get(),
                 block -> createPotFlowerItemTable(ModBlocks.SHRUB_SAPLING.get()));
 
+        // bleeding
+        this.dropSelf(ModBlocks.CRESSET_FLOWER.get());
     }
 
     private LootItemCondition.Builder hasShearsOrSilkTouch() {
