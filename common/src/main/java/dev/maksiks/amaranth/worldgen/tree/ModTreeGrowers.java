@@ -58,4 +58,7 @@ public class ModTreeGrowers {
     public static final TreeGrower SHRUB_GROWER = new TreeGrower(Constants.MOD_ID + ":shrub",
             Optional.empty(), Optional.of(ModConfiguredFeatures.SHRUBLAND_SHRUB_KEY), Optional.empty());
 
+    public static final TreeGrower FRONTIER_BLOSSOM_GROWER = new TreeGrower(Constants.MOD_ID + ":frontier_blossom",
+            Optional.empty(), Optional.of(ModConfiguredFeatures.FRONTIER_BLOSSOM_TREE_KEY), Optional.empty());
+
 }

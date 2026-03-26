@@ -1,3 +1,6 @@
+@file:Suppress("unused")
+// suppressing unused since some fields here are just for convenience
+
 package dev.maksiks.amaranth.block
 
 import com.google.common.base.Supplier
@@ -16,6 +19,7 @@ import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.block.*
+import net.minecraft.world.level.block.grower.TreeGrower
 import net.minecraft.world.level.block.state.BlockBehaviour
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.properties.BlockSetType
@@ -34,9 +38,15 @@ class ModBlocks {
         @JvmField
         val BLOCK_MAP: HashMap<String?, Supplier<out Block?>?> = HashMap<String?, Supplier<out Block?>?>()
 
+        @JvmRecord
+        data class FlowerPotData(
+            val pot: Supplier<FlowerPotBlock?>?,
+            val plant: Supplier<Block?>?,
+            val autoModel: Boolean
+        )
+
         @JvmField
-        var MOD_FLOWER_POTS: HashMap<Supplier<Block?>?, Supplier<FlowerPotBlock?>?> =
-            HashMap<Supplier<Block?>?, Supplier<FlowerPotBlock?>?>()
+        var MOD_FLOWER_POTS: MutableList<FlowerPotData> = ArrayList()
 
         @JvmField
         var MOD_CUTOUT_BLOCKS: MutableList<Supplier<Block?>?> = ArrayList<Supplier<Block?>?>()
@@ -58,6 +68,9 @@ class ModBlocks {
         // group stores
         @JvmField
         var MOD_LEAVES: MutableList<Pair<Supplier<Block?>?, Supplier<Block?>?>> = ArrayList()
+
+        @JvmField
+        var MOD_SAPLINGS: MutableList<Supplier<Block?>> = ArrayList()
 
 
         private val normalWoodProps = Supplier {
@@ -133,20 +146,16 @@ class ModBlocks {
         ) { FlammablePlanksBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_PLANKS)) }
 
         @JvmField
-        val MYSTIC_SAPLING: Supplier<Block?> = registerWithItem<Block?>(
-            "mystic_sapling", renderType = RenderType.CUTOUT
-        ) {
-            SaplingBlock(
-                ModTreeGrowers.MYSTIC_GROWER,
-                BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_SAPLING)
-            )
-        }
+        val MYSTIC_SAPLING: Supplier<Block?> = registerSapling(
+            "mystic_sapling", treeGrower = ModTreeGrowers.MYSTIC_GROWER
+        )
+
+        @JvmField
+        val POTTED_MYSTIC_SAPLING: Supplier<FlowerPotBlock?> = registerFlowerPot(MYSTIC_SAPLING)
 
         @JvmField
         val MYSTIC_LEAVES: Supplier<Block?> = registerLeaves("mystic_leaves", sapling = MYSTIC_SAPLING)
 
-        @JvmField
-        val POTTED_MYSTIC_SAPLING: Supplier<FlowerPotBlock?> = registerFlowerPot(MYSTIC_SAPLING)
 
         // non-full block stuff
         @JvmField
@@ -197,30 +206,21 @@ class ModBlocks {
         // hanged sign
         // boat
         // chest boat
+
         // stubby
         @JvmField
-        val STUBBY_SAPLING: Supplier<Block?> = registerWithItem<Block?>(
-            "stubby_sapling", renderType = RenderType.CUTOUT
-        ) {
-            SaplingBlock(
-                ModTreeGrowers.STUBBY_GROWER,
-                BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_SAPLING)
-            )
-        }
+        val STUBBY_SAPLING: Supplier<Block?> = registerSapling(
+            "stubby_sapling", treeGrower = ModTreeGrowers.STUBBY_GROWER
+        )
 
         @JvmField
         val POTTED_STUBBY_SAPLING: Supplier<FlowerPotBlock?> = registerFlowerPot(STUBBY_SAPLING)
 
         // silver birch
         @JvmField
-        val SILVER_BIRCH_SAPLING: Supplier<Block?> = registerWithItem<Block?>(
-            "silver_birch_sapling", renderType = RenderType.CUTOUT
-        ) {
-            SaplingBlock(
-                ModTreeGrowers.SILVER_BIRCH_GROWER,
-                BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_SAPLING)
-            )
-        }
+        val SILVER_BIRCH_SAPLING: Supplier<Block?> = registerSapling(
+            "silver_birch_sapling", treeGrower = ModTreeGrowers.SILVER_BIRCH_GROWER
+        )
 
         @JvmField
         val SILVERY_SILVER_BIRCH_LEAVES: Supplier<Block?> = registerLeaves(
@@ -261,34 +261,19 @@ class ModBlocks {
 
         // mixed forest
         @JvmField
-        val PURPLE_MIXED_OAK_SAPLING: Supplier<Block?> = registerWithItem<Block?>(
-            "purple_mixed_oak_sapling", renderType = RenderType.CUTOUT
-        ) {
-            SaplingBlock(
-                ModTreeGrowers.PURPLE_MIXED_OAK_GROWER,
-                BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_SAPLING)
-            )
-        }
+        val PURPLE_MIXED_OAK_SAPLING: Supplier<Block?> = registerSapling(
+            "purple_mixed_oak_sapling", treeGrower = ModTreeGrowers.PURPLE_MIXED_OAK_GROWER
+        )
 
         @JvmField
-        val YELLOW_MIXED_OAK_SAPLING: Supplier<Block?> = registerWithItem<Block?>(
-            "yellow_mixed_oak_sapling", renderType = RenderType.CUTOUT
-        ) {
-            SaplingBlock(
-                ModTreeGrowers.YELLOW_MIXED_OAK_GROWER,
-                BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_SAPLING)
-            )
-        }
+        val YELLOW_MIXED_OAK_SAPLING: Supplier<Block?> = registerSapling(
+            "yellow_mixed_oak_sapling", treeGrower = ModTreeGrowers.YELLOW_MIXED_OAK_GROWER
+        )
 
         @JvmField
-        val RED_MIXED_OAK_SAPLING: Supplier<Block?> = registerWithItem<Block?>(
-            "red_mixed_oak_sapling", renderType = RenderType.CUTOUT
-        ) {
-            SaplingBlock(
-                ModTreeGrowers.RED_MIXED_OAK_GROWER,
-                BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_SAPLING)
-            )
-        }
+        val RED_MIXED_OAK_SAPLING: Supplier<Block?> = registerSapling(
+            "red_mixed_oak_sapling", treeGrower = ModTreeGrowers.RED_MIXED_OAK_GROWER
+        )
 
         @JvmField
         val PURPLE_MIXED_OAK_LEAVES: Supplier<Block?> =
@@ -315,14 +300,9 @@ class ModBlocks {
 
         // orderly courts
         @JvmField
-        val TRIMMED_TREE_SAPLING: Supplier<Block?> = registerWithItem<Block?>(
-            "trimmed_tree_sapling", renderType = RenderType.CUTOUT
-        ) {
-            SaplingBlock(
-                ModTreeGrowers.TRIMMED_TREE_GROWER,
-                BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_SAPLING)
-            )
-        }
+        val TRIMMED_TREE_SAPLING: Supplier<Block?> = registerSapling(
+            "trimmed_tree_sapling", treeGrower = ModTreeGrowers.TRIMMED_TREE_GROWER
+        )
 
         @JvmField
         val POTTED_TRIMMED_TREE_SAPLING: Supplier<FlowerPotBlock?> = registerFlowerPot(TRIMMED_TREE_SAPLING)
@@ -358,14 +338,9 @@ class ModBlocks {
         ) { FlammablePlanksBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_PLANKS)) }
 
         @JvmField
-        val ANTHOCYANIN_SAPLING: Supplier<Block?> = registerWithItem<Block?>(
-            "anthocyanin_sapling", renderType = RenderType.CUTOUT
-        ) {
-            SaplingBlock(
-                ModTreeGrowers.ANTHOCYANIN_GROWER,
-                BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_SAPLING)
-            )
-        }
+        val ANTHOCYANIN_SAPLING: Supplier<Block?> = registerSapling(
+            "anthocyanin_sapling", treeGrower = ModTreeGrowers.ANTHOCYANIN_GROWER
+        )
 
         @JvmField
         val ANTHOCYANIN_LEAVES: Supplier<Block?> =
@@ -468,14 +443,9 @@ class ModBlocks {
 
         // speary
         @JvmField
-        val SPEARY_SAPLING: Supplier<Block?> = registerWithItem<Block?>(
-            "speary_sapling", renderType = RenderType.CUTOUT
-        ) {
-            SaplingBlock(
-                ModTreeGrowers.SPEARY_GROWER,
-                BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_SAPLING)
-            )
-        }
+        val SPEARY_SAPLING: Supplier<Block?> = registerSapling(
+            "speary_sapling", treeGrower = ModTreeGrowers.SPEARY_GROWER
+        )
 
         @JvmField
         val POTTED_SPEARY_SAPLING: Supplier<FlowerPotBlock?> = registerFlowerPot(SPEARY_SAPLING)
@@ -518,14 +488,9 @@ class ModBlocks {
         ) { FlammablePlanksBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_PLANKS)) }
 
         @JvmField
-        val WISTERIA_SAPLING: Supplier<Block?> = registerWithItem<Block?>(
-            "wisteria_sapling", renderType = RenderType.CUTOUT
-        ) {
-            SaplingBlock(
-                ModTreeGrowers.WISTERIA_GROWER,
-                BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_SAPLING)
-            )
-        }
+        val WISTERIA_SAPLING: Supplier<Block?> = registerSapling(
+            "wisteria_sapling", treeGrower = ModTreeGrowers.WISTERIA_GROWER
+        )
 
         @JvmField
         val WISTERIA_LEAVES: Supplier<Block?> =
@@ -589,39 +554,31 @@ class ModBlocks {
         ) { ReedsBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.ROSE_BUSH)) }
 
         @JvmField
-        val RED_MINI_SHROOM_SPORELING: Supplier<Block?> = registerWithItem<Block?>(
-            "red_mini_shroom_sporeling", renderType = RenderType.CUTOUT
-        ) {
-            SaplingBlock(
-                ModTreeGrowers.RED_MINI_SHROOM_GROWER,
-                BlockBehaviour.Properties.of()
-                    .mapColor(MapColor.PLANT)
-                    .noCollission()
-                    .randomTicks()
-                    .instabreak()
-                    .sound(SoundType.MUD)
-                    .pushReaction(PushReaction.DESTROY)
-            )
-        }
+        val RED_MINI_SHROOM_SPORELING: Supplier<Block?> = registerSapling(
+            "red_mini_shroom_sporeling", treeGrower = ModTreeGrowers.RED_MINI_SHROOM_GROWER,
+            props = BlockBehaviour.Properties.of()
+                .mapColor(MapColor.PLANT)
+                .noCollission()
+                .randomTicks()
+                .instabreak()
+                .sound(SoundType.MUD)
+                .pushReaction(PushReaction.DESTROY)
+        )
 
         @JvmField
         val POTTED_RED_MINI_SHROOM_SPORELING: Supplier<FlowerPotBlock?> = registerFlowerPot(RED_MINI_SHROOM_SPORELING)
 
         @JvmField
-        val BROWN_MINI_SHROOM_SPORELING: Supplier<Block?> = registerWithItem<Block?>(
-            "brown_mini_shroom_sporeling", renderType = RenderType.CUTOUT
-        ) {
-            SaplingBlock(
-                ModTreeGrowers.BROWN_MINI_SHROOM_GROWER,
-                BlockBehaviour.Properties.of()
-                    .mapColor(MapColor.PLANT)
-                    .noCollission()
-                    .randomTicks()
-                    .instabreak()
-                    .sound(SoundType.MUD)
-                    .pushReaction(PushReaction.DESTROY)
-            )
-        }
+        val BROWN_MINI_SHROOM_SPORELING: Supplier<Block?> = registerSapling(
+            "brown_mini_shroom_sporeling", treeGrower = ModTreeGrowers.BROWN_MINI_SHROOM_GROWER,
+            props = BlockBehaviour.Properties.of()
+                .mapColor(MapColor.PLANT)
+                .noCollission()
+                .randomTicks()
+                .instabreak()
+                .sound(SoundType.MUD)
+                .pushReaction(PushReaction.DESTROY)
+        )
 
         @JvmField
         val POTTED_BROWN_MINI_SHROOM_SPORELING: Supplier<FlowerPotBlock?> =
@@ -629,14 +586,9 @@ class ModBlocks {
 
         // witchy
         @JvmField
-        val WITCHY_SAPLING: Supplier<Block?> = registerWithItem<Block?>(
-            "witchy_sapling", renderType = RenderType.CUTOUT
-        ) {
-            SaplingBlock(
-                ModTreeGrowers.WITCHY_GROWER,
-                BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_SAPLING)
-            )
-        }
+        val WITCHY_SAPLING: Supplier<Block?> = registerSapling(
+            "witchy_sapling", treeGrower = ModTreeGrowers.WITCHY_GROWER
+        )
 
         @JvmField
         val POTTED_WITCHY_SAPLING: Supplier<FlowerPotBlock?> = registerFlowerPot(WITCHY_SAPLING)
@@ -662,14 +614,9 @@ class ModBlocks {
 
         // alpine
         @JvmField
-        val ALPINE_SPRUCE_SAPLING: Supplier<Block?> = registerWithItem<Block?>(
-            "alpine_spruce_sapling", renderType = RenderType.CUTOUT
-        ) {
-            SaplingBlock(
-                ModTreeGrowers.ALPINE_SPRUCE_GROWER,
-                BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_SAPLING)
-            )
-        }
+        val ALPINE_SPRUCE_SAPLING: Supplier<Block?> = registerSapling(
+            "alpine_spruce_sapling", treeGrower = ModTreeGrowers.ALPINE_SPRUCE_GROWER
+        )
 
         @JvmField
         val POTTED_ALPINE_SPRUCE_SAPLING: Supplier<FlowerPotBlock?> = registerFlowerPot(ALPINE_SPRUCE_SAPLING)
@@ -713,14 +660,9 @@ class ModBlocks {
         ) { FlammablePlanksBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_PLANKS)) }
 
         @JvmField
-        val SATISTREE_SAPLING: Supplier<Block?> = registerWithItem<Block?>(
-            "satistree_sapling", renderType = RenderType.CUTOUT
-        ) {
-            SaplingBlock(
-                ModTreeGrowers.SATISTREE_GROWER,
-                BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_SAPLING)
-            )
-        }
+        val SATISTREE_SAPLING: Supplier<Block?> = registerSapling(
+            "satistree_sapling", treeGrower = ModTreeGrowers.SATISTREE_GROWER
+        )
 
         @JvmField
         val ALIEN_LEAVES: Supplier<Block?> =
@@ -730,14 +672,9 @@ class ModBlocks {
         val POTTED_SATISTREE_SAPLING: Supplier<FlowerPotBlock?> = registerFlowerPot(SATISTREE_SAPLING)
 
         @JvmField
-        val GIGANTIC_SATISTREE_SPROUTS: Supplier<Block?> = registerWithItem<Block?>(
-            "gigantic_satistree_sprouts", renderType = RenderType.CUTOUT
-        ) {
-            SaplingBlock(
-                ModTreeGrowers.GIGANTIC_SATISTREE_GROWER,
-                BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_SAPLING)
-            )
-        }
+        val GIGANTIC_SATISTREE_SPROUTS: Supplier<Block?> = registerSapling(
+            "gigantic_satistree_sprouts", treeGrower = ModTreeGrowers.GIGANTIC_SATISTREE_GROWER
+        )
 
         // non-full block stuff
         @JvmField
@@ -784,6 +721,7 @@ class ModBlocks {
             trapdoorFromSpruce()
         }
 
+        // not really a sapling tbh
         @JvmField
         val ALIEN_PHYLLOSTACHYS_SAPLING: Supplier<Block?> = registerWithItem<Block?>(
             "alien_phyllostachys_sapling", renderType = RenderType.CUTOUT
@@ -795,7 +733,8 @@ class ModBlocks {
         ) { AlienPhyllostachysStalkBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.BAMBOO)) }
 
         @JvmField
-        val POTTED_ALIEN_PHYLLOSTACHYS: Supplier<FlowerPotBlock?> = registerFlowerPot(ALIEN_PHYLLOSTACHYS)
+        val POTTED_ALIEN_PHYLLOSTACHYS: Supplier<FlowerPotBlock?> =
+            registerFlowerPot(ALIEN_PHYLLOSTACHYS, autoModel = false)
 
         @JvmField
         val ALIEN_FENCE_PLANKS: Supplier<Block?> = registerWithItem<Block?>(
@@ -818,34 +757,25 @@ class ModBlocks {
         }
 
         @JvmField
-        val ALIEN_FENCE_PLANT_SAPLING: Supplier<Block?> = registerWithItem<Block?>(
-            "alien_fence_plant_sapling", renderType = RenderType.CUTOUT
-        ) {
-            SaplingBlock(
-                ModTreeGrowers.ALIEN_FENCE_PLANT_GROWER,
-                BlockBehaviour.Properties.of()
+        val ALIEN_FENCE_PLANT_SAPLING: Supplier<Block?> = registerSapling(
+            "alien_fence_plant_sapling", treeGrower = ModTreeGrowers.ALIEN_FENCE_PLANT_GROWER,
+            props = BlockBehaviour.Properties.of()
                     .mapColor(MapColor.PLANT)
                     .noCollission()
                     .randomTicks()
                     .instabreak()
                     .sound(SoundType.WET_GRASS)
                     .pushReaction(PushReaction.DESTROY)
-            )
-        }
+        )
 
         @JvmField
         val POTTED_ALIEN_FENCE_PLANT_SAPLING: Supplier<FlowerPotBlock?> = registerFlowerPot(ALIEN_FENCE_PLANT_SAPLING)
 
         // shrub
         @JvmField
-        val SHRUB_SAPLING: Supplier<Block?> = registerWithItem<Block?>(
-            "shrub_sapling", renderType = RenderType.CUTOUT
-        ) {
-            SaplingBlock(
-                ModTreeGrowers.SHRUB_GROWER,
-                BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_SAPLING)
-            )
-        }
+        val SHRUB_SAPLING: Supplier<Block?> = registerSapling(
+            "shrub_sapling", treeGrower = ModTreeGrowers.SHRUB_GROWER,
+        )
 
         @JvmField
         val POTTED_SHRUB_SAPLING: Supplier<FlowerPotBlock?> = registerFlowerPot(SHRUB_SAPLING)
@@ -868,7 +798,31 @@ class ModBlocks {
             )
         }
 
+        @JvmField
+        val FRONTIER_BLOSSOM_SAPLING: Supplier<Block?> = registerSapling(
+            "frontier_blossom_sapling",
+            treeGrower = ModTreeGrowers.FRONTIER_BLOSSOM_GROWER
+        )
+
+        @JvmField
+        val POTTED_FRONTIER_BLOSSOM_SAPLING: Supplier<FlowerPotBlock?> = registerFlowerPot(FRONTIER_BLOSSOM_SAPLING)
+
+
         // methods
+
+        private fun registerSapling(
+            key: String, props: BlockBehaviour.Properties? = null,
+            constructor: (TreeGrower, BlockBehaviour.Properties) -> Block = ::SaplingBlock,
+            treeGrower: TreeGrower
+        ): Supplier<Block?> {
+            val trueProps = props ?: BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_SAPLING)
+            val sapling: Supplier<Block?> = registerWithItem<Block?>(
+                key, renderType = RenderType.CUTOUT
+            ) { constructor(treeGrower, trueProps) }
+            MOD_SAPLINGS.add(sapling)
+            return sapling
+        }
+
 
         private fun registerLeaves(
             key: String, props: BlockBehaviour.Properties? = null,
@@ -901,7 +855,7 @@ class ModBlocks {
             FABRIC_MOD_FLAMMABLE_BLOCKS[block] = FlammabilityData(burn, spread)
         }
 
-        private fun registerFlowerPot(plant: Supplier<Block?>): Supplier<FlowerPotBlock?> {
+        private fun registerFlowerPot(plant: Supplier<Block?>, autoModel: Boolean = true): Supplier<FlowerPotBlock?> {
             val plantName = Utils.findBlockIdByMap(plant)
             val pot = register<FlowerPotBlock?>(
                 "potted_$plantName", renderType = RenderType.CUTOUT,
@@ -913,7 +867,7 @@ class ModBlocks {
                     )
                 }
             )
-            MOD_FLOWER_POTS[plant] = pot
+            MOD_FLOWER_POTS.add(FlowerPotData(pot, plant, autoModel))
             return pot
         }
 

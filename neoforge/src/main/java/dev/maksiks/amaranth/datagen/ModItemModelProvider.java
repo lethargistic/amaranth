@@ -21,6 +21,8 @@ public class ModItemModelProvider extends ItemModelProvider {
 
     @Override
     protected void registerModels() {
+        ModBlocks.MOD_SAPLINGS.forEach(this::splatBlockItem);
+
         // misc
         basicItem(ModItems.PALETTE_OVERLOAD_MUSIC_DISC.get());
         basicItem(ModItems.EMPTY_TEA_CUP.get());
@@ -36,22 +38,8 @@ public class ModItemModelProvider extends ItemModelProvider {
 
         basicItem(ModBlocks.MYSTIC_DOOR.get().asItem());
 
-        splatBlockItem(ModBlocks.MYSTIC_SAPLING);
-
-        // stubby
-        splatBlockItem(ModBlocks.STUBBY_SAPLING);
-
         // silver
         splatBlockItem(ModBlocks.GOLDEN_LEAF_LITTER);
-        splatBlockItem(ModBlocks.SILVER_BIRCH_SAPLING);
-
-        // mixed
-        splatBlockItem(ModBlocks.PURPLE_MIXED_OAK_SAPLING);
-        splatBlockItem(ModBlocks.RED_MIXED_OAK_SAPLING);
-        splatBlockItem(ModBlocks.YELLOW_MIXED_OAK_SAPLING);
-
-        // orderly
-        splatBlockItem(ModBlocks.TRIMMED_TREE_SAPLING);
 
         withExistingParent(findItemId(ModItems.SHROOM_BOI_SPAWN_EGG), mcLoc("item/template_spawn_egg"));
 
@@ -65,8 +53,6 @@ public class ModItemModelProvider extends ItemModelProvider {
         basicItem(ModBlocks.ANTHOCYANIN_DOOR.get().asItem());
         basicItem(ModBlocks.ORNAMENTED_ANTHOCYANIN_DOOR.get().asItem());
 
-        splatBlockItem(ModBlocks.ANTHOCYANIN_SAPLING);
-
         splatBlockItem(ModBlocks.MALACHITE_VIPERS_BUGLOSS);
 
         // pain
@@ -75,16 +61,11 @@ public class ModItemModelProvider extends ItemModelProvider {
 
         basicItem(ModItems.CROWN_OF_THORNS.get().asItem());
 
-        // speary
-        splatBlockItem(ModBlocks.SPEARY_SAPLING);
-
         // pastel
         buttonItem(ModBlocks.WISTERIA_BUTTON, ModBlocks.WISTERIA_PLANKS);
         fenceItem(ModBlocks.WISTERIA_FENCE, ModBlocks.WISTERIA_PLANKS);
 
         basicItem(ModBlocks.WISTERIA_DOOR.get().asItem());
-
-        splatBlockItem(ModBlocks.WISTERIA_SAPLING);
 
         splatBlockItem(ModBlocks.PHLOX);
 
@@ -94,17 +75,8 @@ public class ModItemModelProvider extends ItemModelProvider {
         basicItem(ModBlocks.REEDS.get().asItem());
         basicItem(ModItems.REED_BAR.get());
 
-        splatBlockItem(ModBlocks.RED_MINI_SHROOM_SPORELING);
-        splatBlockItem(ModBlocks.BROWN_MINI_SHROOM_SPORELING);
-
-        // witchy
-        splatBlockItem(ModBlocks.WITCHY_SAPLING);
-
         // lupine
         splatBlockItem(ModBlocks.LUPINE);
-
-        // alpine
-        splatBlockItem(ModBlocks.ALPINE_SPRUCE_SAPLING);
 
         // satis
         buttonItem(ModBlocks.SATISTREE_BUTTON, ModBlocks.SATISTREE_PLANKS);
@@ -112,16 +84,9 @@ public class ModItemModelProvider extends ItemModelProvider {
 
         basicItem(ModBlocks.SATISTREE_DOOR.get().asItem());
 
-        splatBlockItem(ModBlocks.SATISTREE_SAPLING);
-        splatBlockItem(ModBlocks.GIGANTIC_SATISTREE_SPROUTS);
-
         basicItem(ModBlocks.ALIEN_PHYLLOSTACHYS.get().asItem());
 
         fenceItem(ModBlocks.ALIEN_FENCE_PLANT, ModBlocks.ALIEN_FENCE_PLANKS);
-        splatBlockItem(ModBlocks.ALIEN_FENCE_PLANT_SAPLING);
-
-        // shrub
-        splatBlockItem(ModBlocks.SHRUB_SAPLING);
 
         // bleed
         basicItem(ModBlocks.CRESSET_FLOWER.get().asItem());

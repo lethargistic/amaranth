@@ -87,6 +87,7 @@ public class ModPlacedFeatures {
     public static final ResourceKey<PlacedFeature> SHRUBLAND_LUPINE_FLOWER_PLACED_KEY = registerKey("shrubland_lupine_flower_placed");
     public static final ResourceKey<PlacedFeature> SHRUBLAND_ROCK_PLACED_KEY = registerKey("shrubland_rock_placed");
 
+    public static final ResourceKey<PlacedFeature> FRONTIER_BLOSSOM_TREE_PLACED_KEY = registerKey("frontier_blossom_tree_placed");
 
     public static void bootstrap(BootstrapContext<PlacedFeature> context) {
         var configuredFeatures = context.lookup(Registries.CONFIGURED_FEATURE);
@@ -406,6 +407,14 @@ public class ModPlacedFeatures {
                         HeightmapPlacement.onHeightmap(Heightmap.Types.WORLD_SURFACE_WG)
                 )
         );
+
+
+        // bleeding
+        // TODO now: pick rarity
+        register(context, FRONTIER_BLOSSOM_TREE_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.FRONTIER_BLOSSOM_TREE_KEY),
+                // 1 / chance has to be integer mojang why
+                VegetationPlacements.treePlacement(PlacementUtils.countExtra(1, 0.1F, 0),
+                        ModBlocks.FRONTIER_BLOSSOM_SAPLING.get()));
     }
 
     private static ResourceKey<PlacedFeature> registerKey(String name) {

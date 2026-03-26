@@ -9,6 +9,7 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.FlowerPotBlock;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.Nullable;
@@ -30,10 +31,20 @@ public class ModBlockTagProvider extends BlockTagsProvider {
         ModBlocks.MOD_LEAVES.forEach(pair -> {
             Supplier<Block> leaves = pair.getFirst();
 
-            assert leaves != null;
+            if (leaves == null) return;
             this.tag(BlockTags.LEAVES).add(leaves.get());
+        });
+        ModBlocks.MOD_SAPLINGS.forEach(sapling -> {
+            this.tag(BlockTags.SAPLINGS).add(sapling.get());
 
         });
+        ModBlocks.MOD_FLOWER_POTS.forEach(data -> {
+            Supplier<FlowerPotBlock> pot = data.pot();
+
+            if (pot == null) return;
+            this.tag(BlockTags.FLOWER_POTS).add(pot.get());
+        });
+
         this.tag(BlockTags.MINEABLE_WITH_HOE).addTag(BlockTags.LEAVES);
 
         // misc
@@ -59,36 +70,14 @@ public class ModBlockTagProvider extends BlockTagsProvider {
         this.tag(BlockTags.WOODEN_STAIRS).add(ModBlocks.MYSTIC_STAIRS.get());
         this.tag(BlockTags.WOODEN_BUTTONS).add(ModBlocks.MYSTIC_BUTTON.get());
         this.tag(BlockTags.WOODEN_PRESSURE_PLATES).add(ModBlocks.MYSTIC_PRESSURE_PLATE.get());
-        this.tag(BlockTags.SAPLINGS).add(ModBlocks.MYSTIC_SAPLING.get());
-        this.tag(BlockTags.FLOWER_POTS).add(ModBlocks.POTTED_MYSTIC_SAPLING.get());
         this.tag(BlockTags.WOODEN_FENCES).add(ModBlocks.MYSTIC_FENCE.get());
         this.tag(BlockTags.FENCE_GATES).add(ModBlocks.MYSTIC_FENCE_GATE.get());
         this.tag(BlockTags.WOODEN_DOORS).add(ModBlocks.MYSTIC_DOOR.get());
         this.tag(BlockTags.WOODEN_TRAPDOORS).add(ModBlocks.MYSTIC_TRAPDOOR.get());
 
-        // stubby
-        this.tag(BlockTags.SAPLINGS).add(ModBlocks.STUBBY_SAPLING.get());
-        this.tag(BlockTags.FLOWER_POTS).add(ModBlocks.POTTED_STUBBY_SAPLING.get());
-
-        // silver
-        this.tag(BlockTags.SAPLINGS).add(ModBlocks.SILVER_BIRCH_SAPLING.get());
-        this.tag(BlockTags.FLOWER_POTS).add(ModBlocks.POTTED_SILVER_BIRCH_SAPLING.get());
-
         // desolate
         this.tag(BlockTags.ICE).add(ModBlocks.SORROW_ICE.get());
         this.tag(BlockTags.ICE).add(ModBlocks.REMNANT_SORROW_ICE.get());
-
-        // mixed
-        this.tag(BlockTags.SAPLINGS).add(ModBlocks.PURPLE_MIXED_OAK_SAPLING.get());
-        this.tag(BlockTags.FLOWER_POTS).add(ModBlocks.POTTED_PURPLE_MIXED_OAK_SAPLING.get());
-        this.tag(BlockTags.SAPLINGS).add(ModBlocks.RED_MIXED_OAK_SAPLING.get());
-        this.tag(BlockTags.FLOWER_POTS).add(ModBlocks.POTTED_RED_MIXED_OAK_SAPLING.get());
-        this.tag(BlockTags.SAPLINGS).add(ModBlocks.YELLOW_MIXED_OAK_SAPLING.get());
-        this.tag(BlockTags.FLOWER_POTS).add(ModBlocks.POTTED_YELLOW_MIXED_OAK_SAPLING.get());
-
-        // orderly
-        this.tag(BlockTags.SAPLINGS).add(ModBlocks.TRIMMED_TREE_SAPLING.get());
-        this.tag(BlockTags.FLOWER_POTS).add(ModBlocks.POTTED_TRIMMED_TREE_SAPLING.get());
 
         // anthocyanin
         this.tag(BlockTags.LOGS_THAT_BURN)
@@ -106,8 +95,6 @@ public class ModBlockTagProvider extends BlockTagsProvider {
         this.tag(BlockTags.WOODEN_STAIRS).add(ModBlocks.ANTHOCYANIN_STAIRS.get());
         this.tag(BlockTags.WOODEN_BUTTONS).add(ModBlocks.ANTHOCYANIN_BUTTON.get());
         this.tag(BlockTags.WOODEN_PRESSURE_PLATES).add(ModBlocks.ANTHOCYANIN_PRESSURE_PLATE.get());
-        this.tag(BlockTags.SAPLINGS).add(ModBlocks.ANTHOCYANIN_SAPLING.get());
-        this.tag(BlockTags.FLOWER_POTS).add(ModBlocks.POTTED_ANTHOCYANIN_SAPLING.get());
         this.tag(BlockTags.WOODEN_DOORS).add(ModBlocks.ANTHOCYANIN_DOOR.get());
         this.tag(BlockTags.WOODEN_DOORS).add(ModBlocks.ORNAMENTED_ANTHOCYANIN_DOOR.get());
         this.tag(BlockTags.WOODEN_TRAPDOORS).add(ModBlocks.ANTHOCYANIN_TRAPDOOR.get());
@@ -116,7 +103,6 @@ public class ModBlockTagProvider extends BlockTagsProvider {
         this.tag(BlockTags.FENCE_GATES).add(ModBlocks.ANTHOCYANIN_FENCE_GATE.get());
 
         this.tag(BlockTags.SMALL_FLOWERS).add(ModBlocks.MALACHITE_VIPERS_BUGLOSS.get());
-        this.tag(BlockTags.FLOWER_POTS).add(ModBlocks.POTTED_MALACHITE_VIPERS_BUGLOSS.get());
 
         // thrumletons
         this.tag(BlockTags.MINEABLE_WITH_AXE).add(ModBlocks.THICK_PUMPKIN.get());
@@ -142,30 +128,13 @@ public class ModBlockTagProvider extends BlockTagsProvider {
         this.tag(BlockTags.WOODEN_STAIRS).add(ModBlocks.WISTERIA_STAIRS.get());
         this.tag(BlockTags.WOODEN_BUTTONS).add(ModBlocks.WISTERIA_BUTTON.get());
         this.tag(BlockTags.WOODEN_PRESSURE_PLATES).add(ModBlocks.WISTERIA_PRESSURE_PLATE.get());
-        this.tag(BlockTags.SAPLINGS).add(ModBlocks.WISTERIA_SAPLING.get());
-        this.tag(BlockTags.FLOWER_POTS).add(ModBlocks.POTTED_WISTERIA_SAPLING.get());
         this.tag(BlockTags.WOODEN_DOORS).add(ModBlocks.WISTERIA_DOOR.get());
         this.tag(BlockTags.WOODEN_TRAPDOORS).add(ModBlocks.WISTERIA_TRAPDOOR.get());
         this.tag(BlockTags.WOODEN_FENCES).add(ModBlocks.WISTERIA_FENCE.get());
         this.tag(BlockTags.FENCE_GATES).add(ModBlocks.WISTERIA_FENCE_GATE.get());
 
-        // mush
-        this.tag(BlockTags.SAPLINGS).add(ModBlocks.RED_MINI_SHROOM_SPORELING.get());
-        this.tag(BlockTags.FLOWER_POTS).add(ModBlocks.POTTED_RED_MINI_SHROOM_SPORELING.get());
-        this.tag(BlockTags.SAPLINGS).add(ModBlocks.BROWN_MINI_SHROOM_SPORELING.get());
-        this.tag(BlockTags.FLOWER_POTS).add(ModBlocks.POTTED_RED_MINI_SHROOM_SPORELING.get());
-
-        // witchy
-        this.tag(BlockTags.SAPLINGS).add(ModBlocks.WITCHY_SAPLING.get());
-        this.tag(BlockTags.FLOWER_POTS).add(ModBlocks.POTTED_WITCHY_SAPLING.get());
-
         // lupine
         this.tag(BlockTags.SMALL_FLOWERS).add(ModBlocks.LUPINE.get());
-        this.tag(BlockTags.FLOWER_POTS).add(ModBlocks.POTTED_LUPINE.get());
-
-        // alpine
-        this.tag(BlockTags.SAPLINGS).add(ModBlocks.ALPINE_SPRUCE_SAPLING.get());
-        this.tag(BlockTags.FLOWER_POTS).add(ModBlocks.POTTED_ALPINE_SPRUCE_SAPLING.get());
 
         // ashen
         this.tag(BlockTags.MINEABLE_WITH_SHOVEL)
@@ -187,9 +156,6 @@ public class ModBlockTagProvider extends BlockTagsProvider {
         this.tag(BlockTags.WOODEN_STAIRS).add(ModBlocks.SATISTREE_STAIRS.get());
         this.tag(BlockTags.WOODEN_BUTTONS).add(ModBlocks.SATISTREE_BUTTON.get());
         this.tag(BlockTags.WOODEN_PRESSURE_PLATES).add(ModBlocks.SATISTREE_PRESSURE_PLATE.get());
-        this.tag(BlockTags.SAPLINGS).add(ModBlocks.SATISTREE_SAPLING.get());
-        this.tag(BlockTags.FLOWER_POTS).add(ModBlocks.POTTED_SATISTREE_SAPLING.get());
-        this.tag(BlockTags.SAPLINGS).add(ModBlocks.GIGANTIC_SATISTREE_SPROUTS.get());
         this.tag(BlockTags.WOODEN_DOORS).add(ModBlocks.SATISTREE_DOOR.get());
         this.tag(BlockTags.WOODEN_TRAPDOORS).add(ModBlocks.SATISTREE_TRAPDOOR.get());
         this.tag(BlockTags.WOODEN_FENCES).add(ModBlocks.SATISTREE_FENCE.get());
@@ -198,18 +164,11 @@ public class ModBlockTagProvider extends BlockTagsProvider {
                 .addTag(BlockTags.SAND)
                 .addTag(BlockTags.DIRT).remove(Blocks.COARSE_DIRT)
                 .add(ModBlocks.ALIEN_PHYLLOSTACHYS.get(), ModBlocks.ALIEN_PHYLLOSTACHYS_SAPLING.get(), Blocks.GRAVEL, Blocks.SUSPICIOUS_GRAVEL);
-        this.tag(BlockTags.FLOWER_POTS).add(ModBlocks.POTTED_ALIEN_PHYLLOSTACHYS.get());
         this.tag(BlockTags.MINEABLE_WITH_AXE)
                 .add(ModBlocks.ALIEN_PHYLLOSTACHYS.get());
         this.tag(BlockTags.PLANKS).add(ModBlocks.ALIEN_FENCE_PLANKS.get());
         // sorta wooden? idk, still counts
         this.tag(BlockTags.WOODEN_FENCES).add(ModBlocks.ALIEN_FENCE_PLANT.get());
-        this.tag(BlockTags.SAPLINGS).add(ModBlocks.ALIEN_FENCE_PLANT_SAPLING.get());
-        this.tag(BlockTags.FLOWER_POTS).add(ModBlocks.POTTED_ALIEN_FENCE_PLANT_SAPLING.get());
-
-        // shrub
-        this.tag(BlockTags.SAPLINGS).add(ModBlocks.SHRUB_SAPLING.get());
-        this.tag(BlockTags.FLOWER_POTS).add(ModBlocks.POTTED_SHRUB_SAPLING.get());
 
         // bleed
         this.tag(BlockTags.FLOWERS).add(ModBlocks.CRESSET_FLOWER.get());

@@ -1,3 +1,9 @@
+NOTE:
+as this is public, this todo is largely for me to throw out ideas,
+track completion of certain things and devlog,
+as such this is not a roadmap or even a list of planned features,
+a lot of this won't even probably end up in the mod at all
+
 ### Current
 
 - [x] prod: remove dev biomes, clean up
@@ -30,7 +36,8 @@
   seed is already available, so like some event that happens right before the world loads or whatever mixin Terrablender
   runs
   ; got it to work but requires a world restart and it sounds like a pain to ask the player to relog tho
-  ; if i do this i beat Terrablender (the boss)
+  ; if i do this i beat Terrablender (the boss) 
+  ; BIOLITH BIOLITH BIOLITH BIOLITH BIOLITH BIOLITH BIOLITH 
 
 Multiloader moves:
 - [x] todo: written down todos
@@ -65,11 +72,11 @@ Multiloader moves:
 - [ ] todo fun: if amethysts in mystic biome, they glow
 - [x] todo fun: spiky impassable without shears
 - [ ] todo maybe: replace biomes in the region instead of the builder
-- [ ] todo maybe: switch to multiloader, do fabric
+- [x] todo maybe: switch to multiloader, do fabric
 - [ ] todo maybe: 1.21.10
 - [ ] todo maybe: bog with mud and shrooms
 - [ ] todo maybe: 1.20.1
-- [ ] todo maybe: revisit some biomes ; witchy ; satisforest
+- [ ] todo maybe: revisit some biomes ; witchy ; satisforest ; i wish witchy to feel a lot more themed or natural, it's just copy pastes trees rn tbh
 - [ ] todo: block that disables possibly annoying visual effects for biome
 - [ ] todo: add some custom soils (for at least a few at once, not just 1)
 - [ ] todo maybe: make leaf particles only appear on naturally generated ones ; leaf particler staffe

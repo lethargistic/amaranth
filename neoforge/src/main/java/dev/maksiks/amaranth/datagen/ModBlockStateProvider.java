@@ -36,17 +36,28 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
         ModBlocks.MOD_LEAVES.forEach(pair -> {
             Supplier<Block> leaves = pair.getFirst();
-            if (leaves != null) {
-                leavesBlock(leaves);
+            if (leaves == null) return;
+            leavesBlock(leaves);
+        });
+        ModBlocks.MOD_SAPLINGS.forEach(this::twoPlanesCutoutBlock);
+        ModBlocks.MOD_FLOWER_POTS.forEach(data -> {
+            Supplier<FlowerPotBlock> pot = data.pot();
+            Supplier<Block> plant = data.plant();
+
+            if (!data.autoModel()) {
+                return;
             }
+
+            if (plant == null) return;
+            pottedPlantBlock(pot, plant);
         });
 
         // misc
         blockWithItem(ModBlocks.MARBLE);
 
         // mystic
-        logBlock(( ModBlocks.MYSTIC_LOG.get()));
-        axisBlock(( ModBlocks.MYSTIC_WOOD.get()), blockTexture(ModBlocks.MYSTIC_LOG.get()), blockTexture(ModBlocks.MYSTIC_LOG.get()));
+        logBlock((ModBlocks.MYSTIC_LOG.get()));
+        axisBlock((ModBlocks.MYSTIC_WOOD.get()), blockTexture(ModBlocks.MYSTIC_LOG.get()), blockTexture(ModBlocks.MYSTIC_LOG.get()));
 
         logBlock(((RotatedPillarBlock) ModBlocks.STRIPPED_MYSTIC_LOG.get()));
         axisBlock(((RotatedPillarBlock) ModBlocks.STRIPPED_MYSTIC_WOOD.get()), blockTexture(ModBlocks.STRIPPED_MYSTIC_LOG.get()), blockTexture(ModBlocks.STRIPPED_MYSTIC_LOG.get()));
@@ -57,8 +68,6 @@ public class ModBlockStateProvider extends BlockStateProvider {
         blockItem(ModBlocks.STRIPPED_MYSTIC_WOOD);
 
         blockWithItem(ModBlocks.MYSTIC_PLANKS);
-        twoPlanesCutoutBlock(ModBlocks.MYSTIC_SAPLING);
-        pottedPlantBlock(ModBlocks.POTTED_MYSTIC_SAPLING, ModBlocks.MYSTIC_SAPLING);
 
         stairsBlock(ModBlocks.MYSTIC_STAIRS.get(), blockTexture(ModBlocks.MYSTIC_PLANKS.get()));
         slabBlock(ModBlocks.MYSTIC_SLAB.get(), blockTexture(ModBlocks.MYSTIC_PLANKS.get()), blockTexture(ModBlocks.MYSTIC_PLANKS.get()));
@@ -78,29 +87,12 @@ public class ModBlockStateProvider extends BlockStateProvider {
         blockItem(ModBlocks.MYSTIC_FENCE_GATE);
         blockItem(ModBlocks.MYSTIC_TRAPDOOR, "_bottom");
 
-        // stubby
-        twoPlanesCutoutBlock(ModBlocks.STUBBY_SAPLING);
-        pottedPlantBlock(ModBlocks.POTTED_STUBBY_SAPLING, ModBlocks.STUBBY_SAPLING);
-
         // leaf litter is made manually
-        twoPlanesCutoutBlock(ModBlocks.SILVER_BIRCH_SAPLING);
-        pottedPlantBlock(ModBlocks.POTTED_SILVER_BIRCH_SAPLING, ModBlocks.SILVER_BIRCH_SAPLING);
 
         // desolate
         iceBlock(ModBlocks.SORROW_ICE);
         blockItem(ModBlocks.SORROW_ICE);
         blockWithItem(ModBlocks.REMNANT_SORROW_ICE);
-
-        twoPlanesCutoutBlock(ModBlocks.PURPLE_MIXED_OAK_SAPLING);
-        pottedPlantBlock(ModBlocks.POTTED_PURPLE_MIXED_OAK_SAPLING, ModBlocks.PURPLE_MIXED_OAK_SAPLING);
-        twoPlanesCutoutBlock(ModBlocks.RED_MIXED_OAK_SAPLING);
-        pottedPlantBlock(ModBlocks.POTTED_RED_MIXED_OAK_SAPLING, ModBlocks.RED_MIXED_OAK_SAPLING);
-        twoPlanesCutoutBlock(ModBlocks.YELLOW_MIXED_OAK_SAPLING);
-        pottedPlantBlock(ModBlocks.POTTED_YELLOW_MIXED_OAK_SAPLING, ModBlocks.YELLOW_MIXED_OAK_SAPLING);
-
-        // orderly
-        twoPlanesCutoutBlock(ModBlocks.TRIMMED_TREE_SAPLING);
-        pottedPlantBlock(ModBlocks.POTTED_TRIMMED_TREE_SAPLING, ModBlocks.TRIMMED_TREE_SAPLING);
 
         // anthocyanin
         logBlock((ModBlocks.ANTHOCYANIN_LOG.get()));
@@ -115,8 +107,6 @@ public class ModBlockStateProvider extends BlockStateProvider {
         blockItem(ModBlocks.STRIPPED_ANTHOCYANIN_WOOD);
 
         blockWithItem(ModBlocks.ANTHOCYANIN_PLANKS);
-        twoPlanesCutoutBlock(ModBlocks.ANTHOCYANIN_SAPLING);
-        pottedPlantBlock(ModBlocks.POTTED_ANTHOCYANIN_SAPLING, ModBlocks.ANTHOCYANIN_SAPLING);
 
         stairsBlock(ModBlocks.ANTHOCYANIN_STAIRS.get(), blockTexture(ModBlocks.ANTHOCYANIN_PLANKS.get()));
         slabBlock(ModBlocks.ANTHOCYANIN_SLAB.get(), blockTexture(ModBlocks.ANTHOCYANIN_PLANKS.get()), blockTexture(ModBlocks.ANTHOCYANIN_PLANKS.get()));
@@ -140,7 +130,6 @@ public class ModBlockStateProvider extends BlockStateProvider {
         blockItem(ModBlocks.ORNAMENTED_ANTHOCYANIN_TRAPDOOR, "_bottom");
 
         twoPlanesCutoutBlock(ModBlocks.MALACHITE_VIPERS_BUGLOSS);
-        pottedPlantBlock(ModBlocks.POTTED_MALACHITE_VIPERS_BUGLOSS, ModBlocks.MALACHITE_VIPERS_BUGLOSS);
 
         // pain
         randomVariantTwoPlaneCutout(ModBlocks.SPIKY_ARCHES, 4);
@@ -149,10 +138,6 @@ public class ModBlockStateProvider extends BlockStateProvider {
         // TODO: more blockstates
         thickPumpkinBlock(ModBlocks.THICK_PUMPKIN);
         thickPumpkinBlockItem(ModBlocks.THICK_PUMPKIN);
-
-        // speary
-        twoPlanesCutoutBlock(ModBlocks.SPEARY_SAPLING);
-        pottedPlantBlock(ModBlocks.POTTED_SPEARY_SAPLING, ModBlocks.SPEARY_SAPLING);
 
         // pastel
         axisBlock(ModBlocks.JUICY_WISTERIA_LOG.get(), modLoc("block/wisteria_log"), modLoc("block/juicy_wisteria_log_top"));
@@ -169,8 +154,6 @@ public class ModBlockStateProvider extends BlockStateProvider {
         blockItem(ModBlocks.STRIPPED_WISTERIA_WOOD);
 
         blockWithItem(ModBlocks.WISTERIA_PLANKS);
-        twoPlanesCutoutBlock(ModBlocks.WISTERIA_SAPLING);
-        pottedPlantBlock(ModBlocks.POTTED_WISTERIA_SAPLING, ModBlocks.WISTERIA_SAPLING);
 
         stairsBlock(ModBlocks.WISTERIA_STAIRS.get(), blockTexture(ModBlocks.WISTERIA_PLANKS.get()));
         slabBlock(ModBlocks.WISTERIA_SLAB.get(), blockTexture(ModBlocks.WISTERIA_PLANKS.get()), blockTexture(ModBlocks.WISTERIA_PLANKS.get()));
@@ -193,22 +176,8 @@ public class ModBlockStateProvider extends BlockStateProvider {
         // mush
         doubleFourPlaneCropBlock(ModBlocks.REEDS);
 
-        twoPlanesCutoutBlock(ModBlocks.RED_MINI_SHROOM_SPORELING);
-        pottedPlantBlock(ModBlocks.POTTED_RED_MINI_SHROOM_SPORELING, ModBlocks.RED_MINI_SHROOM_SPORELING);
-        twoPlanesCutoutBlock(ModBlocks.BROWN_MINI_SHROOM_SPORELING);
-        pottedPlantBlock(ModBlocks.POTTED_BROWN_MINI_SHROOM_SPORELING, ModBlocks.BROWN_MINI_SHROOM_SPORELING);
-
-        // witchy
-        twoPlanesCutoutBlock(ModBlocks.WITCHY_SAPLING);
-        pottedPlantBlock(ModBlocks.POTTED_WITCHY_SAPLING, ModBlocks.WITCHY_SAPLING);
-
         // lupine
         twoPlanesCutoutMippedBlock(ModBlocks.LUPINE);
-        pottedPlantBlock(ModBlocks.POTTED_LUPINE, ModBlocks.LUPINE);
-
-        // alpine
-        twoPlanesCutoutBlock(ModBlocks.ALPINE_SPRUCE_SAPLING);
-        pottedPlantBlock(ModBlocks.POTTED_ALPINE_SPRUCE_SAPLING, ModBlocks.ALPINE_SPRUCE_SAPLING);
 
         // ashen
         blockWithItem(ModBlocks.VOLCANIC_ASH);
@@ -226,9 +195,6 @@ public class ModBlockStateProvider extends BlockStateProvider {
         blockItem(ModBlocks.STRIPPED_SATISTREE_WOOD);
 
         blockWithItem(ModBlocks.SATISTREE_PLANKS);
-        twoPlanesCutoutBlock(ModBlocks.SATISTREE_SAPLING);
-        pottedPlantBlock(ModBlocks.POTTED_SATISTREE_SAPLING, ModBlocks.SATISTREE_SAPLING);
-        twoPlanesCutoutBlock(ModBlocks.GIGANTIC_SATISTREE_SPROUTS);
 
         stairsBlock(ModBlocks.SATISTREE_STAIRS.get(), blockTexture(ModBlocks.SATISTREE_PLANKS.get()));
         slabBlock(ModBlocks.SATISTREE_SLAB.get(), blockTexture(ModBlocks.SATISTREE_PLANKS.get()), blockTexture(ModBlocks.SATISTREE_PLANKS.get()));
@@ -253,12 +219,6 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
         blockWithItem(ModBlocks.ALIEN_FENCE_PLANKS);
         fenceBlock(ModBlocks.ALIEN_FENCE_PLANT.get(), blockTexture(ModBlocks.ALIEN_FENCE_PLANKS.get()));
-        twoPlanesCutoutBlock(ModBlocks.ALIEN_FENCE_PLANT_SAPLING);
-        pottedPlantBlock(ModBlocks.POTTED_ALIEN_FENCE_PLANT_SAPLING, ModBlocks.ALIEN_FENCE_PLANT_SAPLING);
-
-        // shrub
-        twoPlanesCutoutBlock(ModBlocks.SHRUB_SAPLING);
-        pottedPlantBlock(ModBlocks.POTTED_SHRUB_SAPLING, ModBlocks.SHRUB_SAPLING);
 
         // cresset flower manually
     }
@@ -309,10 +269,10 @@ public class ModBlockStateProvider extends BlockStateProvider {
             BooleanProperty prop = switch (dir) {
                 case NORTH -> BlockStateProperties.NORTH;
                 case SOUTH -> BlockStateProperties.SOUTH;
-                case EAST  -> BlockStateProperties.EAST;
-                case WEST  -> BlockStateProperties.WEST;
-                case UP    -> BlockStateProperties.UP;
-                case DOWN  -> BlockStateProperties.DOWN;
+                case EAST -> BlockStateProperties.EAST;
+                case WEST -> BlockStateProperties.WEST;
+                case UP -> BlockStateProperties.UP;
+                case DOWN -> BlockStateProperties.DOWN;
             };
 
             builder

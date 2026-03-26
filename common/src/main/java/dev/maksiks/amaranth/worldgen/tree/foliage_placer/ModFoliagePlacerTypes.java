@@ -26,6 +26,7 @@ public class ModFoliagePlacerTypes{
     public static final Supplier<FoliagePlacerType<GiganticSatistreeFoliagePlacer>> GIGANTIC_SATISTREE_FOLIAGE_PLACER = register("gigantic_satistree_foliage_placer", Suppliers.memoize(() -> new FoliagePlacerType<>(GiganticSatistreeFoliagePlacer.getCODEC())));
     public static final Supplier<FoliagePlacerType<AlienFencePlantFoliagePlacer>> ALIEN_FENCE_PLANT_FOLIAGE_PLACER = register("alien_fence_plant_foliage_placer", Suppliers.memoize(() -> new FoliagePlacerType<>(AlienFencePlantFoliagePlacer.getCODEC())));
     public static final Supplier<FoliagePlacerType<ShrubFoliagePlacer>> SHRUB_FOLIAGE_PLACER = register("shrub_foliage_placer", Suppliers.memoize(() -> new FoliagePlacerType<>(ShrubFoliagePlacer.getCODEC())));
+    public static final Supplier<FoliagePlacerType<FrontierBlossomFoliagePlacer>> FRONTIER_BLOSSOM_FOLIAGE_PLACER = register("frontier_blossom_foliage_placer", Suppliers.memoize(() -> new FoliagePlacerType<>(FrontierBlossomFoliagePlacer.getCODEC())));
 
     private static <T extends FoliagePlacer> Supplier<FoliagePlacerType<T>> register(String key, Supplier<FoliagePlacerType<T>> placer) {
         FOLIAGE_PLACER_TYPE_MAP.put(key, placer);

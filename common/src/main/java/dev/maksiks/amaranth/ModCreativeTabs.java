@@ -6,11 +6,11 @@ import dev.maksiks.amaranth.item.ModItems;
 import dev.maksiks.amaranth.platform.Services;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.block.Block;
 
 import java.util.ArrayList;
 import java.util.List;
 
-// this ended up kinda ugly i should've just kept it in two files
 public class ModCreativeTabs {
     public static final List<Supplier<? extends ItemLike>> MAIN_CREATIVE_MODE_ITEM_MAP = new ArrayList<>();
 
@@ -36,37 +36,13 @@ public class ModCreativeTabs {
         MAIN_CREATIVE_MODE_ITEM_MAP.add(ModItems.SHROOM_BOI_SPAWN_EGG);
 
         // leaves
-        MAIN_CREATIVE_MODE_ITEM_MAP.add(ModBlocks.MYSTIC_LEAVES);
-        MAIN_CREATIVE_MODE_ITEM_MAP.add(ModBlocks.SILVERY_SILVER_BIRCH_LEAVES);
-        MAIN_CREATIVE_MODE_ITEM_MAP.add(ModBlocks.LIGHT_SILVER_BIRCH_LEAVES);
-        MAIN_CREATIVE_MODE_ITEM_MAP.add(ModBlocks.DARK_SILVER_BIRCH_LEAVES);
-        MAIN_CREATIVE_MODE_ITEM_MAP.add(ModBlocks.PURPLE_MIXED_OAK_LEAVES);
-        MAIN_CREATIVE_MODE_ITEM_MAP.add(ModBlocks.RED_MIXED_OAK_LEAVES);
-        MAIN_CREATIVE_MODE_ITEM_MAP.add(ModBlocks.YELLOW_MIXED_OAK_LEAVES);
-        MAIN_CREATIVE_MODE_ITEM_MAP.add(ModBlocks.ANTHOCYANIN_LEAVES);
-        MAIN_CREATIVE_MODE_ITEM_MAP.add(ModBlocks.BLOOMING_ANTHOCYANIN_LEAVES);
-        MAIN_CREATIVE_MODE_ITEM_MAP.add(ModBlocks.WISTERIA_LEAVES);
-        MAIN_CREATIVE_MODE_ITEM_MAP.add(ModBlocks.ALIEN_LEAVES);
+        ModBlocks.MOD_LEAVES.forEach((pair) -> {
+            Supplier<Block> leaves = pair.getFirst();
+            MAIN_CREATIVE_MODE_ITEM_MAP.add(leaves);
+        });
 
         // saplings
-        MAIN_CREATIVE_MODE_ITEM_MAP.add(ModBlocks.MYSTIC_SAPLING);
-        MAIN_CREATIVE_MODE_ITEM_MAP.add(ModBlocks.STUBBY_SAPLING);
-        MAIN_CREATIVE_MODE_ITEM_MAP.add(ModBlocks.SILVER_BIRCH_SAPLING);
-        MAIN_CREATIVE_MODE_ITEM_MAP.add(ModBlocks.PURPLE_MIXED_OAK_SAPLING);
-        MAIN_CREATIVE_MODE_ITEM_MAP.add(ModBlocks.RED_MIXED_OAK_SAPLING);
-        MAIN_CREATIVE_MODE_ITEM_MAP.add(ModBlocks.YELLOW_MIXED_OAK_SAPLING);
-        MAIN_CREATIVE_MODE_ITEM_MAP.add(ModBlocks.TRIMMED_TREE_SAPLING);
-        MAIN_CREATIVE_MODE_ITEM_MAP.add(ModBlocks.ANTHOCYANIN_SAPLING);
-        MAIN_CREATIVE_MODE_ITEM_MAP.add(ModBlocks.SPEARY_SAPLING);
-        MAIN_CREATIVE_MODE_ITEM_MAP.add(ModBlocks.WISTERIA_SAPLING);
-        MAIN_CREATIVE_MODE_ITEM_MAP.add(ModBlocks.RED_MINI_SHROOM_SPORELING);
-        MAIN_CREATIVE_MODE_ITEM_MAP.add(ModBlocks.BROWN_MINI_SHROOM_SPORELING);
-        MAIN_CREATIVE_MODE_ITEM_MAP.add(ModBlocks.WITCHY_SAPLING);
-        MAIN_CREATIVE_MODE_ITEM_MAP.add(ModBlocks.ALPINE_SPRUCE_SAPLING);
-        MAIN_CREATIVE_MODE_ITEM_MAP.add(ModBlocks.SATISTREE_SAPLING);
-        MAIN_CREATIVE_MODE_ITEM_MAP.add(ModBlocks.GIGANTIC_SATISTREE_SPROUTS);
-        MAIN_CREATIVE_MODE_ITEM_MAP.add(ModBlocks.ALIEN_FENCE_PLANT_SAPLING);
-        MAIN_CREATIVE_MODE_ITEM_MAP.add(ModBlocks.SHRUB_SAPLING);
+        MAIN_CREATIVE_MODE_ITEM_MAP.addAll(ModBlocks.MOD_SAPLINGS);
 
         // biome decor
         MAIN_CREATIVE_MODE_ITEM_MAP.add(ModBlocks.GOLDEN_LEAF_LITTER);

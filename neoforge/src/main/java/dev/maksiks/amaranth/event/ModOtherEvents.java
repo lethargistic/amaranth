@@ -1,5 +1,6 @@
 package dev.maksiks.amaranth.event;
 
+import com.google.common.base.Supplier;
 import dev.maksiks.amaranth.Constants;
 import dev.maksiks.amaranth.entity.ModEntities;
 import dev.maksiks.amaranth.util.Utils;
@@ -7,6 +8,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.SpawnPlacementTypes;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FlowerPotBlock;
 import net.minecraft.world.level.levelgen.Heightmap;
@@ -53,7 +55,11 @@ public class ModOtherEvents {
     public static void onCommonSetup(FMLCommonSetupEvent event) {
         // note: fairly certain you don't need to do this on fabric (it works)
         // but im confused as to why you do on Neo then
-        event.enqueueWork(() -> MOD_FLOWER_POTS.forEach((plant, pot) -> {
+        event.enqueueWork(() -> MOD_FLOWER_POTS.forEach((data) -> {
+            Supplier<FlowerPotBlock> pot = data.pot();
+            Supplier<Block> plant = data.plant();
+            if (plant == null || pot == null) return;
+
             ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(
                     ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, Utils.findBlockId(plant)),
                     pot

@@ -22,6 +22,7 @@ public class ModTrunkPlacerTypes{
     public static final Supplier<TrunkPlacerType<SatistreeTrunkPlacer>> SATISTREE_TRUNK_PLACER = register("satistree_trunk_placer", Suppliers.memoize(() -> new TrunkPlacerType<>(SatistreeTrunkPlacer.CODEC)));
     public static final Supplier<TrunkPlacerType<GiganticSatistreeTrunkPlacer>> GIGANTIC_SATISTREE_TRUNK_PLACER = register("gigantic_satistree_trunk_placer", Suppliers.memoize(() -> new TrunkPlacerType<>(GiganticSatistreeTrunkPlacer.CODEC)));
     public static final Supplier<TrunkPlacerType<AlienFencePlantTrunkPlacer>> ALIEN_FENCE_PLANT_TRUNK_PLACER = register("alien_fence_plant_trunk_placer", Suppliers.memoize(() -> new TrunkPlacerType<>(AlienFencePlantTrunkPlacer.CODEC)));
+    public static final Supplier<TrunkPlacerType<FrontierBlossomTrunkPlacer>> FRONTIER_BLOSSOM_TRUNK_PLACER = register("frontier_blossom_trunk_placer", Suppliers.memoize(() -> new TrunkPlacerType<>(FrontierBlossomTrunkPlacer.CODEC)));
 
     private static <T extends TrunkPlacer> Supplier<TrunkPlacerType<T>> register(String key, Supplier<TrunkPlacerType<T>> placer) {
         TRUNK_PLACER_TYPE_MAP.put(key, placer);

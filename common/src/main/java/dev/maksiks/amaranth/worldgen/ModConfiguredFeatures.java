@@ -109,6 +109,8 @@ public class ModConfiguredFeatures {
     public static ResourceKey<ConfiguredFeature<?, ?>> SHRUBLAND_LUPINE_FLOWER_KEY = registerKey("shrubland_lupine_flower");
     public static ResourceKey<ConfiguredFeature<?, ?>> SHRUBLAND_ROCK_KEY = registerKey("shrubland_rock");
 
+    public static ResourceKey<ConfiguredFeature<?, ?>> FRONTIER_BLOSSOM_TREE_KEY = registerKey("frontier_blossom_tree");
+
     public static void bootstrap(BootstrapContext<ConfiguredFeature<?, ?>> context) {
         HolderGetter<ConfiguredFeature<?, ?>> configuredFeatures = context.lookup(Registries.CONFIGURED_FEATURE);
 
@@ -796,6 +798,19 @@ public class ModConfiguredFeatures {
         );
         register(context, SHRUBLAND_ROCK_KEY,
                 ModFeatures.SHRUBLAND_ROCK_FEATURE.get(), NoneFeatureConfiguration.INSTANCE);
+
+        // bleeding
+        register(
+                context,
+                FRONTIER_BLOSSOM_TREE_KEY,
+                Feature.TREE,
+                new TreeConfiguration.TreeConfigurationBuilder(
+                        BlockStateProvider.simple(Blocks.CHERRY_LOG),
+                        new FrontierBlossomTrunkPlacer(0, 0, 0),
+                        BlockStateProvider.simple(Blocks.CHERRY_LEAVES),
+                        new FrontierBlossomFoliagePlacer(ConstantInt.of(0), ConstantInt.of(0), 0),
+                        new TwoLayersFeatureSize(0, 0, 0)).build()
+        );
     }
 
     public static ResourceKey<ConfiguredFeature<?, ?>> registerKey(String name) {
