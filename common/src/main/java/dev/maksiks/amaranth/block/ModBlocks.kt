@@ -851,7 +851,6 @@ class ModBlocks {
         val POTTED_SHRUB_SAPLING: Supplier<FlowerPotBlock?> = registerFlowerPot(SHRUB_SAPLING)
 
         // bleeding
-        // TODO cur: non temp item texture
         @JvmField
         val CRESSET_FLOWER: Supplier<CressetFlowerBlock?> = registerWithItem<CressetFlowerBlock?>(
             "cresset_flower", renderType = RenderType.CUTOUT

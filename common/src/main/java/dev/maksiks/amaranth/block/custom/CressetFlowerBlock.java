@@ -3,6 +3,7 @@ package dev.maksiks.amaranth.block.custom;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -31,9 +32,11 @@ public class CressetFlowerBlock extends Block {
         return SHAPE.move(vec3.x, vec3.y, vec3.z);
     }
 
+    // leaves for building
     @Override
-    protected boolean canSurvive(BlockState p_154709_, LevelReader p_154710_, BlockPos p_154711_) {
-        return Block.canSupportCenter(p_154710_, p_154711_.above(), Direction.DOWN) && !p_154710_.isWaterAt(p_154711_);
+    protected boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
+        return (level.getBlockState(pos.above()).is(BlockTags.LEAVES)
+                || Block.canSupportCenter(level, pos.above(), Direction.DOWN)) && !level.isWaterAt(pos);
     }
 
     @Override
