@@ -1279,6 +1279,7 @@ public class ModBiomes {
         // TODO now: rocks or something else to make it not bland
         // TODO now: balance the biome
         // TODO now: balance the blossoms
+        // TODO now: HOLY SHIT MAKE THEM SPAWN IN LITTLE GROVES LIKE IN THE DEV WORLD YESYYESYESE
 
         BiomeDefaultFeatures.addDefaultMushrooms(biomeBuilder);
         BiomeDefaultFeatures.addDefaultExtraVegetation(biomeBuilder);

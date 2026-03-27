@@ -3,6 +3,7 @@ package dev.maksiks.amaranth.item;
 import com.google.common.base.Supplier;
 import com.google.common.base.Suppliers;
 import dev.maksiks.amaranth.entity.ModEntities;
+import dev.maksiks.amaranth.item.custom.AshesOfTheLawnGnomeItem;
 import dev.maksiks.amaranth.item.custom.CrownOfThornsItem;
 import dev.maksiks.amaranth.item.custom.MelonHelmetItem;
 import dev.maksiks.amaranth.item.custom.WisteriaJuiceItem;
@@ -45,6 +46,8 @@ public class ModItems {
             () -> new MelonHelmetItem(ModArmorMaterials.MELON_HELMET_MATERIAL, ArmorItem.Type.HELMET,
                     new Item.Properties().durability(ArmorItem.Type.HELMET.getDurability(5))));
 
+    public static final Supplier<Item> ASHES_OF_THE_LAWN_GNOME = register("ashes_of_the_lawn_gnome",
+            () -> new AshesOfTheLawnGnomeItem(new Item.Properties()));
     // discs
     public static final Supplier<Item> PALETTE_OVERLOAD_MUSIC_DISC = register("palette_overload_music_disc",
             () -> new Item(new Item.Properties().rarity(Rarity.RARE).jukeboxPlayable(ModSounds.PALETTE_OVERLOAD_KEY).stacksTo(1)));
