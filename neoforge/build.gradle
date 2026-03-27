@@ -11,6 +11,7 @@ repositories {
         name = 'Kotlin for Forge'
         url = 'https://thedarkcolour.github.io/KotlinForForge/'
     }
+    mavenLocal()
 }
 
 dependencies {

@@ -4,6 +4,7 @@ import com.google.common.base.Supplier;
 import dev.maksiks.amaranth.Constants;
 import dev.maksiks.amaranth.entity.ModEntities;
 import dev.maksiks.amaranth.util.Utils;
+import dev.maksiks.amaranth.worldgen.biome.surface.ModSurfaceRules;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -18,6 +19,7 @@ import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent;
+import terrablender.api.SurfaceRuleManager;
 
 import static dev.maksiks.amaranth.block.ModBlocks.MOD_FLOWER_POTS;
 
@@ -53,12 +55,20 @@ public class ModOtherEvents {
 
     @SubscribeEvent
     public static void onCommonSetup(FMLCommonSetupEvent event) {
+        SurfaceRuleManager.addSurfaceRules(SurfaceRuleManager.RuleCategory.OVERWORLD, Constants.MOD_ID, ModSurfaceRules.makeRules());
+
+        Constants.LOG.info("Amaranth: Hi im pot {13");
         // note: fairly certain you don't need to do this on fabric (it works)
         // but im confused as to why you do on Neo then
         event.enqueueWork(() -> MOD_FLOWER_POTS.forEach((data) -> {
             Supplier<FlowerPotBlock> pot = data.pot();
             Supplier<Block> plant = data.plant();
+
+            Constants.LOG.info("Hi im pot {}", pot);
+
             if (plant == null || pot == null) return;
+
+            Constants.LOG.info("Hi im pot {}", pot);
 
             ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(
                     ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, Utils.findBlockId(plant)),
