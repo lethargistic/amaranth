@@ -410,7 +410,6 @@ public class ModPlacedFeatures {
 
 
         // bleeding
-        // TODO now: pick rarity
         register(context, FRONTIER_BLOSSOM_TREE_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.FRONTIER_BLOSSOM_TREE_KEY),
                 // 1 / chance has to be integer mojang why
                 VegetationPlacements.treePlacement(PlacementUtils.countExtra(1, 0.1F, 0),

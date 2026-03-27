@@ -6,6 +6,7 @@ a lot of this won't even probably end up in the mod at all
 
 ### Current
 
+- [ ] todo very: instameal
 - [x] prod: remove dev biomes, clean up
 - [x] todo very: melon helmet
 - [ ] fix minor: game logs missing item for alien bamboo sapling
@@ -89,6 +90,7 @@ Multiloader moves:
 - [ ] improve: pumpkin
 - [ ] cleanup: linked biome configs
 - [ ] todo maybe: add items to vanilla tabs
+- [ ] fix maybe: frontier blossom very rarely generates two cressets on top of eachother
 
 ### Whatever
 

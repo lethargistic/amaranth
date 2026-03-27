@@ -1,31 +1,43 @@
-package dev.maksiks.amaranth.worldgen.tree;
+package dev.maksiks.amaranth.worldgen.tree
 
-import net.minecraft.core.BlockPos;
+import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
+import net.minecraft.util.RandomSource
+import kotlin.math.abs
 
-import java.util.List;
-
-public class TreeUtils {
+object TreeUtils {
     /**
      * checks if two positions are adjacent within 1 block in any direction, including diagonals
      */
-    public static boolean isAdjacent(BlockPos pos1, BlockPos pos2) {
-        if (pos1.equals(pos2)) {
-            return false;
+    @JvmStatic
+    fun isAdjacent(pos1: BlockPos, pos2: BlockPos): Boolean {
+        if (pos1 == pos2) {
+            return false
         }
 
-        int deltaX = Math.abs(pos1.getX() - pos2.getX());
-        int deltaY = Math.abs(pos1.getY() - pos2.getY());
-        int deltaZ = Math.abs(pos1.getZ() - pos2.getZ());
+        val deltaX = abs(pos1.x - pos2.x)
+        val deltaY = abs(pos1.y - pos2.y)
+        val deltaZ = abs(pos1.z - pos2.z)
 
-        return deltaX <= 1 && deltaY <= 1 && deltaZ <= 1;
+        return deltaX <= 1 && deltaY <= 1 && deltaZ <= 1
     }
 
-    public static boolean isAdjacentToAny(BlockPos pos, List<BlockPos> positions) {
-        for (BlockPos adjacent : positions) {
+    @JvmStatic
+    fun isAdjacentToAny(pos: BlockPos, positions: MutableList<BlockPos>): Boolean {
+        for (adjacent in positions) {
             if (isAdjacent(pos, adjacent)) {
-                return true;
+                return true
             }
         }
-        return false;
+        return false
+    }
+
+    @JvmStatic
+    fun getRandomXWiseDir(dir: Direction, random: RandomSource): Direction {
+        return if (random.nextBoolean()) {
+            dir.clockWise
+        } else {
+            dir.counterClockWise
+        }
     }
 }

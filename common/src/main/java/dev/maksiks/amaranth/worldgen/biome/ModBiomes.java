@@ -1274,7 +1274,11 @@ public class ModBiomes {
         BiomeDefaultFeatures.addDefaultFlowers(biomeBuilder);
         BiomeDefaultFeatures.addDefaultGrass(biomeBuilder);
 
-        // TODO now: add tree
+        biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.FRONTIER_BLOSSOM_TREE_PLACED_KEY);
+
+        // TODO now: rocks or something else to make it not bland
+        // TODO now: balance the biome
+        // TODO now: balance the blossoms
 
         BiomeDefaultFeatures.addDefaultMushrooms(biomeBuilder);
         BiomeDefaultFeatures.addDefaultExtraVegetation(biomeBuilder);

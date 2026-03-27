@@ -6,22 +6,24 @@ import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import com.mojang.serialization.codecs.RecordCodecBuilder.Instance
 import com.mojang.serialization.codecs.RecordCodecBuilder.Mu
+import dev.maksiks.amaranth.worldgen.tree.TreeUtils
 import dev.maksiks.amaranth.worldgen.tree.foliage_placer.ModFoliagePlacerTypes
-import dev.maksiks.twigonometry.api.LayerPattern
-import dev.maksiks.twigonometry.api.LeafPlacerContext
+import dev.maksiks.amaranth.worldgen.tree.trunk_placer.custom_placer.FrontierBlossomTrunkPlacer
+import dev.maksiks.twigonometry.api.*
+import dev.maksiks.twigonometry.api.LeafPlacerContext.HorizontalLayer
 import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
 import net.minecraft.util.RandomSource
 import net.minecraft.util.valueproviders.IntProvider
 import net.minecraft.world.level.LevelSimulatedReader
 import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration
-import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacer
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacerType
 
 class FrontierBlossomFoliagePlacer(
     radius: IntProvider,
     offset: IntProvider,
     val height: Int
-) : FoliagePlacer(radius, offset) {
+) : WildcardFoliagePlacer(radius, offset) {
     companion object {
         @JvmStatic
         var CODEC: MapCodec<FrontierBlossomFoliagePlacer> =
@@ -42,19 +44,17 @@ class FrontierBlossomFoliagePlacer(
         }
     }
 
-    protected override fun type(): FoliagePlacerType<*>
-    = ModFoliagePlacerTypes.FRONTIER_BLOSSOM_FOLIAGE_PLACER.get()
+    protected override fun type(): FoliagePlacerType<*> = ModFoliagePlacerTypes.FRONTIER_BLOSSOM_FOLIAGE_PLACER.get()
 
-    override fun createFoliage(
+    override fun createWildcardFoliage(
         level: LevelSimulatedReader,
         blockSetter: FoliageSetter,
         random: RandomSource,
         config: TreeConfiguration,
         maxFreeTreeHeight: Int,
-        attachment: FoliageAttachment,
+        attachment: WildcardFoliageAttachment,
         foliageHeight: Int,
-        foliageRadius: Int,
-        offset: Int
+        foliageRadius: Int
     ) {
         val trunkPos = attachment.pos().below();
         val ctx = LeafPlacerContext.ctx(level, blockSetter, random, config, debug = false);
@@ -64,19 +64,59 @@ class FrontierBlossomFoliagePlacer(
         fun bump() {
             curY += 1
         }
+
         fun lower() {
             curY -= 1
         }
+        bump()
 
-        run {
-            ctx.incSquare(at(curY), 0,
-                LeafPlacerContext.HorizontalLayer(100, 100, 100, null, false),
-                LeafPlacerContext.HorizontalLayer(95, 90, 100, 0.8, false, LayerPattern.NOT_CORNERS)
-            )
+        attachment.require("variant", "dir")
+        val variant = attachment.getRequired<FrontierBlossomTrunkPlacer.Variant?>("variant")
+        val dir = attachment.getRequired<Direction>("dir")
+
+        if (variant == FrontierBlossomTrunkPlacer.Variant.BUNS) {
+            ctx.diamond(at(curY), 1)
             bump()
-            ctx.incSquare(at(curY), 100,
-                LeafPlacerContext.HorizontalLayer(90, 90, 100, 0.8, false)
+            ctx.placeLeaf(at(curY))
+            if (random.nextInt(100) < 10) {
+                ctx.placeLeaf(
+                    at(curY)
+                        .relative(Direction.Plane.HORIZONTAL.getRandomDirection(random), 1)
+                )
+            }
+        }
+        if (variant == FrontierBlossomTrunkPlacer.Variant.DROOPY) {
+            val diagonalDroop = ICustomLeafPlacer { pos, x, z, dist ->
+                ctx.placeLeaf(pos)
+                if (random.nextBoolean()) {
+                    ctx.placeLeaf(pos.below())
+                }
+            }
+
+            ctx.diamond(at(curY), 1)
+            ctx.incSquare(
+                at(curY), 0,
+                HorizontalLayer(25, cap = 25, pattern = LayerPattern.NOT_PLUS, custom = diagonalDroop)
             )
+
+            // droop itself
+            val chiefDir =
+                generateSequence { Direction.Plane.HORIZONTAL.getRandomDirection(random) }.first { it != dir }
+            val edgeDir = generateSequence { TreeUtils.getRandomXWiseDir(chiefDir, random) }.first { it != dir }
+            val mirrorEdge = random.nextInt(4) == 0
+
+            ctx.placeLeaf(at(curY - 1).relative(edgeDir))
+            if (mirrorEdge) ctx.placeLeaf(at(curY - 1).relative(edgeDir.opposite))
+            repeat(2) { ctx.placeLeaf(at(curY - it - 1).relative(chiefDir)) }
+
+            bump()
+            ctx.placeLeaf(at(curY))
+            if (random.nextInt(100) < 20) {
+                ctx.placeLeaf(
+                    at(curY)
+                        .relative(Direction.Plane.HORIZONTAL.getRandomDirection(random), 1)
+                )
+            }
         }
     }
 
