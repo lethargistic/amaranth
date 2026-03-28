@@ -118,7 +118,7 @@ public class ModBiomeSelectors {
     );
 
     public static final List<List<ResourceKey<Biome>>> MOD_PLATEAU_BIOMES_VARIANT = ModBiomeSelectorUtils.create("plateau_biomes_variant/mod_plateau_biomes_variant", "",
-            List.of(P, P, P, P, P),
+            List.of(P, P, BLEEDING_EDGE, P, P),
             List.of(P, P, P, P, P),
             List.of(P, P, P, ORDERLY_COURTS_RUINS, P),
             List.of(P, P, P, P, P),
@@ -126,7 +126,7 @@ public class ModBiomeSelectors {
     );
 
     public static final List<List<ResourceKey<Biome>>> MOD_PLATEAU_BIOMES_VARIANT_2 = ModBiomeSelectorUtils.create("plateau_biomes_variant/mod_plateau_biomes_variant_2", "",
-            List.of(DESOLATE_ICE_FIELDS, DESOLATE_ICE_FIELDS, P, P, P),
+            List.of(DESOLATE_ICE_FIELDS, DESOLATE_ICE_FIELDS, BLEEDING_EDGE, P, P),
             List.of(P, P, P, P, P),
             List.of(PASTEL_PARCEL, P, P, P, P),
             List.of(PASTEL_PARCEL, PASTEL_PARCEL, P, P, P),

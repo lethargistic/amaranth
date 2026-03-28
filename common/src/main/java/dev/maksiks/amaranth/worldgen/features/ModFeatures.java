@@ -14,6 +14,9 @@ import java.util.HashMap;
 public class ModFeatures {
     public static final HashMap<String, Supplier<? extends Feature<?>>> FEATURE_MAP = new HashMap<>();
 
+    public static final Supplier<Feature<NoneFeatureConfiguration>> TEST_FILL_FEATURE =
+            register("test_fill",
+                    () -> new TestFillFeature(NoneFeatureConfiguration.CODEC));
     public static final Supplier<Feature<NoneFeatureConfiguration>> DESOLATE_SPIKE_FEATURE =
             register("desolate_spike",
                     () -> new DesolateSpikeFeature(NoneFeatureConfiguration.CODEC));
@@ -52,6 +55,9 @@ public class ModFeatures {
     public static final Supplier<Feature<NoneFeatureConfiguration>> SHRUBLAND_ROCK_FEATURE =
             register("shrubland_rock",
                     () -> new VividShrublandRockFeature(NoneFeatureConfiguration.CODEC));
+    public static final Supplier<Feature<ProbabilityFeatureConfiguration>> SMOL_BAMBOO_FEATURE =
+            register("smol_bamboo",
+                    () -> new SmolBambooFeature(ProbabilityFeatureConfiguration.CODEC));
 
     private static <T extends FeatureConfiguration> Supplier<Feature<T>> register(String key, Supplier<Feature<T>> feature) {
         Supplier<Feature<T>> memoized = Suppliers.memoize(feature);

@@ -662,7 +662,17 @@ IDEAS:
 ### cherry + snow
 ----------------------
 
-- [ ] the concept of blood on snow doesn't leave my head so might as well
+- [x] the concept of blood on snow doesn't leave my head so might as well
+- [ ] todo maybe: rocks
+- [ ] todo maybe: little water pools, this went in a nice like winter mountain direction so adding little ice pools could be fun
+
+----------------------
+
+### this
+----------------------
+
+- [ ] this
+![img_3.png](img_3.png)
 
 ----------------------
 

@@ -3,15 +3,24 @@ package dev.maksiks.amaranth.worldgen;
 import dev.maksiks.amaranth.Constants;
 import dev.maksiks.amaranth.block.ModBlocks;
 import net.minecraft.core.Holder;
+import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
+import net.minecraft.data.worldgen.features.FeatureUtils;
 import net.minecraft.data.worldgen.features.VegetationFeatures;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.data.worldgen.placement.VegetationPlacements;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.valueproviders.ClampedInt;
+import net.minecraft.util.valueproviders.UniformInt;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.configurations.SimpleBlockConfiguration;
+import net.minecraft.world.level.levelgen.feature.configurations.SimpleRandomFeatureConfiguration;
+import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 import net.minecraft.world.level.levelgen.placement.*;
 
 import java.util.List;
@@ -88,6 +97,8 @@ public class ModPlacedFeatures {
     public static final ResourceKey<PlacedFeature> SHRUBLAND_ROCK_PLACED_KEY = registerKey("shrubland_rock_placed");
 
     public static final ResourceKey<PlacedFeature> FRONTIER_BLOSSOM_TREE_PLACED_KEY = registerKey("frontier_blossom_tree_placed");
+    public static final ResourceKey<PlacedFeature> BLEEDING_EDGE_PEONIES_PLACED_KEY = registerKey("bleeding_edge_peonies_placed");
+    public static final ResourceKey<PlacedFeature> BLEEDING_EDGE_BAMBOO_PLACED_KEY = registerKey("bleeding_edge_bamboo_placed");
 
     public static void bootstrap(BootstrapContext<PlacedFeature> context) {
         var configuredFeatures = context.lookup(Registries.CONFIGURED_FEATURE);
@@ -408,12 +419,33 @@ public class ModPlacedFeatures {
                 )
         );
 
-
         // bleeding
         register(context, FRONTIER_BLOSSOM_TREE_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.FRONTIER_BLOSSOM_TREE_KEY),
                 // 1 / chance has to be integer mojang why
-                VegetationPlacements.treePlacement(PlacementUtils.countExtra(1, 0.1F, 0),
-                        ModBlocks.FRONTIER_BLOSSOM_SAPLING.get()));
+                List.of(
+                        NoiseThresholdCountPlacement.of(-0.3, 7, 2),
+                        InSquarePlacement.spread(),
+                        PlacementUtils.HEIGHTMAP_WORLD_SURFACE,
+                        BiomeFilter.biome()
+                )
+        );
+
+        register(
+                context,
+                BLEEDING_EDGE_PEONIES_PLACED_KEY,
+                configuredFeatures.getOrThrow(ModConfiguredFeatures.BLEEDING_EDGE_PEONIES_KEY),
+                List.of(
+                        RarityFilter.onAverageOnceEvery(2),
+                        InSquarePlacement.spread(),
+                        PlacementUtils.HEIGHTMAP,
+                        CountPlacement.of(ClampedInt.of(UniformInt.of(-1, 3), 0, 3)),
+                        BiomeFilter.biome()
+                )
+        );
+
+        register(context, BLEEDING_EDGE_BAMBOO_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.BLEEDING_EDGE_BAMBOO_KEY),
+                List.of(RarityFilter.onAverageOnceEvery(2), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome()));
+
     }
 
     private static ResourceKey<PlacedFeature> registerKey(String name) {

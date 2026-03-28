@@ -12,6 +12,7 @@ import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
+import net.minecraft.data.worldgen.features.FeatureUtils;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -39,7 +40,11 @@ import net.minecraft.world.level.levelgen.synth.NormalNoise;
 
 import java.util.List;
 
+import static dev.maksiks.amaranth.worldgen.features.ModFeatures.TEST_FILL_FEATURE;
+
 public class ModConfiguredFeatures {
+    public static ResourceKey<ConfiguredFeature<?, ?>> TEST_FILL_KEY = registerKey("test_lupine_fill");
+
     public static ResourceKey<ConfiguredFeature<?, ?>> MYSTIC_KEY = registerKey("mystic");
     public static ResourceKey<ConfiguredFeature<?, ?>> MYSTIC_FLOWER_KEY = registerKey("mystic_flower");
     public static ResourceKey<ConfiguredFeature<?, ?>> MYSTIC_AMETHYST_KEY = registerKey("mystic_amethyst");
@@ -110,9 +115,19 @@ public class ModConfiguredFeatures {
     public static ResourceKey<ConfiguredFeature<?, ?>> SHRUBLAND_ROCK_KEY = registerKey("shrubland_rock");
 
     public static ResourceKey<ConfiguredFeature<?, ?>> FRONTIER_BLOSSOM_TREE_KEY = registerKey("frontier_blossom_tree");
+    public static ResourceKey<ConfiguredFeature<?, ?>> BLEEDING_EDGE_PEONIES_KEY = registerKey("bleeding_edge_peonies");
+    public static ResourceKey<ConfiguredFeature<?, ?>> BLEEDING_EDGE_BAMBOO_KEY = registerKey("bleeding_edge_bamboo_key");
 
     public static void bootstrap(BootstrapContext<ConfiguredFeature<?, ?>> context) {
         HolderGetter<ConfiguredFeature<?, ?>> configuredFeatures = context.lookup(Registries.CONFIGURED_FEATURE);
+
+        // for noise testing
+        register(
+                context,
+                TEST_FILL_KEY,
+                TEST_FILL_FEATURE.get(),
+                NoneFeatureConfiguration.INSTANCE
+        );
 
         // mystic
         register(context, MYSTIC_KEY, Feature.TREE, new TreeConfiguration.TreeConfigurationBuilder(
@@ -811,7 +826,43 @@ public class ModConfiguredFeatures {
                         new FrontierBlossomFoliagePlacer(ConstantInt.of(0), ConstantInt.of(0), 0),
                         new TwoLayersFeatureSize(0, 0, 0)).build()
         );
+
+        register(
+                context,
+                BLEEDING_EDGE_PEONIES_KEY,
+                Feature.SIMPLE_RANDOM_SELECTOR,
+                new SimpleRandomFeatureConfiguration(
+                        HolderSet.direct(
+                                PlacementUtils.inlinePlaced(
+                                        Feature.RANDOM_PATCH,
+                                        FeatureUtils.simplePatchConfiguration(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(BlockStateProvider.simple(Blocks.PEONY)))
+                                ),
+                                PlacementUtils.inlinePlaced(
+                                        Feature.NO_BONEMEAL_FLOWER,
+                                        FeatureUtils.simplePatchConfiguration(
+                                                Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(BlockStateProvider.simple(Blocks.LILY_OF_THE_VALLEY))
+                                        )
+                                )
+                        )
+                )
+        );
+
+        register(
+                context,
+                BLEEDING_EDGE_BAMBOO_KEY,
+                Feature.RANDOM_PATCH,
+                new RandomPatchConfiguration(
+                        6,
+                        3,
+                        2,
+                        PlacementUtils.onlyWhenEmpty(
+                                ModFeatures.SMOL_BAMBOO_FEATURE.get(),
+                                new ProbabilityFeatureConfiguration(0.0F)
+                        )
+                )
+        );
     }
+
 
     public static ResourceKey<ConfiguredFeature<?, ?>> registerKey(String name) {
         return ResourceKey.create(Registries.CONFIGURED_FEATURE, ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, name));
