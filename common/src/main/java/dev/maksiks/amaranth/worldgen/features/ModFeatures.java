@@ -52,12 +52,18 @@ public class ModFeatures {
     public static final Supplier<Feature<NoneFeatureConfiguration>> SATIS_ROCK_FEATURE =
             register("satis_rock",
                     () -> new SatisRockFeature(NoneFeatureConfiguration.CODEC));
+
     public static final Supplier<Feature<NoneFeatureConfiguration>> SHRUBLAND_ROCK_FEATURE =
             register("shrubland_rock",
                     () -> new VividShrublandRockFeature(NoneFeatureConfiguration.CODEC));
+
     public static final Supplier<Feature<ProbabilityFeatureConfiguration>> SMOL_BAMBOO_FEATURE =
             register("smol_bamboo",
                     () -> new SmolBambooFeature(ProbabilityFeatureConfiguration.CODEC));
+
+    public static final Supplier<Feature<NoneFeatureConfiguration>> ROSERY_MEGA_BOULDER_FEATURE =
+            register("rosery_mega_boulder",
+                    () -> new RoseryMegaBoulder(NoneFeatureConfiguration.CODEC));
 
     private static <T extends FeatureConfiguration> Supplier<Feature<T>> register(String key, Supplier<Feature<T>> feature) {
         Supplier<Feature<T>> memoized = Suppliers.memoize(feature);

@@ -116,7 +116,9 @@ public class ModConfiguredFeatures {
 
     public static ResourceKey<ConfiguredFeature<?, ?>> FRONTIER_BLOSSOM_TREE_KEY = registerKey("frontier_blossom_tree");
     public static ResourceKey<ConfiguredFeature<?, ?>> BLEEDING_EDGE_PEONIES_KEY = registerKey("bleeding_edge_peonies");
-    public static ResourceKey<ConfiguredFeature<?, ?>> BLEEDING_EDGE_BAMBOO_KEY = registerKey("bleeding_edge_bamboo_key");
+    public static ResourceKey<ConfiguredFeature<?, ?>> BLEEDING_EDGE_BAMBOO_KEY = registerKey("bleeding_edge_bamboo");
+
+    public static ResourceKey<ConfiguredFeature<?, ?>> ROSERY_MEGA_BOULDER_KEY = registerKey("rosery_mega_boulder");
 
     public static void bootstrap(BootstrapContext<ConfiguredFeature<?, ?>> context) {
         HolderGetter<ConfiguredFeature<?, ?>> configuredFeatures = context.lookup(Registries.CONFIGURED_FEATURE);
@@ -860,6 +862,14 @@ public class ModConfiguredFeatures {
                                 new ProbabilityFeatureConfiguration(0.0F)
                         )
                 )
+        );
+
+        // rosery
+        register(
+                context,
+                ROSERY_MEGA_BOULDER_KEY,
+                ModFeatures.ROSERY_MEGA_BOULDER_FEATURE.get(),
+                NoneFeatureConfiguration.INSTANCE
         );
     }
 

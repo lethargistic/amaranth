@@ -676,6 +676,14 @@ IDEAS:
 
 ----------------------
 
+### mindless rosery
+----------------------
+
+- [ ] something like this MMM pic
+![img_4.png](img_4.png)
+
+----------------------
+
 
 tutorial:
 

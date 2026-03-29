@@ -100,6 +100,8 @@ public class ModPlacedFeatures {
     public static final ResourceKey<PlacedFeature> BLEEDING_EDGE_PEONIES_PLACED_KEY = registerKey("bleeding_edge_peonies_placed");
     public static final ResourceKey<PlacedFeature> BLEEDING_EDGE_BAMBOO_PLACED_KEY = registerKey("bleeding_edge_bamboo_placed");
 
+    public static final ResourceKey<PlacedFeature> ROSERY_MEGA_BOULDER_PLACED_KEY = registerKey("rosery_mega_boulder_placed_key");
+
     public static void bootstrap(BootstrapContext<PlacedFeature> context) {
         var configuredFeatures = context.lookup(Registries.CONFIGURED_FEATURE);
 
@@ -446,6 +448,19 @@ public class ModPlacedFeatures {
         register(context, BLEEDING_EDGE_BAMBOO_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.BLEEDING_EDGE_BAMBOO_KEY),
                 List.of(RarityFilter.onAverageOnceEvery(2), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome()));
 
+        // rosery
+        register(
+                context,
+                ROSERY_MEGA_BOULDER_PLACED_KEY,
+                configuredFeatures.getOrThrow(ModConfiguredFeatures.ROSERY_MEGA_BOULDER_KEY),
+                List.of(
+                        RarityFilter.onAverageOnceEvery(2),
+                        InSquarePlacement.spread(),
+                        PlacementUtils.HEIGHTMAP,
+                        CountPlacement.of(ClampedInt.of(UniformInt.of(-1, 3), 0, 3)),
+                        BiomeFilter.biome()
+                )
+        );
     }
 
     private static ResourceKey<PlacedFeature> registerKey(String name) {

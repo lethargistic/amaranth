@@ -61,6 +61,7 @@ public class ModBiomes {
     public static final ResourceKey<Biome> SHRUBLAND = registerOverworld("shrubland");
     public static final ResourceKey<Biome> VIVID_SHRUBLAND = registerOverworld("vivid_shrubland");
     public static final ResourceKey<Biome> BLEEDING_EDGE = registerOverworld("bleeding_edge");
+    public static final ResourceKey<Biome> MINDLESS_ROSERY = registerOverworld("mindless_rosery");
 
     // underground
     // public static final ResourceKey<Biome> DWARVEN_LEFTOVERS = registerDev("dwarven_leftovers");
@@ -121,6 +122,7 @@ public class ModBiomes {
         ctx.register(SHRUBLAND, shrublands(ctx, false));
         ctx.register(VIVID_SHRUBLAND, shrublands(ctx, true));
         ctx.register(BLEEDING_EDGE, bleedingEdge(ctx));
+        ctx.register(MINDLESS_ROSERY, mindlessRosery(ctx));
 
         // underground
 //        ctx.register(DWARVEN_LEFTOVERS, dwarvenLeftovers(ctx));
@@ -423,6 +425,7 @@ public class ModBiomes {
     }
 
     // orderly
+    // why did i copy it over instead of reusing the method back then eugfehwrwoewerwojrwe
     public static Biome orderlyCourtsRuins(BootstrapContext<Biome> context) {
         MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder();
 
@@ -1286,6 +1289,45 @@ public class ModBiomes {
                 .hasPrecipitation(true)
                 .temperature(0.0F)
                 .downfall(0.5f)
+                .generationSettings(biomeBuilder.build())
+                .mobSpawnSettings(spawnBuilder.build())
+                .specialEffects((new BiomeSpecialEffects.Builder())
+                        .waterColor(FAIRLY_NORMAL_WATER_COLOR)
+                        .waterFogColor(FAILRY_NORMAL_WATER_FOG_COLOR)
+                        .skyColor(7972607)
+                        .fogColor(12638463)
+                        .ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS)
+                        .build())
+                .build();
+    }
+
+    // mindless rosery
+    public static Biome mindlessRosery(BootstrapContext<Biome> context) {
+        MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder();
+
+        BiomeDefaultFeatures.farmAnimals(spawnBuilder);
+        BiomeDefaultFeatures.commonSpawns(spawnBuilder);
+
+        BiomeGenerationSettings.Builder biomeBuilder =
+                new BiomeGenerationSettings.Builder(context.lookup(Registries.PLACED_FEATURE), context.lookup(Registries.CONFIGURED_CARVER));
+        // friendly reminder to not cause feature order cycle
+        globalOverworldGeneration(biomeBuilder);
+        BiomeDefaultFeatures.addDefaultOres(biomeBuilder);
+        BiomeDefaultFeatures.addDefaultSoftDisks(biomeBuilder);
+        BiomeDefaultFeatures.addPlainGrass(biomeBuilder);
+
+        // TODO now: roses
+        // TODO now: poppies
+        // TODO now: grass
+        // TODO now: terrain (? use noise for the slopes and features for ovals?)
+
+        BiomeDefaultFeatures.addDefaultMushrooms(biomeBuilder);
+        BiomeDefaultFeatures.addDefaultExtraVegetation(biomeBuilder);
+
+        return new Biome.BiomeBuilder()
+                .hasPrecipitation(true)
+                .temperature(0.8F)
+                .downfall(0.4F)
                 .generationSettings(biomeBuilder.build())
                 .mobSpawnSettings(spawnBuilder.build())
                 .specialEffects((new BiomeSpecialEffects.Builder())

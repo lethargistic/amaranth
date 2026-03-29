@@ -61,10 +61,11 @@ public class ModBiomeSelectors {
             List.of(P, P, P, P, P)
     );
 
+    // TODO now: figure out how to squish in rosery, also biolithbiolithbiolithbiolith
     public static final List<List<ResourceKey<Biome>>> MOD_MIDDLE_BIOMES_2 = ModBiomeSelectorUtils.create("middle_biomes/mod_middle_biomes_2", "",
             List.of(P, P, P, P, P),
-            List.of(P, P, THRUMLETONS, P, P),
-            List.of(P, P, MIXED_WOODS, P, P),
+            List.of(MINDLESS_ROSERY, MINDLESS_ROSERY, THRUMLETONS, P, P),
+            List.of(P, MINDLESS_ROSERY, MIXED_WOODS, P, P),
             List.of(SHRUBLAND, SHRUBLAND, P, P, P),
             List.of(DUSTY_FLATS, P, P, P, P)
     );
@@ -72,7 +73,7 @@ public class ModBiomeSelectors {
     public static final List<List<ResourceKey<Biome>>> MOD_MIDDLE_BIOMES_3 = ModBiomeSelectorUtils.create("middle_biomes/mod_middle_biomes_3", "",
             List.of(DESOLATE_ICE_FIELDS, P, P, P, P),
             List.of(P, P, MYSTIC_FOREST, P, P),
-            List.of(P, P, MYSTIC_FOREST, WITCHY_WOODS, P),
+            List.of(P, P, P, WITCHY_WOODS, P),
             List.of(P, P, P, MYSTIC_FOREST, SHROOMLANDS),
             List.of(P, DUSTY_FLATS, P, P, P)
     );
