@@ -54,7 +54,10 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
         // misc
         blockWithItem(ModBlocks.MARBLE);
-        blockWithItem(ModBlocks.WORLDGEN_MARKER);
+        blockWithItem(ModBlocks.WORLDGEN_MARKER_RED);
+        blockWithItem(ModBlocks.WORLDGEN_MARKER_BLUE);
+        blockWithItem(ModBlocks.WORLDGEN_MARKER_GREEN);
+        blockWithItem(ModBlocks.WORLDGEN_MARKER_PURPLE);
 
         // mystic
         logBlock((ModBlocks.MYSTIC_LOG.get()));

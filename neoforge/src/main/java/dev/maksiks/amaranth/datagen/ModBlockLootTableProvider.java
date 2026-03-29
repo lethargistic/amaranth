@@ -82,7 +82,10 @@ public class ModBlockLootTableProvider extends BlockLootSubProvider {
 
         // misc
         this.dropSelf(ModBlocks.MARBLE.get());
-        this.dropSelf(ModBlocks.WORLDGEN_MARKER.get());
+        this.dropSelf(ModBlocks.WORLDGEN_MARKER_RED.get());
+        this.dropSelf(ModBlocks.WORLDGEN_MARKER_BLUE.get());
+        this.dropSelf(ModBlocks.WORLDGEN_MARKER_GREEN.get());
+        this.dropSelf(ModBlocks.WORLDGEN_MARKER_PURPLE.get());
 
         // mystic
         this.dropSelf(ModBlocks.MYSTIC_LOG.get());

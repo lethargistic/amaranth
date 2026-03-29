@@ -116,9 +116,27 @@ class ModBlocks {
         ) { Block(BlockBehaviour.Properties.ofFullCopy(Blocks.CALCITE)) }
 
         @JvmField
-        val WORLDGEN_MARKER: Supplier<Block?> = registerWithItem<Block?>("worldgen_marker") {
+        val WORLDGEN_MARKER_RED: Supplier<Block?> = registerWithItem<Block?>("worldgen_marker_red") {
             Block(
                 BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_RED).instrument(NoteBlockInstrument.BASEDRUM).strength(0.5F, 6.0F)
+            )
+        }
+        @JvmField
+        val WORLDGEN_MARKER_BLUE: Supplier<Block?> = registerWithItem<Block?>("worldgen_marker_blue") {
+            Block(
+                BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BLUE).instrument(NoteBlockInstrument.BASEDRUM).strength(0.5F, 6.0F)
+            )
+        }
+        @JvmField
+        val WORLDGEN_MARKER_GREEN: Supplier<Block?> = registerWithItem<Block?>("worldgen_marker_green") {
+            Block(
+                BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_GREEN).instrument(NoteBlockInstrument.BASEDRUM).strength(0.5F, 6.0F)
+            )
+        }
+        @JvmField
+        val WORLDGEN_MARKER_PURPLE: Supplier<Block?> = registerWithItem<Block?>("worldgen_marker_purple") {
+            Block(
+                BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_PURPLE).instrument(NoteBlockInstrument.BASEDRUM).strength(0.5F, 6.0F)
             )
         }
 

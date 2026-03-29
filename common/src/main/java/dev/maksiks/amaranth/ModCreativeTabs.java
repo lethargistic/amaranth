@@ -21,7 +21,6 @@ public class ModCreativeTabs {
         MAIN_CREATIVE_MODE_ITEM_MAP.add(ModItems.BEANIE_BLOB);
         MAIN_CREATIVE_MODE_ITEM_MAP.add(ModItems.EMPTY_TEA_CUP);
         MAIN_CREATIVE_MODE_ITEM_MAP.add(ModItems.MELON_HELMET);
-        MAIN_CREATIVE_MODE_ITEM_MAP.add(ModItems.ASHES_OF_THE_LAWN_GNOME);
 
         // biome items
         MAIN_CREATIVE_MODE_ITEM_MAP.add(ModItems.THORN);
@@ -131,6 +130,13 @@ public class ModCreativeTabs {
 
         // music discs
         MAIN_CREATIVE_MODE_ITEM_MAP.add(ModItems.PALETTE_OVERLOAD_MUSIC_DISC);
+
+        // misc but at the end
+        MAIN_CREATIVE_MODE_ITEM_MAP.add(ModItems.ASHES_OF_THE_LAWN_GNOME);
+        MAIN_CREATIVE_MODE_ITEM_MAP.add(ModBlocks.WORLDGEN_MARKER_RED);
+        MAIN_CREATIVE_MODE_ITEM_MAP.add(ModBlocks.WORLDGEN_MARKER_BLUE);
+        MAIN_CREATIVE_MODE_ITEM_MAP.add(ModBlocks.WORLDGEN_MARKER_GREEN);
+        MAIN_CREATIVE_MODE_ITEM_MAP.add(ModBlocks.WORLDGEN_MARKER_PURPLE);
     }
 
     // can't forget
