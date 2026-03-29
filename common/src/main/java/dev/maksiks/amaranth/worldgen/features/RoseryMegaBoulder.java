@@ -1,6 +1,7 @@
 package dev.maksiks.amaranth.worldgen.features;
 
 import com.mojang.serialization.Codec;
+import dev.maksiks.amaranth.block.ModBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
@@ -11,8 +12,6 @@ import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConf
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static dev.maksiks.amaranth.worldgen.features.ModFeatureUtils.hasNonSolidBelow;
 
 public class RoseryMegaBoulder extends Feature<NoneFeatureConfiguration> {
     public RoseryMegaBoulder(Codec<NoneFeatureConfiguration> codec) {
@@ -32,7 +31,6 @@ public class RoseryMegaBoulder extends Feature<NoneFeatureConfiguration> {
         double p = 4.0; // 2.0 = should be an ellipse, 4-6 = flat sides + rounded corners
 
         List<BlockPos> positions = new ArrayList<>();
-
 
         for (int x = -hLength; x <= hLength; x++) {
             for (int z = -hWidth; z <= hWidth; z++) {
@@ -63,7 +61,7 @@ public class RoseryMegaBoulder extends Feature<NoneFeatureConfiguration> {
 //        }
 
         for (BlockPos pos : positions) {
-            level.setBlock(pos, Blocks.STONE.defaultBlockState(), 2);
+            level.setBlock(pos, ModBlocks.WORLDGEN_MARKER.get().defaultBlockState(), 2);
         }
 
         return true;

@@ -115,6 +115,13 @@ class ModBlocks {
             "marble"
         ) { Block(BlockBehaviour.Properties.ofFullCopy(Blocks.CALCITE)) }
 
+        @JvmField
+        val WORLDGEN_MARKER: Supplier<Block?> = registerWithItem<Block?>("worldgen_marker") {
+            Block(
+                BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_RED).instrument(NoteBlockInstrument.BASEDRUM).strength(0.5F, 6.0F)
+            )
+        }
+
         // mystic
         @JvmField
         val STRIPPED_MYSTIC_LOG: Supplier<Block?> = registerWithItem<Block?>(
@@ -806,7 +813,6 @@ class ModBlocks {
 
         @JvmField
         val POTTED_FRONTIER_BLOSSOM_SAPLING: Supplier<FlowerPotBlock?> = registerFlowerPot(FRONTIER_BLOSSOM_SAPLING)
-
 
         // methods
 
