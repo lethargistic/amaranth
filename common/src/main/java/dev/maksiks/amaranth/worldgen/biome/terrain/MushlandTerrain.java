@@ -21,9 +21,9 @@ public class MushlandTerrain {
     // lower = steeper
     private static final int BLEND_RADIUS = 5;
 
-    public static void processMushlandTerrain(Function<BlockPos, Holder<Biome>> biomeGetter,
-                                              ChunkAccess chunk,
-                                              WorldGenRegion region) {
+    public static void process(Function<BlockPos, Holder<Biome>> biomeGetter,
+                               ChunkAccess chunk,
+                               WorldGenRegion region) {
         ChunkPos pos = chunk.getPos();
         BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
 

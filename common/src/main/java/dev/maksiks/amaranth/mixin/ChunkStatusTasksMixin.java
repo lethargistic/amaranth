@@ -1,6 +1,7 @@
 package dev.maksiks.amaranth.mixin;
 
 import com.llamalad7.mixinextras.sugar.Local;
+import dev.maksiks.amaranth.worldgen.biome.terrain.MindlessRoseryTerrain;
 import dev.maksiks.amaranth.worldgen.biome.terrain.MushlandTerrain;
 import dev.maksiks.amaranth.worldgen.biome.terrain.SteppedSpringsTerrain;
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
@@ -40,7 +41,8 @@ public abstract class ChunkStatusTasksMixin {
                 key1 -> biomeManager.getBiome(pos));
 
         // biomes
-        MushlandTerrain.processMushlandTerrain(biomeGetter, chunk, worldGenRegion);
-        SteppedSpringsTerrain.processSteppedSpringsTerrain(biomeGetter, chunk, worldGenRegion);
+        MushlandTerrain.process(biomeGetter, chunk, worldGenRegion);
+        SteppedSpringsTerrain.process(biomeGetter, chunk, worldGenRegion);
+        MindlessRoseryTerrain.process(biomeGetter, chunk, worldGenRegion);
     }
 }

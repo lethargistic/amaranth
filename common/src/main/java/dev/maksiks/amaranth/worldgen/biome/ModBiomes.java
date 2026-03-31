@@ -1333,6 +1333,7 @@ public class ModBiomes {
                 .specialEffects((new BiomeSpecialEffects.Builder())
                         .waterColor(FAIRLY_NORMAL_WATER_COLOR)
                         .waterFogColor(FAILRY_NORMAL_WATER_FOG_COLOR)
+                        .grassColorOverride(0x9bd975) // temp
                         .skyColor(7972607)
                         .fogColor(12638463)
                         .ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS)

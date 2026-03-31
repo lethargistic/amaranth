@@ -27,7 +27,7 @@ class SteppedSpringsTerrain {
         private const val LAYER_OFFSET = 0
 
         @JvmStatic
-        fun processSteppedSpringsTerrain(
+        fun process(
             biomeGetter: Function<BlockPos, Holder<Biome>>,
             chunk: ChunkAccess,
             region: WorldGenRegion

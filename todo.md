@@ -6,7 +6,9 @@ a lot of this won't even probably end up in the mod at all
 
 ### Current
 
-- [ ] todo very: instameal
+- [ ] todo very: try datagenning the biome noise
+- [x] todo very: instameal
+- [ ] todo: some grass colors are acid
 - [x] prod: remove dev biomes, clean up
 - [x] todo very: melon helmet
 - [ ] fix minor: game logs missing item for alien bamboo sapling
@@ -684,6 +686,19 @@ IDEAS:
 
 ----------------------
 
+### something jungley
+----------------------
+
+- [ ] meteor structure
+
+----------------------
+
+### floating islands
+----------------------
+
+- [ ] noises and floating rocks
+
+----------------------
 
 tutorial:
 
@@ -700,6 +715,8 @@ tutorial:
 - biome grass: https://minecraft.fandom.com/wiki/Biome#Climate
 - also some info on points there
 - sliced lime video
+- noise
+- hendrik video
 
 tree tutorial:
 
