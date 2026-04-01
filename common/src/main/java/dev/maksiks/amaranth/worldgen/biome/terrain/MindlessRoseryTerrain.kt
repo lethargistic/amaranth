@@ -1,6 +1,5 @@
 package dev.maksiks.amaranth.worldgen.biome.terrain
 
-import dev.maksiks.amaranth.block.ModBlocks
 import dev.maksiks.amaranth.worldgen.biome.ModBiomes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Holder
@@ -9,6 +8,7 @@ import net.minecraft.util.RandomSource
 import net.minecraft.world.level.biome.Biome
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.chunk.ChunkAccess
+import net.minecraft.world.level.levelgen.Heightmap
 import net.minecraft.world.level.levelgen.synth.PerlinNoise
 import java.util.function.Function
 import java.util.stream.IntStream
@@ -16,20 +16,22 @@ import kotlin.math.pow
 
 /**
  *
- * This is one kinda jankier and does nothing in the mountains
- * as it is more complex than the last ones
+ * This is one kinda jankier as it is more complex than the last ones
  * and im actually using noise rather than cutting out or adding blocks
+ * me brain fry
+ *
+ * this should've really been more like a vanilla terrain smoother, but i just
+ * wanted to play around with noise lol
  *
  */
 
-// TODO now: optimize
-// TODO now: flatten vanilla bits
 class MindlessRoseryTerrain {
     companion object {
         private const val BASE_Y = 63
         private const val MAX_HEIGHT = 20
 
         private const val FREQUENCY = 0.025
+        // i think i stupided the math and these two do nothing or very minor somehow but it fine
         private const val OCTAVES = 2
         private const val AMPLITUDE = 0.2
 
@@ -51,17 +53,35 @@ class MindlessRoseryTerrain {
             val startX = chunkPos.minBlockX
             val startZ = chunkPos.minBlockZ
 
+            val cacheSize = 16 + BLEND_RADIUS * 2
+            val cacheOffset = BLEND_RADIUS
+
+            val blendCache = Array(cacheSize) { bx ->
+                BooleanArray(cacheSize) { bz ->
+                    val wx = startX - BLEND_RADIUS + bx
+                    val wz = startZ - BLEND_RADIUS + bz
+                    val isInBiome = biomeGetter.apply(BlockPos(wx, 64, wz)).`is`(ModBiomes.MINDLESS_ROSERY)
+                    val isWater = region.getBlockState(BlockPos(wx, BASE_Y - 1, wz)).`is`(Blocks.WATER)
+                    isInBiome && !isWater
+                }
+            }
+
+            // smoothing
+            smoothTerrain(biomeGetter, chunk, region)
+
+            // custom terrain
             for (x in 0..15) {
                 for (z in 0..15) {
                     val worldX = startX + x
                     val worldZ = startZ + z
 
-                    val pos = BlockPos(worldX, 64, worldZ) // temp Y for biome check
-                    val biome = biomeGetter.apply(pos)
-
-                    if (!biome.`is`(ModBiomes.MINDLESS_ROSERY)) continue
+                    if (!biomeGetter.apply(BlockPos(worldX, 64, worldZ)).`is`(ModBiomes.MINDLESS_ROSERY)) continue
 
                     val isWaterColumn = region.getBlockState(BlockPos(worldX, BASE_Y - 1, worldZ)).`is`(Blocks.WATER)
+
+                    // skipping placing if it's higher than my plain anyway as an optimization
+                    val heightmap = chunk.getOrCreateHeightmapUnprimed(Heightmap.Types.WORLD_SURFACE_WG)
+                    if (heightmap.getFirstAvailable(x, z) > BASE_Y + MAX_HEIGHT) continue
 
                     var inBiome = 0
                     var total = 0
@@ -69,10 +89,7 @@ class MindlessRoseryTerrain {
                         for (bz in -BLEND_RADIUS..BLEND_RADIUS) {
                             if (bx * bx + bz * bz > BLEND_RADIUS * BLEND_RADIUS) continue
                             total++
-                            val checkPos = BlockPos(worldX + bx, 64, worldZ + bz)
-                            val isInBiome = biomeGetter.apply(checkPos).`is`(ModBiomes.MINDLESS_ROSERY)
-                            val isWater = region.getBlockState(BlockPos(worldX + bx, BASE_Y - 1, worldZ + bz)).`is`(Blocks.WATER)
-                            if (isInBiome && !isWater) inBiome++
+                            if (blendCache[x + cacheOffset + bx][z + cacheOffset + bz]) inBiome++
                         }
                     }
                     val blendFactor = inBiome.toDouble() / total
@@ -89,5 +106,41 @@ class MindlessRoseryTerrain {
                 }
             }
         }
-    }
+
+        @JvmStatic
+        fun smoothTerrain(biomeGetter: Function<BlockPos, Holder<Biome>>, chunk: ChunkAccess, region: WorldGenRegion) {
+            val chunkPos = chunk.pos
+            val startX = chunkPos.minBlockX
+            val startZ = chunkPos.minBlockZ
+
+            val heightmap = chunk.getOrCreateHeightmapUnprimed(Heightmap.Types.WORLD_SURFACE_WG)
+
+            for (x in 0..15) {
+                for (z in 0..15) {
+                    val worldX = startX + x
+                    val worldZ = startZ + z
+
+                    if (!biomeGetter.apply(BlockPos(worldX, 64, worldZ)).`is`(ModBiomes.MINDLESS_ROSERY)) continue
+
+                    val topY = heightmap.getFirstAvailable(x, z) - 1
+
+                    for (y in BASE_Y..topY) {
+                        val state = chunk.getBlockState(BlockPos(x, y, z))
+                        if (state.isAir || state.`is`(Blocks.WATER)) continue
+
+                        var neighbours = 0
+                        for (bx in -4..4) {
+                            for (bz in -4..4) {
+                                val nState = region.getBlockState(BlockPos(worldX + bx, y, worldZ + bz))
+                                if (!nState.isAir && !nState.`is`(Blocks.WATER)) neighbours++
+                            }
+                        }
+
+                        if (neighbours < 16) {
+                            chunk.setBlockState(BlockPos(x, y, z), Blocks.AIR.defaultBlockState(), false)
+                        }
+                    }
+                }
+            }
+        }    }
 }

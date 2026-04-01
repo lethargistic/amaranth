@@ -64,8 +64,8 @@ Multiloader moves:
   today i forgor to replace it
 
 ### Moderate
-- 
 
+- [ ] todo fun: gnome kid mob, makes ashes of the garden gnome ; lmao make the texture animated and still have eyes moving around
 - [ ] todo maybe: report VanillaParameterOverlayBuilder mob spawn issue if it's still a thing in latest
 - [ ] todo fun: a mod that makes players edible
 - [ ] todo very: a minecraft biome and terrablender biome guide, no one has to suffer through this shit again ; also
