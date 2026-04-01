@@ -34,6 +34,7 @@ import net.minecraft.world.level.levelgen.feature.foliageplacers.BlobFoliagePlac
 import net.minecraft.world.level.levelgen.feature.foliageplacers.CherryFoliagePlacer;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 import net.minecraft.world.level.levelgen.feature.stateproviders.DualNoiseProvider;
+import net.minecraft.world.level.levelgen.feature.stateproviders.NoiseThresholdProvider;
 import net.minecraft.world.level.levelgen.feature.stateproviders.WeightedStateProvider;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.StraightTrunkPlacer;
 import net.minecraft.world.level.levelgen.synth.NormalNoise;
@@ -119,6 +120,8 @@ public class ModConfiguredFeatures {
     public static ResourceKey<ConfiguredFeature<?, ?>> BLEEDING_EDGE_BAMBOO_KEY = registerKey("bleeding_edge_bamboo");
 
     public static ResourceKey<ConfiguredFeature<?, ?>> ROSERY_MEGA_BOULDER_KEY = registerKey("rosery_mega_boulder");
+    public static ResourceKey<ConfiguredFeature<?, ?>> ROSERY_ROSE_PATCH_KEY = registerKey("rosery_rose_patch");
+    public static ResourceKey<ConfiguredFeature<?, ?>> ROSERY_POPPY_PATCH_KEY = registerKey("rosery_poppy_patch");
 
     public static void bootstrap(BootstrapContext<ConfiguredFeature<?, ?>> context) {
         HolderGetter<ConfiguredFeature<?, ?>> configuredFeatures = context.lookup(Registries.CONFIGURED_FEATURE);
@@ -870,6 +873,40 @@ public class ModConfiguredFeatures {
                 ROSERY_MEGA_BOULDER_KEY,
                 ModFeatures.ROSERY_MEGA_BOULDER_FEATURE.get(),
                 NoneFeatureConfiguration.INSTANCE
+        );
+
+        register(
+                context,
+                ROSERY_ROSE_PATCH_KEY,
+                Feature.RANDOM_PATCH,
+                new RandomPatchConfiguration(
+                        80,
+                        8,
+                        2,
+                        PlacementUtils.onlyWhenEmpty(
+                                Feature.SIMPLE_BLOCK,
+                                new SimpleBlockConfiguration(
+                                        BlockStateProvider.simple(Blocks.ROSE_BUSH)
+                                )
+                        )
+                )
+        );
+
+        register(
+                context,
+                ROSERY_POPPY_PATCH_KEY,
+                Feature.RANDOM_PATCH,
+                new RandomPatchConfiguration(
+                        60,
+                        8,
+                        2,
+                        PlacementUtils.onlyWhenEmpty(
+                                Feature.SIMPLE_BLOCK,
+                                new SimpleBlockConfiguration(
+                                        BlockStateProvider.simple(Blocks.POPPY)
+                                )
+                        )
+                )
         );
     }
 

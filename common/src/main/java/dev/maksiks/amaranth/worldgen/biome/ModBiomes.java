@@ -2,6 +2,7 @@ package dev.maksiks.amaranth.worldgen.biome;
 
 import dev.maksiks.amaranth.Constants;
 import dev.maksiks.amaranth.entity.ModEntities;
+import dev.maksiks.amaranth.worldgen.ModConfiguredFeatures;
 import dev.maksiks.amaranth.worldgen.ModPlacedFeatures;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BiomeDefaultFeatures;
@@ -1311,15 +1312,27 @@ public class ModBiomes {
         BiomeGenerationSettings.Builder biomeBuilder =
                 new BiomeGenerationSettings.Builder(context.lookup(Registries.PLACED_FEATURE), context.lookup(Registries.CONFIGURED_CARVER));
         // friendly reminder to not cause feature order cycle
-        globalOverworldGeneration(biomeBuilder);
+        // unfolded globalOverworldGeneration without upper variety and dirt and springs
+        BiomeDefaultFeatures.addDefaultCarversAndLakes(biomeBuilder);
+        BiomeDefaultFeatures.addDefaultCrystalFormations(biomeBuilder);
+        BiomeDefaultFeatures.addDefaultMonsterRoom(biomeBuilder);
+        biomeBuilder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, OrePlacements.ORE_GRAVEL);
+        biomeBuilder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, OrePlacements.ORE_GRANITE_LOWER);
+        biomeBuilder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, OrePlacements.ORE_DIORITE_LOWER);
+        biomeBuilder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, OrePlacements.ORE_ANDESITE_LOWER);
+        biomeBuilder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, OrePlacements.ORE_TUFF);
+        biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, CavePlacements.GLOW_LICHEN);
+        BiomeDefaultFeatures.addSurfaceFreezing(biomeBuilder);
+
         BiomeDefaultFeatures.addDefaultOres(biomeBuilder);
         BiomeDefaultFeatures.addDefaultSoftDisks(biomeBuilder);
         BiomeDefaultFeatures.addPlainGrass(biomeBuilder);
 
-        // TODO now: roses
-        // TODO now: poppies
-        // TODO now: grass
-        // TODO now: terrain (? use noise for the slopes and features for ovals?)
+        biomeBuilder.addFeature(GenerationStep.Decoration.LOCAL_MODIFICATIONS, ModPlacedFeatures.ROSERY_MEGA_BOULDER_PLACED_KEY);
+        biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.ROSERY_ROSE_PATCH_PLACED_KEY);
+        biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.ROSERY_POPPY_PATCH_PLACED_KEY);
+        biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, VegetationPlacements.PATCH_GRASS_PLAIN);
+
 
         BiomeDefaultFeatures.addDefaultMushrooms(biomeBuilder);
         BiomeDefaultFeatures.addDefaultExtraVegetation(biomeBuilder);
@@ -1333,11 +1346,19 @@ public class ModBiomes {
                 .specialEffects((new BiomeSpecialEffects.Builder())
                         .waterColor(FAIRLY_NORMAL_WATER_COLOR)
                         .waterFogColor(FAILRY_NORMAL_WATER_FOG_COLOR)
-                        .grassColorOverride(0x9bd975) // temp
+                        .grassColorOverride(0x83b350)
                         .skyColor(7972607)
                         .fogColor(12638463)
                         .ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS)
                         .build())
                 .build();
+    }
+
+    public static void globalOverworldButNoGodforsakenSprings(BiomeGenerationSettings.Builder builder) {
+        BiomeDefaultFeatures.addDefaultCarversAndLakes(builder);
+        BiomeDefaultFeatures.addDefaultCrystalFormations(builder);
+        BiomeDefaultFeatures.addDefaultMonsterRoom(builder);
+        BiomeDefaultFeatures.addDefaultUndergroundVariety(builder);
+        BiomeDefaultFeatures.addSurfaceFreezing(builder);
     }
 }

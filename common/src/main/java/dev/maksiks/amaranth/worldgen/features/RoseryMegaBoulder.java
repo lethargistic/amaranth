@@ -50,6 +50,13 @@ public class RoseryMegaBoulder extends Feature<NoneFeatureConfiguration> {
 
     private static final boolean RANDOM_YAW = true;
 
+    private static final double MIN_GROUND_COVERAGE = 0.7;
+
+    private static final int VERTICAL_OFFSET_MIN = -4;
+    private static final int VERTICAL_OFFSET_MAX = 2;
+
+    // TODO now: fix chunk border glitches
+
     @Override
     public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> ctx) {
         WorldGenLevel level = ctx.level();
@@ -115,8 +122,40 @@ public class RoseryMegaBoulder extends Feature<NoneFeatureConfiguration> {
         }
 
         Set<BlockPos> posSet = new HashSet<>(positions);
+
+        // air/moss/water check
+        List<BlockPos> bottomBlocks = new ArrayList<>();
+        for (BlockPos pos : posSet) {
+            if (!posSet.contains(pos.below())) {
+                bottomBlocks.add(pos);
+            }
+        }
+
+        int groundedCount = 0;
+        for (BlockPos pos : bottomBlocks) {
+            BlockState belowState = level.getBlockState(pos.below());
+            if (belowState.isAir() || belowState.is(Blocks.MOSS_BLOCK) || belowState.liquid()) continue;
+            groundedCount++;
+        }
+
+        if ((double) groundedCount / bottomBlocks.size() < MIN_GROUND_COVERAGE) return false;
+
+        for (BlockPos pos : posSet) {
+            if (level.getBlockState(pos).liquid()) return false;
+            if (!posSet.contains(pos.below()) && level.getBlockState(pos.below()).liquid()) return false;
+        }
         int bottomY = origin.getY() - hHeight;
         int totalHeight = hHeight * 2;
+
+        // vertical offset
+        int verticalOffset = VERTICAL_OFFSET_MIN + random.nextInt(VERTICAL_OFFSET_MAX - VERTICAL_OFFSET_MIN + 1);
+        if (verticalOffset != 0) {
+            Set<BlockPos> shifted = new HashSet<>(posSet.size());
+            for (BlockPos pos : posSet) {
+                shifted.add(pos.offset(0, verticalOffset, 0));
+            }
+            posSet = new HashSet<>(shifted);
+        }
 
         // painting
         for (BlockPos pos : posSet) {

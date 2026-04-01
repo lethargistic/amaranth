@@ -100,7 +100,9 @@ public class ModPlacedFeatures {
     public static final ResourceKey<PlacedFeature> BLEEDING_EDGE_PEONIES_PLACED_KEY = registerKey("bleeding_edge_peonies_placed");
     public static final ResourceKey<PlacedFeature> BLEEDING_EDGE_BAMBOO_PLACED_KEY = registerKey("bleeding_edge_bamboo_placed");
 
-    public static final ResourceKey<PlacedFeature> ROSERY_MEGA_BOULDER_PLACED_KEY = registerKey("rosery_mega_boulder_placed_key");
+    public static final ResourceKey<PlacedFeature> ROSERY_MEGA_BOULDER_PLACED_KEY = registerKey("rosery_mega_boulder_placed");
+    public static final ResourceKey<PlacedFeature> ROSERY_ROSE_PATCH_PLACED_KEY = registerKey("rosery_rose_patch_placed");
+    public static final ResourceKey<PlacedFeature> ROSERY_POPPY_PATCH_PLACED_KEY = registerKey("rosery_poppy_patch_placed");
 
     public static void bootstrap(BootstrapContext<PlacedFeature> context) {
         var configuredFeatures = context.lookup(Registries.CONFIGURED_FEATURE);
@@ -454,10 +456,36 @@ public class ModPlacedFeatures {
                 ROSERY_MEGA_BOULDER_PLACED_KEY,
                 configuredFeatures.getOrThrow(ModConfiguredFeatures.ROSERY_MEGA_BOULDER_KEY),
                 List.of(
-                        RarityFilter.onAverageOnceEvery(2),
+                        CountPlacement.of(1),
+                        RarityFilter.onAverageOnceEvery(4),
                         InSquarePlacement.spread(),
                         PlacementUtils.HEIGHTMAP,
-                        CountPlacement.of(ClampedInt.of(UniformInt.of(-1, 3), 0, 3)),
+                        BiomeFilter.biome()
+                )
+        );
+
+        register(
+                context,
+                ROSERY_ROSE_PATCH_PLACED_KEY,
+                configuredFeatures.getOrThrow(ModConfiguredFeatures.ROSERY_ROSE_PATCH_KEY),
+                List.of(
+                        NoiseThresholdCountPlacement.of(-0.8, 15, 4),
+                        RarityFilter.onAverageOnceEvery(4),
+                        InSquarePlacement.spread(),
+                        PlacementUtils.HEIGHTMAP,
+                        BiomeFilter.biome()
+                )
+        );
+
+        register(
+                context,
+                ROSERY_POPPY_PATCH_PLACED_KEY,
+                configuredFeatures.getOrThrow(ModConfiguredFeatures.ROSERY_POPPY_PATCH_KEY),
+                List.of(
+                        NoiseThresholdCountPlacement.of(-0.8, 15, 4),
+                        RarityFilter.onAverageOnceEvery(9),
+                        InSquarePlacement.spread(),
+                        PlacementUtils.HEIGHTMAP,
                         BiomeFilter.biome()
                 )
         );

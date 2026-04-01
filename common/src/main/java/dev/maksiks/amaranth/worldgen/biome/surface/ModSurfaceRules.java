@@ -53,6 +53,7 @@ public class ModSurfaceRules {
     private static final SurfaceRules.RuleSource ANDESITE = makeStateRule(Blocks.ANDESITE);
     private static final SurfaceRules.RuleSource COARSE_DIRT = makeStateRule(Blocks.COARSE_DIRT);
     private static final SurfaceRules.RuleSource SAND = makeStateRule(Blocks.SAND);
+    private static final SurfaceRules.RuleSource MOSS = makeStateRule(Blocks.MOSS_BLOCK);
 
     private static SurfaceRules.RuleSource silverLayerRule(int layerY) {
         return SurfaceRules.ifTrue(
@@ -760,6 +761,54 @@ public class ModSurfaceRules {
                                 SurfaceRules.ifTrue(
                                         SurfaceRules.noiseCondition(VEINY_NOISE, -0.10D, 0.10D),
                                         SurfaceRules.ifTrue(isAtOrAboveWaterLevel, COARSE_DIRT)
+                                )
+                        )
+                )
+        );
+
+        //
+        // rosery
+        //
+        rules.add(SurfaceRules.ifTrue(
+                        SurfaceRules.isBiome(ModBiomes.MINDLESS_ROSERY),
+                        SurfaceRules.sequence(
+                                safeSurfaceFloorRule(
+                                        SurfaceRules.ifTrue(
+                                                SurfaceRules.noiseCondition(SILVER_NOISE, -0.1D, 0.1D),
+                                                SurfaceRules.ifTrue(isAtOrAboveWaterLevel, MOSS)
+                                        )
+                                ),
+                                SurfaceRules.ifTrue(
+                                        stoneDepthCheck(0, false, 5, CaveSurface.FLOOR),
+                                        SurfaceRules.ifTrue(
+                                                SurfaceRules.noiseCondition(VEINY_NOISE, -0.02D, 0.02D),
+                                                SurfaceRules.ifTrue(isAtOrAboveWaterLevel, ANDESITE)
+                                        )
+                                ),
+                                SurfaceRules.ifTrue(
+                                        stoneDepthCheck(0, false, 5, CaveSurface.FLOOR),
+                                        SurfaceRules.ifTrue(
+                                                SurfaceRules.noiseCondition(VEINY_NOISE, -0.15D, 0.05D),
+                                                SurfaceRules.ifTrue(isAtOrAboveWaterLevel, STONE)
+                                        )
+                                ),
+                                safeSurfaceFloorRule(
+                                        SurfaceRules.ifTrue(
+                                                SurfaceRules.noiseCondition(SILVER_NOISE, -0.1D, 0.1D),
+                                                SurfaceRules.ifTrue(isAtOrAboveWaterLevel, COARSE_DIRT)
+                                        )
+                                ),
+                                safeSurfaceFloorRule(
+                                        SurfaceRules.ifTrue(
+                                                SurfaceRules.noiseCondition(SILVER_NOISE, -0.15D, 0.15D),
+                                                SurfaceRules.ifTrue(isAtOrAboveWaterLevel, STONE)
+                                        )
+                                ),
+                                safeSurfaceFloorRule(
+                                        SurfaceRules.ifTrue(
+                                                SurfaceRules.noiseCondition(SILVER_NOISE, -0.4D, 0.3D),
+                                                SurfaceRules.ifTrue(isAtOrAboveWaterLevel, MOSS)
+                                        )
                                 )
                         )
                 )

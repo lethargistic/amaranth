@@ -6,9 +6,11 @@ a lot of this won't even probably end up in the mod at all
 
 ### Current
 
-- [ ] todo very: try datagenning the biome noise
+- [ ] ~~todo very: try datagenning the biome noise~~ ; not using it so nvm
 - [x] todo very: instameal
-- [ ] todo: some grass colors are acid
+- [ ] todo fun: 1/100 chance for rosery rock to have a moustache or a top hat, and also pots to add to the primality of the stachio
+- [ ] fix very: some grass colors are acid
+- [ ] fix minor: vivid lupine rocks are repetitive 
 - [x] prod: remove dev biomes, clean up
 - [x] todo very: melon helmet
 - [ ] fix minor: game logs missing item for alien bamboo sapling
