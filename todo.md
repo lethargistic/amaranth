@@ -9,6 +9,8 @@ a lot of this won't even probably end up in the mod at all
 - [ ] ~~todo very: try datagenning the biome noise~~ ; not using it so nvm
 - [x] todo very: instameal
 - [ ] todo fun: 1/100 chance for rosery rock to have a moustache or a top hat, and also pots to add to the primality of the stachio
+- [ ] todo fun: gnomssssss
+- [ ] todo fun: autumnal
 - [ ] fix very: some grass colors are acid
 - [ ] fix minor: vivid lupine rocks are repetitive 
 - [x] prod: remove dev biomes, clean up
@@ -683,7 +685,9 @@ IDEAS:
 ### mindless rosery
 ----------------------
 
-- [ ] something like this MMM pic
+- [x] something like this MMM pic
+- [ ] stachio
+- [ ] gnomes
 ![img_4.png](img_4.png)
 
 ----------------------
