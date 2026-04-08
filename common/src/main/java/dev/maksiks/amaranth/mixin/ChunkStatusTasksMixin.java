@@ -1,6 +1,7 @@
 package dev.maksiks.amaranth.mixin;
 
 import com.llamalad7.mixinextras.sugar.Local;
+import dev.maksiks.amaranth.worldgen.biome.ModBiomes;
 import dev.maksiks.amaranth.worldgen.biome.terrain.MindlessRoseryTerrain;
 import dev.maksiks.amaranth.worldgen.biome.terrain.MushlandTerrain;
 import dev.maksiks.amaranth.worldgen.biome.terrain.SteppedSpringsTerrain;
@@ -18,11 +19,14 @@ import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.chunk.status.ChunkStatusTasks;
 import net.minecraft.world.level.chunk.status.ChunkStep;
 import net.minecraft.world.level.chunk.status.WorldGenContext;
+import net.minecraft.world.level.levelgen.Heightmap;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
+import java.util.EnumSet;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Function;
 
@@ -41,8 +45,56 @@ public abstract class ChunkStatusTasksMixin {
                 key1 -> biomeManager.getBiome(pos));
 
         // biomes
-        MushlandTerrain.process(biomeGetter, chunk, worldGenRegion);
+        MushlandTerrain.process(biomeGetter, chunk);
+
         SteppedSpringsTerrain.process(biomeGetter, chunk, worldGenRegion);
-        MindlessRoseryTerrain.process(biomeGetter, chunk, worldGenRegion);
     }
-}
+
+    // super duper bootleg, this is not a feature but i went down the rabbit hole of asynchronously storing
+    // the chunks to access nearby chunks for smoothing for this to no avail and no thank u this is fine enough
+    //
+    // im frankly just kind gambler's fallacy doing this for my own knowledge but im realizing
+    // i'm not getting anywhere if i don't do more different stuff with chunks or else i'll spend
+    // way too much time on this, and i mean i already spent way too much time on this.
+    // so this is the best thing i can come up with
+    @Inject(
+            method = "generateFeatures",
+            at = @At("HEAD")
+    )
+    private static void correctPendingOnFeatures(
+            WorldGenContext worldGenContext, ChunkStep step,
+            StaticCache2D<GenerationChunkHolder> cache, ChunkAccess chunk,
+            CallbackInfoReturnable<CompletableFuture<ChunkAccess>> cir
+    ) {
+        ServerLevel serverLevel = worldGenContext.level();
+        WorldGenRegion worldGenRegion = new WorldGenRegion(serverLevel, cache, step, chunk);
+
+        BiomeManager biomeManager = worldGenRegion.getBiomeManager()
+                .withDifferentSource((x, y, z) -> worldGenContext.generator().getBiomeSource().getNoiseBiome(x, y, z, worldGenContext.level()
+                        .getChunkSource().randomState().sampler()));
+        Long2ObjectOpenHashMap<Long2ObjectOpenHashMap<Holder<Biome>>> biomeCache = new Long2ObjectOpenHashMap<>();
+
+        Function<BlockPos, Holder<Biome>> biomeGetter =
+                pos -> biomeCache.computeIfAbsent(ChunkPos.asLong(pos),
+                        key0 -> new Long2ObjectOpenHashMap<>()).computeIfAbsent(ChunkPos.asLong(pos.getX(), pos.getZ()),
+                        key1 -> biomeManager.getBiome(pos));
+
+        boolean hasRosery = false;
+        outer:
+        for (int bx = 0; bx < 16; bx += 4) {
+            for (int bz = 0; bz < 16; bz += 4) {
+                BlockPos probe = new BlockPos(chunk.getPos().getMinBlockX() + bx, 64, chunk.getPos().getMinBlockZ() + bz);
+                if (biomeGetter.apply(probe).is(ModBiomes.MINDLESS_ROSERY)) {
+                    hasRosery = true;
+                    break outer;
+                }
+            }
+        }
+
+        if (!hasRosery) return;
+
+        // making terrain first on top of vanilla
+        MindlessRoseryTerrain.process(biomeGetter, chunk, worldGenRegion);
+        // then remaking the heightmaps and re-applying the surface rules
+        MindlessRoseryTerrain.reapplySurface(worldGenContext, worldGenRegion, serverLevel, chunk);
+    }}

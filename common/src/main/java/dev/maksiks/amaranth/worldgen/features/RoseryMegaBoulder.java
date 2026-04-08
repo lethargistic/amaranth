@@ -56,6 +56,7 @@ public class RoseryMegaBoulder extends Feature<NoneFeatureConfiguration> {
     private static final int VERTICAL_OFFSET_MAX = 2;
 
     // TODO now: fix chunk border glitches
+    // TODO now: it feels laggy ! mayb that's just me tho
 
     @Override
     public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> ctx) {
