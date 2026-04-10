@@ -39,6 +39,8 @@ import kotlin.math.pow
  *
  */
 
+// TODO now: fix it affecting boulders
+
 class MindlessRoseryTerrain {
     companion object {
         private const val BASE_Y = 63
