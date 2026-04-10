@@ -14,6 +14,9 @@ accessible class net/minecraft/world/level/levelgen/SurfaceRules$SurfaceRule
 accessible class net/minecraft/world/level/levelgen/SurfaceRules$Condition
 accessible method net/minecraft/core/particles/SimpleParticleType <init> (Z)V
 
+# Tool Tiers
+accessible field net/minecraft/world/item/TieredItem tier Lnet/minecraft/world/item/Tier;
+
 # OverworldBiomeBuilder
 accessible method net/minecraft/world/level/biome/OverworldBiomeBuilder pickBadlandsBiome (ILnet/minecraft/world/level/biome/Climate$Parameter;)Lnet/minecraft/resources/ResourceKey;
 accessible method net/minecraft/world/level/biome/OverworldBiomeBuilder pickPlateauBiome (IILnet/minecraft/world/level/biome/Climate$Parameter;)Lnet/minecraft/resources/ResourceKey;

@@ -2,6 +2,7 @@ package dev.maksiks.amaranth;
 
 import com.google.common.base.Supplier;
 import dev.maksiks.amaranth.block.ModBlocks;
+import dev.maksiks.amaranth.component.ModDataComponentTypes;
 import dev.maksiks.amaranth.entity.ModEntities;
 import dev.maksiks.amaranth.item.ModItems;
 import dev.maksiks.amaranth.particle.ModParticles;
@@ -10,6 +11,7 @@ import dev.maksiks.amaranth.worldgen.features.ModFeatures;
 import dev.maksiks.amaranth.worldgen.features.structure_processor.ModStructureProcessorTypes;
 import dev.maksiks.amaranth.worldgen.tree.foliage_placer.ModFoliagePlacerTypes;
 import dev.maksiks.amaranth.worldgen.tree.trunk_placer.ModTrunkPlacerTypes;
+import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -47,6 +49,8 @@ public class NeoModRegistries {
                 DeferredRegister.create(BuiltInRegistries.FEATURE, Constants.MOD_ID);
         DeferredRegister<StructureProcessorType<?>> STRUCTURE_PROCESSOR_TYPES =
                 DeferredRegister.create(STRUCTURE_PROCESSOR, Constants.MOD_ID);
+        DeferredRegister<DataComponentType<?>> DATA_COMPONENT_TYPES =
+                DeferredRegister.create(BuiltInRegistries.DATA_COMPONENT_TYPE, Constants.MOD_ID);
 
         CREATIVE_MODE_TABS.register(ModCreativeTabs.MAIN_TAB_NAME, ModCreativeTabs.loaderTabContents);
 
@@ -59,6 +63,7 @@ public class NeoModRegistries {
         ModSounds.SOUND_EVENT_MAP.forEach(SOUND_EVENTS::register);
         ModFeatures.FEATURE_MAP.forEach(FEATURES::register);
         ModStructureProcessorTypes.STRUCTURE_PROCESSOR_TYPE_MAP.forEach(STRUCTURE_PROCESSOR_TYPES::register);
+        ModDataComponentTypes.DATA_COMPONENT_TYPE_MAP.forEach(DATA_COMPONENT_TYPES::register);
 
         CREATIVE_MODE_TABS.register(eventBus);
         BLOCKS.register(eventBus);

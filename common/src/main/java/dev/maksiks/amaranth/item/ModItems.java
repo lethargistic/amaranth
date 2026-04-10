@@ -2,6 +2,7 @@ package dev.maksiks.amaranth.item;
 
 import com.google.common.base.Supplier;
 import com.google.common.base.Suppliers;
+import dev.maksiks.amaranth.component.ModDataComponentTypes;
 import dev.maksiks.amaranth.entity.ModEntities;
 import dev.maksiks.amaranth.item.custom.*;
 import dev.maksiks.amaranth.platform.Services;
@@ -15,6 +16,9 @@ import java.util.List;
 public class ModItems {
     public static final HashMap<String, Supplier<? extends Item>> ITEM_MAP = new HashMap<>();
 
+    private static final int NORMAL_SWORD_BASE_DMG = 3;
+    private static final float NORMAL_SWORD_BASE_SPD = -2.4f;
+
     // misc
     public static final Supplier<Item> MAFIA_BLOB = register("mafia_blob",
             () -> new Item(new Item.Properties()) {
@@ -27,11 +31,20 @@ public class ModItems {
 
     // TODO now: make it sword
     public static final Supplier<Item> SKEWER = register("skewer",
-            () -> new Item(new Item.Properties()));
+            () -> new StackableSwordItem(ModToolTiers.SKEWER, 64, new Item.Properties()
+                    .attributes(SwordItem.createAttributes(ModToolTiers.SKEWER, NORMAL_SWORD_BASE_DMG, NORMAL_SWORD_BASE_SPD))
+                    .stacksTo(64)
+            ) {
+                @Override
+                public int getDefaultMaxStackSize() {
+                    return 64;
+                }
+            }
+    );
 
     // TODO maybe: mushroom skewer maybe?
     public static final Supplier<Item> RAW_MEAT_SKEWER = register("raw_meat_skewer",
-            () -> new SkewerItem(new Item.Properties().food(ModFoodProperties.RAW_MEAT_SKEWER)) {
+            () -> new Item(new Item.Properties().food(ModFoodProperties.RAW_MEAT_SKEWER)) {
                 @Override
                 public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
                     tooltipComponents.add(Component.translatable("tooltip.amaranth.raw_skewer.tooltip"));
@@ -39,7 +52,7 @@ public class ModItems {
                 }
             });
     public static final Supplier<Item> MEAT_SKEWER = register("meat_skewer",
-            () -> new SkewerItem(new Item.Properties().food(ModFoodProperties.MEAT_SKEWER)));
+            () -> new Item(new Item.Properties().food(ModFoodProperties.MEAT_SKEWER)));
 
     public static final Supplier<Item> BEANIE_BLOB = register("beanie_blob",
             () -> new Item(new Item.Properties()));

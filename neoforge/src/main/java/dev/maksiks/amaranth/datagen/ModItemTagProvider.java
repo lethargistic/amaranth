@@ -2,6 +2,7 @@ package dev.maksiks.amaranth.datagen;
 
 import dev.maksiks.amaranth.Constants;
 import dev.maksiks.amaranth.item.ModItems;
+import dev.maksiks.amaranth.tags.ModTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
@@ -41,6 +42,9 @@ public class ModItemTagProvider extends ItemTagsProvider {
         this.tag(ItemTags.GOAT_FOOD)
                 .add(ModItems.MUSHROOM_TEA.get());
 
+
+        this.tag(ItemTags.SWORDS)
+                .add(ModItems.SKEWER.get());
         // the implication is that they chow it down with the skewer, yummers
         this.tag(ItemTags.HOGLIN_FOOD)
                 .add(ModItems.RAW_MEAT_SKEWER.get());

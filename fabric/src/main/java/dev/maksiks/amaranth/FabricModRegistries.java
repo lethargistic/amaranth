@@ -2,6 +2,7 @@ package dev.maksiks.amaranth;
 
 import com.google.common.base.Supplier;
 import dev.maksiks.amaranth.block.ModBlocks;
+import dev.maksiks.amaranth.component.ModDataComponentTypes;
 import dev.maksiks.amaranth.entity.ModEntities;
 import dev.maksiks.amaranth.item.ModItems;
 import dev.maksiks.amaranth.particle.ModParticles;
@@ -36,6 +37,7 @@ public class FabricModRegistries {
         registerUsualEach(ModFoliagePlacerTypes.FOLIAGE_PLACER_TYPE_MAP, BuiltInRegistries.FOLIAGE_PLACER_TYPE);
         registerUsualEach(ModParticles.PARTICLE_TYPE_MAP, BuiltInRegistries.PARTICLE_TYPE);
         registerUsualEach(ModSounds.SOUND_EVENT_MAP, BuiltInRegistries.SOUND_EVENT);
+        registerUsualEach(ModDataComponentTypes.DATA_COMPONENT_TYPE_MAP, BuiltInRegistries.DATA_COMPONENT_TYPE);
         registerUsualEach(ModFeatures.FEATURE_MAP, BuiltInRegistries.FEATURE);
         registerUsualEach(ModStructureProcessorTypes.STRUCTURE_PROCESSOR_TYPE_MAP, BuiltInRegistries.STRUCTURE_PROCESSOR);
 

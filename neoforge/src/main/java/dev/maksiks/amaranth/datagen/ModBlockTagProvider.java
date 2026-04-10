@@ -54,6 +54,14 @@ public class ModBlockTagProvider extends BlockTagsProvider {
         this.tag(BlockTags.NEEDS_STONE_TOOL)
                 .add(ModBlocks.MARBLE.get());
 
+
+        this.tag(ModTags.Blocks.NEEDS_SKEWER_TOOL)
+                .addTag(BlockTags.NEEDS_STONE_TOOL);
+
+        this.tag(ModTags.Blocks.INCORRECT_FOR_SKEWER_TOOL)
+                .addTag(BlockTags.INCORRECT_FOR_IRON_TOOL)
+                .remove(ModTags.Blocks.NEEDS_SKEWER_TOOL);
+
         // mystic
         this.tag(BlockTags.LOGS_THAT_BURN)
                 .add(ModBlocks.MYSTIC_LOG.get())

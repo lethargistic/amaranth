@@ -8,6 +8,11 @@ import net.minecraft.world.level.block.Block;
 
 public class ModTags {
     public static class Blocks {
+        public static final TagKey<Block> NEEDS_SKEWER_TOOL =
+                tag("needs_skewer_tool");
+        public static final TagKey<Block> INCORRECT_FOR_SKEWER_TOOL =
+                tag("incorrect_for_skewer_tool");
+
         /**
         * separate tag from vanilla because the vanilla one
         * would allow placing bamboo on top of this block and vice versa
