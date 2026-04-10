@@ -2,7 +2,6 @@ package dev.maksiks.amaranth.item;
 
 import com.google.common.base.Supplier;
 import com.google.common.base.Suppliers;
-import dev.maksiks.amaranth.component.ModDataComponentTypes;
 import dev.maksiks.amaranth.entity.ModEntities;
 import dev.maksiks.amaranth.item.custom.*;
 import dev.maksiks.amaranth.platform.Services;
@@ -29,17 +28,10 @@ public class ModItems {
                 }
             });
 
-    // TODO now: make it sword
     public static final Supplier<Item> SKEWER = register("skewer",
             () -> new StackableSwordItem(ModToolTiers.SKEWER, 64, new Item.Properties()
                     .attributes(SwordItem.createAttributes(ModToolTiers.SKEWER, NORMAL_SWORD_BASE_DMG, NORMAL_SWORD_BASE_SPD))
-                    .stacksTo(64)
-            ) {
-                @Override
-                public int getDefaultMaxStackSize() {
-                    return 64;
-                }
-            }
+            )
     );
 
     // TODO maybe: mushroom skewer maybe?

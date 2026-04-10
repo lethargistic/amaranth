@@ -1,15 +1,16 @@
 NOTE:
-as this is public, this todo is largely for me to throw out ideas,
-track completion of certain things and devlog,
-as such this is not a roadmap or even a list of planned features,
-a lot of this won't even probably end up in the mod at all
+Noting this since this todo is public.
+This place is largely for me to throw out ideas,
+track completion of certain things and devlog.
+As such this is not a roadmap or even a list of planned features,
+a lot of this probably won't even ever end up in the mod at all
 
 ### Current
 
 - [ ] ~~todo very: try datagenning the biome noise~~ ; not using it so nvm
 - [x] todo very: instameal
 - [ ] todo fun: 1/100 chance for rosery rock to have a moustache or a top hat, and also pots to add to the primality of the stachio
-- [ ] todo fun: gnomssssss
+- [ ] todo fun: gnomessssss
 - [ ] todo fun: autumnal
 - [ ] fix very: some grass colors are acid
 - [ ] fix minor: vivid lupine rocks are repetitive 
@@ -80,7 +81,7 @@ Multiloader moves:
 - [x] todo fun: spiky impassable without shears
 - [ ] todo maybe: replace biomes in the region instead of the builder
 - [x] todo maybe: switch to multiloader, do fabric
-- [ ] todo maybe: 1.21.10
+- [ ] todo maybe: update to latest
 - [ ] todo maybe: bog with mud and shrooms
 - [ ] todo maybe: 1.20.1
 - [ ] todo maybe: revisit some biomes ; witchy ; satisforest ; i wish witchy to feel a lot more themed or natural, it's just copy pastes trees rn tbh

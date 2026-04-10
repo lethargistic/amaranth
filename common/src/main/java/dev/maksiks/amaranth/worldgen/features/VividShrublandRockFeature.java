@@ -2,6 +2,7 @@ package dev.maksiks.amaranth.worldgen.features;
 
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
@@ -27,16 +28,20 @@ public class VividShrublandRockFeature extends Feature<NoneFeatureConfiguration>
         int sqrRadius = 2;
 
         List<BlockPos> positions = new ArrayList<>();
-        int skipCorner = random.nextInt(4);
+        boolean skipCorner = random.nextInt(100) < 90;
+        int cornerToSkip = random.nextInt(4);
 
         for (int y = 0; y <= 1; y++) {
             for (int x = 1; x <= sqrRadius; x++) {
                 for (int z = 1; z <= sqrRadius; z++) {
-                    if (y == 1 &&
-                            ((skipCorner == 0 && x == 1 && z == 1) ||
-                                    (skipCorner == 1 && x == sqrRadius && z == 1) ||
-                                    (skipCorner == 2 && x == 1 && z == sqrRadius) ||
-                                    (skipCorner == 3 && x == sqrRadius && z == sqrRadius))) {
+                    if (y == 0 && random.nextInt(100) < 80) {
+                        positions.add(origin.offset(x, y, z).relative(Direction.Plane.HORIZONTAL.getRandomDirection(random)));
+                    }
+                    if (y == 1 && skipCorner &&
+                            ((cornerToSkip == 0 && x == 1 && z == 1) ||
+                                    (cornerToSkip == 1 && x == sqrRadius && z == 1) ||
+                                    (cornerToSkip == 2 && x == 1 && z == sqrRadius) ||
+                                    (cornerToSkip == 3 && x == sqrRadius && z == sqrRadius))) {
                         continue;
                     }
                     positions.add(origin.offset(x, y, z));
@@ -46,7 +51,7 @@ public class VividShrublandRockFeature extends Feature<NoneFeatureConfiguration>
 
         shiftAndPlace(positions, level, random);
 
-        return false;
+        return true;
     }
 
     private void shiftAndPlace(List<BlockPos> positions, WorldGenLevel level, RandomSource random) {
