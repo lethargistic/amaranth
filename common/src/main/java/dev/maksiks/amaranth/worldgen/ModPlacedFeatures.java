@@ -219,7 +219,7 @@ public class ModPlacedFeatures {
         // thrumletons
         register(context, THICK_PUMPKIN_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.THICK_PUMPKIN_KEY),
                 List.of(
-                        CountPlacement.of(2),
+                        CountPlacement.of(1),
                         InSquarePlacement.spread(),
                         PlacementUtils.HEIGHTMAP,
                         BiomeFilter.biome(),

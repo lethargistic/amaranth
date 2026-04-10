@@ -129,7 +129,6 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_thick_pumpkin", has(ModBlocks.THICK_PUMPKIN.get()))
                 .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "pumpkin_pie_from_thick_pumpkin"));
 
-        // yoink a custom method for smelting later so it's inside neo's folder because it's hardcoded to be in mc
         // mystic
         ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, ModBlocks.MYSTIC_PLANKS.get().asItem(), 4)
                 .requires(ModBlocks.MYSTIC_LOG.get())
