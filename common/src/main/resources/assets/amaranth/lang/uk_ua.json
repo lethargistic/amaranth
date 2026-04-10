@@ -1,4 +1,8 @@
 {
   "item.amaranth.melon_helmet": "Кавуновий Шольом",
-  "tooltip.amaranth.melon_helmet.tooltip": "§8§oБаза розміром з кавунову галактику"
+  "tooltip.amaranth.melon_helmet.tooltip": "§8§oБаза розміром з кавунову галактику",
+
+  "item.amaranth.skewer": "Шампур",
+  "item.amaranth.raw_meat_skewer": "Сирий Шашлик",
+  "item.amaranth.meat_skewer": "Шашлик"
 }

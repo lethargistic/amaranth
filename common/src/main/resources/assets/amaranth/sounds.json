@@ -5,6 +5,18 @@
       "amaranth:arctic_wind_throngled"
     ]
   },
+  "metal_pipe": {
+    "subtitle": "sounds.amaranth.metal_pipe",
+    "sounds": [
+      "amaranth:metal_pipe"
+    ]
+  },
+  "eating_metal": {
+    "subtitle": "sounds.amaranth.eating_metal",
+    "sounds": [
+      "amaranth:eating_metal"
+    ]
+  },
   "palette_overload": {
     "sounds": [
       {

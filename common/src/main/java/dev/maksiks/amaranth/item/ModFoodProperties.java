@@ -26,8 +26,14 @@ public class ModFoodProperties {
             .usingConvertsTo(Items.GLASS_BOTTLE)
             .build();
 
-
     public static final FoodProperties REED_BAR = new FoodProperties.Builder().nutrition(2).saturationModifier(0.3f)
             .fast()
+            .build();
+
+    public static final FoodProperties RAW_MEAT_SKEWER = new FoodProperties.Builder().nutrition(5).saturationModifier(0.3f)
+            .usingConvertsTo(ModItems.SKEWER.get())
+            .build();
+    public static final FoodProperties MEAT_SKEWER = new FoodProperties.Builder().nutrition(14).saturationModifier(2.4f)
+            .usingConvertsTo(ModItems.SKEWER.get())
             .build();
 }

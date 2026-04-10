@@ -7,7 +7,8 @@
   "mixins": [
     "event.CrownOfThornsDamageHandlerMixin",
     "event.JuiceCraftHandlerMixin",
-    "event.MelonHelmetCraftHandlerMixin"
+    "event.MelonHelmetCraftHandlerMixin",
+    "event.SkewerEatingHandlerMixin"
   ],
   "client": [
     "event.CustomFogHandlerMixin",

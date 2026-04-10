@@ -9,6 +9,7 @@ import net.minecraft.data.recipes.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.conditions.IConditionBuilder;
 
@@ -18,6 +19,13 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
 
     public ModRecipeProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
         super(output, registries);
+    }
+
+    protected static void campfireOnlyRecipe(RecipeOutput recipeOutput, int cookingTime, ItemLike material, net.minecraft.world.level.ItemLike
+            result, float experience) {
+        SimpleCookingRecipeBuilder var10000 = SimpleCookingRecipeBuilder.campfireCooking(Ingredient.of(material), RecipeCategory.FOOD, result, experience, cookingTime).unlockedBy(getHasName(material), has(material));
+        String var10002 = getItemName(result);
+        var10000.save(recipeOutput, var10002 + "_from_campfiring");
     }
 
     @Override
@@ -42,7 +50,20 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_hexfruit", has(ModItems.HEXFRUIT.get()))
                 .save(recipeOutput);
 
-        // not temp
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.SKEWER.get(), 3)
+                .requires(Items.IRON_BARS)
+                .unlockedBy("has_iron_bars", has(Items.IRON_BARS))
+                .save(recipeOutput);
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.RAW_MEAT_SKEWER.get(), 1)
+                .requires(ModItems.SKEWER.get())
+                .requires(Items.BEEF)
+                .requires(Items.CHICKEN)
+                .requires(Items.PORKCHOP)
+                .unlockedBy("has_skewer", has(ModItems.SKEWER.get()))
+                .save(recipeOutput);
+
+        campfireOnlyRecipe(recipeOutput, 100, ModItems.RAW_MEAT_SKEWER.get(), ModItems.MEAT_SKEWER.get(), 1.35F);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.EMPTY_TEA_CUP.get(), 1)
                 .pattern("M M")

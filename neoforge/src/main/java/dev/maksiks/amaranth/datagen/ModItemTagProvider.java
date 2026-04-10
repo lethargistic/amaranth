@@ -40,6 +40,16 @@ public class ModItemTagProvider extends ItemTagsProvider {
         // uh
         this.tag(ItemTags.GOAT_FOOD)
                 .add(ModItems.MUSHROOM_TEA.get());
+
+        // the implication is that they chow it down with the skewer, yummers
+        this.tag(ItemTags.HOGLIN_FOOD)
+                .add(ModItems.RAW_MEAT_SKEWER.get());
+        this.tag(ItemTags.HOGLIN_FOOD)
+                .add(ModItems.MEAT_SKEWER.get());
+        this.tag(ItemTags.WOLF_FOOD)
+                .add(ModItems.RAW_MEAT_SKEWER.get());
+        this.tag(ItemTags.WOLF_FOOD)
+                .add(ModItems.MEAT_SKEWER.get());
     }
 
     private void blockCopiers() {

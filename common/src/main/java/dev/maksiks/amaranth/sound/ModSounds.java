@@ -17,6 +17,8 @@ public class ModSounds {
     public static final HashMap<String, com.google.common.base.Supplier<SoundEvent>> SOUND_EVENT_MAP = new HashMap<>();
 
     public static final Supplier<SoundEvent> ARCTIC_WIND_THRONGLED = registerSoundEvent("arctic_wind_throngled");
+    public static final Supplier<SoundEvent> METAL_PIPE = registerSoundEvent("metal_pipe");
+    public static final Supplier<SoundEvent> EATING_METAL = registerSoundEvent("eating_metal");
 
     public static Holder.Reference<SoundEvent> getSoundHolder(Supplier<SoundEvent> supplier) {
         return BuiltInRegistries.SOUND_EVENT.getHolderOrThrow(

@@ -28,6 +28,9 @@ public class ModItemModelProvider extends ItemModelProvider {
         basicItem(ModItems.EMPTY_TEA_CUP.get());
         basicItem(ModItems.MELON_HELMET.get());
         basicItem(ModItems.ASHES_OF_THE_LAWN_GNOME.get());
+        basicItem(ModItems.SKEWER.get());
+        basicItem(ModItems.RAW_MEAT_SKEWER.get());
+        basicItem(ModItems.MEAT_SKEWER.get());
 
         // mystic
         basicItem(ModItems.MAFIA_BLOB.get());

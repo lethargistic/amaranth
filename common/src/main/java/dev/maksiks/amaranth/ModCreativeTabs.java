@@ -21,6 +21,9 @@ public class ModCreativeTabs {
         MAIN_CREATIVE_MODE_ITEM_MAP.add(ModItems.BEANIE_BLOB);
         MAIN_CREATIVE_MODE_ITEM_MAP.add(ModItems.EMPTY_TEA_CUP);
         MAIN_CREATIVE_MODE_ITEM_MAP.add(ModItems.MELON_HELMET);
+        MAIN_CREATIVE_MODE_ITEM_MAP.add(ModItems.SKEWER);
+        MAIN_CREATIVE_MODE_ITEM_MAP.add(ModItems.RAW_MEAT_SKEWER);
+        MAIN_CREATIVE_MODE_ITEM_MAP.add(ModItems.MEAT_SKEWER);
 
         // biome items
         MAIN_CREATIVE_MODE_ITEM_MAP.add(ModItems.THORN);

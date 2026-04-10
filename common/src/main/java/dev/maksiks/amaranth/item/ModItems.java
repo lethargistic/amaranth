@@ -3,10 +3,7 @@ package dev.maksiks.amaranth.item;
 import com.google.common.base.Supplier;
 import com.google.common.base.Suppliers;
 import dev.maksiks.amaranth.entity.ModEntities;
-import dev.maksiks.amaranth.item.custom.AshesOfTheLawnGnomeItem;
-import dev.maksiks.amaranth.item.custom.CrownOfThornsItem;
-import dev.maksiks.amaranth.item.custom.MelonHelmetItem;
-import dev.maksiks.amaranth.item.custom.WisteriaJuiceItem;
+import dev.maksiks.amaranth.item.custom.*;
 import dev.maksiks.amaranth.platform.Services;
 import dev.maksiks.amaranth.sound.ModSounds;
 import net.minecraft.network.chat.Component;
@@ -27,6 +24,22 @@ public class ModItems {
                     super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
                 }
             });
+
+    // TODO now: make it sword
+    public static final Supplier<Item> SKEWER = register("skewer",
+            () -> new Item(new Item.Properties()));
+
+    // TODO maybe: mushroom skewer maybe?
+    public static final Supplier<Item> RAW_MEAT_SKEWER = register("raw_meat_skewer",
+            () -> new SkewerItem(new Item.Properties().food(ModFoodProperties.RAW_MEAT_SKEWER)) {
+                @Override
+                public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+                    tooltipComponents.add(Component.translatable("tooltip.amaranth.raw_skewer.tooltip"));
+                    super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
+                }
+            });
+    public static final Supplier<Item> MEAT_SKEWER = register("meat_skewer",
+            () -> new SkewerItem(new Item.Properties().food(ModFoodProperties.MEAT_SKEWER)));
 
     public static final Supplier<Item> BEANIE_BLOB = register("beanie_blob",
             () -> new Item(new Item.Properties()));

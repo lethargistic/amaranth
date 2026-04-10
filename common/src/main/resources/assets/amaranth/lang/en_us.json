@@ -14,6 +14,11 @@
 
   "item.amaranth.mushroom_tea": "Mushroom Tea",
 
+  "item.amaranth.skewer": "Skewer",
+  "item.amaranth.raw_meat_skewer": "Raw Meat Skewer",
+  "item.amaranth.meat_skewer": "Meat Skewer",
+  "tooltip.amaranth.raw_skewer.tooltip": "§8§oCan only be cooked at a campfire. Hoglins love this stuff.§r",
+
   "item.amaranth.shroom_boi_spawn_egg": "Shroom Boi Spawn Egg",
 
   "item.amaranth.thorn": "Thorn",
@@ -184,5 +189,6 @@
 
   "entity.amaranth.shroom_boi": "Shroom Boi",
 
+  "sounds.amaranth.metal_pipe": "Metal Pipe Falling",
   "sounds.amaranth.arctic_wind_throngled": "Intense Wind"
 }
