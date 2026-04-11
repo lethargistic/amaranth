@@ -20,8 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static dev.maksiks.amaranth.worldgen.noise.ModNoises.*;
-import static net.minecraft.world.level.levelgen.SurfaceRules.stoneDepthCheck;
-import static net.minecraft.world.level.levelgen.SurfaceRules.yBlockCheck;
+import static net.minecraft.world.level.levelgen.SurfaceRules.*;
 
 public class ModSurfaceRules {
     private static final SurfaceRules.RuleSource DIRT = makeStateRule(Blocks.DIRT);
@@ -494,6 +493,26 @@ public class ModSurfaceRules {
                         SurfaceRules.ifTrue(
                                 SurfaceRules.noiseCondition(VEINY_NOISE, -0.16D, 0.16D),
                                 SurfaceRules.ifTrue(isAtOrAboveWaterLevel, PRISMARINE)
+                        )
+                )
+        ));
+
+        // pain
+        rules.add(SurfaceRules.ifTrue(
+                SurfaceRules.isBiome(ModBiomes.FIELDS_OF_PAIN),
+                sequence(
+                        SurfaceRules.ifTrue(
+                                stoneDepthCheck(0, false, 5, CaveSurface.FLOOR),
+                                SurfaceRules.ifTrue(
+                                        SurfaceRules.noiseCondition(VEINY_NOISE, -0.15D, 0.05D),
+                                        SurfaceRules.ifTrue(isAtOrAboveWaterLevel, STONE)
+                                )
+                        ),
+                        safeSurfaceFloorRule(
+                                SurfaceRules.ifTrue(
+                                        SurfaceRules.noiseCondition(SILVER_NOISE, -0.4D, 0.3D),
+                                        SurfaceRules.ifTrue(isAtOrAboveWaterLevel, COARSE_DIRT)
+                                )
                         )
                 )
         ));

@@ -25,8 +25,7 @@ import terrablender.api.ParameterUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-// TODO now: make pain, anthocyanin, satis even less acid
-// TODO now: tweak witchy to have detail
+// TODO now: make pain, anthocyanin, satis even, less acid
 // TODO now: villages for shrubland, thrumletons, lupine fields
 // TODO now: make lupine fields more fun if got ideas ; moss? ; stony terrain?
 

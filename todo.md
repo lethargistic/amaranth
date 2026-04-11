@@ -12,8 +12,9 @@ a lot of this probably won't even ever end up in the mod at all
 - [ ] todo fun: 1/100 chance for rosery rock to have a moustache or a top hat, and also pots to add to the primality of the stachio
 - [ ] todo fun: gnomessssss
 - [ ] todo fun: autumnal
-- [ ] fix very: some grass colors are acid
-- [ ] fix minor: vivid lupine rocks are repetitive 
+- [ ] fix very: fields of pain suck, make them like vines with lots of blockstates rather than this
+- [x] fix very: some grass colors are acid
+- [x] fix minor: vivid lupine rocks are repetitive 
 - [x] prod: remove dev biomes, clean up
 - [x] todo very: melon helmet
 - [ ] fix minor: game logs missing item for alien bamboo sapling
