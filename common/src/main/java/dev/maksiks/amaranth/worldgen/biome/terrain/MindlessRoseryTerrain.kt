@@ -1,5 +1,6 @@
 package dev.maksiks.amaranth.worldgen.biome.terrain
 
+import dev.maksiks.amaranth.block.ModBlocks
 import dev.maksiks.amaranth.worldgen.biome.ModBiomes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Holder
@@ -38,8 +39,6 @@ import kotlin.math.pow
  * only a few people would ever notice
  *
  */
-
-// TODO now: fix it affecting boulders
 
 class MindlessRoseryTerrain {
     companion object {
@@ -168,6 +167,8 @@ class MindlessRoseryTerrain {
 
                         if (neighbours < threshold) {
                             chunk.setBlockState(BlockPos(worldX, y, worldZ), Blocks.AIR.defaultBlockState(), false)
+                            // to not to leave open dirt (will be filled due to second surface rule pass)
+                            chunk.setBlockState(BlockPos(worldX, y-1, worldZ), Blocks.STONE.defaultBlockState(), false)
                         }
                     }
                 }
@@ -196,6 +197,24 @@ class MindlessRoseryTerrain {
                 serverLevel.chunkSource.randomState(),
                 chunk
             )
+        }
+
+        @JvmStatic
+        fun fillBoulderStone(chunk: ChunkAccess) {
+            val startX = chunk.pos.minBlockX
+            val startZ = chunk.pos.minBlockZ
+            val minY = chunk.minBuildHeight+64
+
+            for (x in 0..15) {
+                for (z in 0..15) {
+                    for (y in minY until chunk.height) {
+                        val pos = BlockPos(startX + x, y, startZ + z)
+                        if (chunk.getBlockState(pos).`is`(ModBlocks.WORLDGEN_MARKER_PURPLE.get() ?: Blocks.STONE )) {
+                            chunk.setBlockState(pos, Blocks.STONE.defaultBlockState() , false)
+                        }
+                    }
+                }
+            }
         }
     }
 }

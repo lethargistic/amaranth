@@ -41,13 +41,15 @@ public abstract class ChunkStatusTasksMixin {
 
         Function<BlockPos, Holder<Biome>> biomeGetter =
                 pos -> biomeCache.computeIfAbsent(ChunkPos.asLong(pos),
-                key0 -> new Long2ObjectOpenHashMap<>()).computeIfAbsent(ChunkPos.asLong(pos.getX(), pos.getZ()),
-                key1 -> biomeManager.getBiome(pos));
+                        key0 -> new Long2ObjectOpenHashMap<>()).computeIfAbsent(ChunkPos.asLong(pos.getX(), pos.getZ()),
+                        key1 -> biomeManager.getBiome(pos));
 
         // biomes
         MushlandTerrain.process(biomeGetter, chunk);
 
         SteppedSpringsTerrain.process(biomeGetter, chunk, worldGenRegion);
+
+
     }
 
     // super duper bootleg, this is not a feature but i went down the rabbit hole of asynchronously storing
@@ -61,7 +63,7 @@ public abstract class ChunkStatusTasksMixin {
             method = "generateFeatures",
             at = @At("HEAD")
     )
-    private static void correctPendingOnFeatures(
+    private static void roseryTerrain(
             WorldGenContext worldGenContext, ChunkStep step,
             StaticCache2D<GenerationChunkHolder> cache, ChunkAccess chunk,
             CallbackInfoReturnable<CompletableFuture<ChunkAccess>> cir
@@ -97,4 +99,17 @@ public abstract class ChunkStatusTasksMixin {
         MindlessRoseryTerrain.process(biomeGetter, chunk, worldGenRegion);
         // then remaking the heightmaps and re-applying the surface rules
         MindlessRoseryTerrain.reapplySurface(worldGenContext, worldGenRegion, serverLevel, chunk);
-    }}
+    }
+
+    @Inject(
+            method = "full",
+            at = @At("TAIL")
+    )
+    private static void fillBoulderStone(
+            WorldGenContext worldGenContext, ChunkStep step,
+            StaticCache2D<GenerationChunkHolder> cache, ChunkAccess chunk,
+            CallbackInfoReturnable<CompletableFuture<ChunkAccess>> cir
+    ) {
+        MindlessRoseryTerrain.fillBoulderStone(chunk);
+    }
+}

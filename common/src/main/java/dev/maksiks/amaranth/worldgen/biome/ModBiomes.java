@@ -25,6 +25,12 @@ import terrablender.api.ParameterUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+// TODO now: make mystic, pain, anthocyanin, satis even less acid
+// TODO now: tweak witchy to have detail
+// TODO now: villages for shrubland, thrumletons, lupine fields
+// TODO now: make lupine fields more fun if got ideas ; moss? ; stony terrain?
+// TODO now fix: boulders getting in feature gen
+
 public class ModBiomes {
     public static final List<ResourceKey<Biome>> MOD_OVERWORLD_SURFACE_BIOMES = new ArrayList<>();
     public static final List<ResourceKey<Biome>> MOD_OVERWORLD_CAVE_BIOMES = new ArrayList<>();

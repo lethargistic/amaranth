@@ -1,6 +1,7 @@
 package dev.maksiks.amaranth.worldgen.features;
 
 import com.mojang.serialization.Codec;
+import dev.maksiks.amaranth.block.ModBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
@@ -239,7 +240,8 @@ public class RoseryMegaBoulder extends Feature<NoneFeatureConfiguration> {
                     );
                     state = (andesiteN + 1.0) / 2.0 < ANDESITE_IN_STONE_THRESHOLD
                             ? Blocks.ANDESITE.defaultBlockState()
-                            : Blocks.STONE.defaultBlockState();
+                            /// this gets replaced in {@link dev.maksiks.amaranth.worldgen.biome.terrain.MindlessRoseryTerrain}
+                            : ModBlocks.WORLDGEN_MARKER_PURPLE.get().defaultBlockState();
                 }
             }
 

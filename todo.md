@@ -18,16 +18,16 @@ a lot of this probably won't even ever end up in the mod at all
 - [x] todo very: melon helmet
 - [ ] fix minor: game logs missing item for alien bamboo sapling
 - [ ] todo: sparsey spears need a rework, they're nice but just too homegenous (also not sparsey and moutain-e)
-- [ ] todo: snowy biome ; blood on snow
+- [x] todo: snowy biome ; blood on snow
 - [x] fix: melon helmet tooltip isn't actually multiline lol ; again
-- [ ] fix: melon helmet regeneration doesn't actually work ; or maybe i should keep it as a primordial evil that i am rofl
+- [ ] fix: melon helmet regeneration doesn't actually work ; or maybe i should keep it as a primordial evil that i am rofl ; i'll fix it, in just a few updates, surely
 - [ ] fix maybe: setblock in far chunk vanilla log spam, im fairly certain it's harmless tho
 - [x] cfg: worldgen balancing ; double x
 - [x] fix: look into isSolid vs isFaceSturdy
 - [x] fix: make disc obtainable ; any loot table chest? ; or dungeons ; in desolate loot table, the contrast, WOO
 - [x] todo: add teaser hut structure
 - [x] cfg: config
-- [ ] todo very: full config, region weights + change biome selectors ; did individual biome config
+- [ ] todo very: full config, region weights + change biome selectors ; did individual biome config ; should wait for biolith
 - [x] todo maybe: specify access transformers for some instead of wildcards. tho no conflicts as far as i can see
 - [ ] todo very: add base biome for every climate zone
 - [x] todo: "subtle" for desc? ; no but actually yes
@@ -94,7 +94,7 @@ Multiloader moves:
 - [ ] finish: shrooms
 - [ ] todo maybe: maybe marble columns and etc.
 - [ ] todo maybe: actually put marble in somewhere
-- [ ] improve: pumpkin
+- [ ] improve: pumpkin ; having connected textures for the outside for the ultimate chonk pumpkins would be really nice
 - [ ] cleanup: linked biome configs
 - [ ] todo maybe: add items to vanilla tabs
 - [ ] fix maybe: frontier blossom very rarely generates two cressets on top of eachother
