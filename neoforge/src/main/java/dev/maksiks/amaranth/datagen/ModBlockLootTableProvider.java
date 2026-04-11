@@ -184,6 +184,9 @@ public class ModBlockLootTableProvider extends BlockLootSubProvider {
         // mush
         this.add(ModBlocks.REEDS.get(), block -> this.createItemDoublePlantTable(ModBlocks.REEDS.get().asItem(), ModBlocks.REEDS.get(), DoublePlantBlock.HALF, DoubleBlockHalf.LOWER));
 
+        // witchy
+        this.dropSelf(ModBlocks.NAAITE.get());
+
         // lupine
         this.dropSelf(ModBlocks.LUPINE.get());
 

@@ -25,11 +25,10 @@ import terrablender.api.ParameterUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-// TODO now: make mystic, pain, anthocyanin, satis even less acid
+// TODO now: make pain, anthocyanin, satis even less acid
 // TODO now: tweak witchy to have detail
 // TODO now: villages for shrubland, thrumletons, lupine fields
 // TODO now: make lupine fields more fun if got ideas ; moss? ; stony terrain?
-// TODO now fix: boulders getting in feature gen
 
 public class ModBiomes {
     public static final List<ResourceKey<Biome>> MOD_OVERWORLD_SURFACE_BIOMES = new ArrayList<>();
@@ -700,8 +699,8 @@ public class ModBiomes {
                         .waterColor(FAIRLY_NORMAL_WATER_COLOR)
                         .waterFogColor(FAILRY_NORMAL_WATER_FOG_COLOR)
                         .skyColor(7972607)
+                        // or #4ec386 ??
                         .grassColorOverride(0x59ba7a)
-//                        .foliageColorOverride(0x59AE30)
                         .fogColor(12638463)
                         .ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS)
                         .build())

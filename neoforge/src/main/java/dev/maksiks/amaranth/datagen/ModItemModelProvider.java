@@ -79,6 +79,9 @@ public class ModItemModelProvider extends ItemModelProvider {
         basicItem(ModBlocks.REEDS.get().asItem());
         basicItem(ModItems.REED_BAR.get());
 
+        // witchy
+        splatBlockItem(ModBlocks.NAAITE);
+
         // lupine
         splatBlockItem(ModBlocks.LUPINE);
 

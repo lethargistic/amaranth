@@ -141,6 +141,9 @@ public class ModBlockTagProvider extends BlockTagsProvider {
         this.tag(BlockTags.WOODEN_FENCES).add(ModBlocks.WISTERIA_FENCE.get());
         this.tag(BlockTags.FENCE_GATES).add(ModBlocks.WISTERIA_FENCE_GATE.get());
 
+        // witchy
+        this.tag(BlockTags.SMALL_FLOWERS).add(ModBlocks.NAAITE.get());
+
         // lupine
         this.tag(BlockTags.SMALL_FLOWERS).add(ModBlocks.LUPINE.get());
 

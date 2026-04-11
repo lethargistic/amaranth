@@ -180,6 +180,9 @@ public class ModBlockStateProvider extends BlockStateProvider {
         // mush
         doubleFourPlaneCropBlock(ModBlocks.REEDS);
 
+        //
+        twoPlanesCutoutBlock(ModBlocks.NAAITE);
+
         // lupine
         twoPlanesCutoutMippedBlock(ModBlocks.LUPINE);
 

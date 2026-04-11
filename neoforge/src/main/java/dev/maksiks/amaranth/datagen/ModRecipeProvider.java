@@ -212,7 +212,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Items.CYAN_DYE, 1)
                 .requires(ModBlocks.MALACHITE_VIPERS_BUGLOSS.get())
                 .unlockedBy("has_malachite_vipers_bugloss", has(ModBlocks.MALACHITE_VIPERS_BUGLOSS.get()))
-                .save(recipeOutput);
+                .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "cyan_dye_from_malachite_vipers_bugloss"));
 
         // pastel
         ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, ModBlocks.WISTERIA_PLANKS.get().asItem(), 4)
@@ -274,11 +274,17 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_reeds", has(ModBlocks.REEDS.get().asItem()))
                 .save(recipeOutput);
 
+        // witchy
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Items.MAGENTA_DYE, 1)
+                .requires(ModBlocks.NAAITE.get())
+                .unlockedBy("has_naaite", has(ModBlocks.NAAITE.get()))
+                .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "magenta_dye_from_naaite"));
+
         // lupine
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Items.PURPLE_DYE, 1)
                 .requires(ModBlocks.LUPINE.get().asItem())
                 .unlockedBy("has_lupine", has(ModBlocks.LUPINE.get().asItem()))
-                .save(recipeOutput);
+                .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "purple_dye_from_lupine"));
 
         // satis
         ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, ModBlocks.SATISTREE_PLANKS.get().asItem(), 4)
