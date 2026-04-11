@@ -90,6 +90,7 @@ public class ModConfiguredFeatures {
     public static ResourceKey<ConfiguredFeature<?, ?>> BROWN_MINI_SHROOM_KEY = registerKey("brown_mini_shroom");
 
     public static ResourceKey<ConfiguredFeature<?, ?>> WITCHY_KEY = registerKey("witchy");
+    public static ResourceKey<ConfiguredFeature<?, ?>> WITCHY_FLOWER_NAAITE_KEY = registerKey("witchy_flower_naaite");
 
     public static ResourceKey<ConfiguredFeature<?, ?>> LUPINE_FILL_KEY = registerKey("lupine_fill");
 
@@ -577,6 +578,23 @@ public class ModConfiguredFeatures {
                                 .build()),
                         new WitchyFoliagePlacer(ConstantInt.of(0), ConstantInt.of(0), 0),
                         new TwoLayersFeatureSize(1, 0, 1)).build()
+        );
+
+        register(
+                context,
+                WITCHY_FLOWER_NAAITE_KEY,
+                Feature.FLOWER,
+                new RandomPatchConfiguration(
+                        45,
+                        5,
+                        2,
+                        PlacementUtils.onlyWhenEmpty(
+                                Feature.SIMPLE_BLOCK,
+                                new SimpleBlockConfiguration(
+                                        BlockStateProvider.simple(ModBlocks.NAAITE.get())
+                                )
+                        )
+                )
         );
 
         // lupine
