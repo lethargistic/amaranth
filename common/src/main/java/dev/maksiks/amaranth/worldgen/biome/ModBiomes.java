@@ -25,7 +25,7 @@ import terrablender.api.ParameterUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-// TODO now: make anthocyanin, satis even, less acid
+// TODO now: make anthocyanin, satis even, less acid ; grass
 // TODO now: fix satisforest being super rare
 // TODO now: villages for shrubland, thrumletons, lupine fields
 // TODO now: make lupine fields more fun if got ideas ; moss? ; stony terrain?
@@ -618,8 +618,7 @@ public class ModBiomes {
                         .waterColor(FAIRLY_NORMAL_WATER_COLOR)
                         .waterFogColor(FAILRY_NORMAL_WATER_FOG_COLOR)
                         .skyColor(7972607)
-                        .grassColorOverride(0x00AAFF)
-                        .foliageColorOverride(0x00AAFF)
+                        .grassColorOverride(0x7a9df6)
                         .grassColorModifier(BiomeSpecialEffects.GrassColorModifier.NONE)
                         .fogColor(12638463)
                         .ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS)

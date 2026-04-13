@@ -39,6 +39,8 @@ public class ModSurfaceRules {
     private static final SurfaceRules.RuleSource PRISMARINE = makeStateRule(Blocks.PRISMARINE);
     private static final SurfaceRules.RuleSource CYAN_CONCRETE = makeStateRule(Blocks.CYAN_CONCRETE);
     private static final SurfaceRules.RuleSource DARK_PRISMARINE = makeStateRule(Blocks.DARK_PRISMARINE);
+    private static final SurfaceRules.RuleSource BLUE_TERRACOTTA = makeStateRule(Blocks.BLUE_TERRACOTTA);
+    private static final SurfaceRules.RuleSource CYAN_TERRACOTTA = makeStateRule(Blocks.CYAN_TERRACOTTA);
     private static final SurfaceRules.RuleSource WATER = makeStateRule(Blocks.WATER);
     private static final SurfaceRules.RuleSource MUD = makeStateRule(Blocks.MUD);
     private static final SurfaceRules.RuleSource BLACKSTONE = makeStateRule(Blocks.BLACKSTONE);
@@ -472,7 +474,7 @@ public class ModSurfaceRules {
                 safeSurfaceFloorRule(
                         SurfaceRules.ifTrue(
                                 SurfaceRules.noiseCondition(VEINY_NOISE, -0.06D, 0.06D),
-                                SurfaceRules.ifTrue(isAtOrAboveWaterLevel, DARK_PRISMARINE)
+                                SurfaceRules.ifTrue(isAtOrAboveWaterLevel, BLUE_TERRACOTTA)
                         )
                 )
         ));
@@ -482,7 +484,7 @@ public class ModSurfaceRules {
                 safeSurfaceFloorRule(
                         SurfaceRules.ifTrue(
                                 SurfaceRules.noiseCondition(VEINY_NOISE, -0.11D, 0.11D),
-                                SurfaceRules.ifTrue(isAtOrAboveWaterLevel, CYAN_CONCRETE)
+                                SurfaceRules.ifTrue(isAtOrAboveWaterLevel, CYAN_TERRACOTTA)
                         )
                 )
         ));

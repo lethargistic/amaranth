@@ -12,7 +12,8 @@ a lot of this probably won't even ever end up in the mod at all
 - [ ] todo fun: 1/100 chance for rosery rock to have a moustache or a top hat, and also pots to add to the primality of the stachio
 - [ ] todo fun: gnomessssss
 - [ ] todo fun: autumnal
-- [ ] todo eventually: remake anthocyanin to be more uh porcelain and less CuSO4, so new ground blocks instead of prismarine stuff and different wood color
+- [ ] todo eventually: remake anthocyanin wood color, add new ground blocks and position it somewhere better
+- [x] todo eventually: remake anthocyanin to be more uh porcelain and less CuSO4, so new ground blocks instead of prismarine stuff and different wood color
 - [ ] fix very: fields of pain suck, make them like vines with lots of blockstates rather than this
 - [x] fix very: some grass colors are acid
 - [x] fix minor: vivid lupine rocks are repetitive 
