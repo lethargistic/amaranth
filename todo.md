@@ -7,14 +7,16 @@ a lot of this probably won't even ever end up in the mod at all
 
 ### Current
 
+- [ ] todo very: ask people for music for music discs
 - [ ] ~~todo very: try datagenning the biome noise~~ ; not using it so nvm
 - [x] todo very: instameal
 - [ ] todo fun: 1/100 chance for rosery rock to have a moustache or a top hat, and also pots to add to the primality of the stachio
 - [ ] todo fun: gnomessssss
 - [ ] todo fun: autumnal
+- [ ] todo eventually: lupine meadows are boring
 - [ ] todo eventually: remake anthocyanin wood color, add new ground blocks and position it somewhere better
 - [x] todo eventually: remake anthocyanin to be more uh porcelain and less CuSO4, so new ground blocks instead of prismarine stuff and different wood color
-- [ ] fix very: fields of pain suck, make them like vines with lots of blockstates rather than this
+- [ ] fix very: fields of pain suck, make them like vines with lots of blockstates rather than this ; made them have cool ground tho 
 - [x] fix very: some grass colors are acid
 - [x] fix minor: vivid lupine rocks are repetitive 
 - [x] prod: remove dev biomes, clean up
@@ -38,8 +40,8 @@ a lot of this probably won't even ever end up in the mod at all
 - [x] todo: publish on Modrinth
 - [x] todo: publish on Curseforge
 - [x] todo: add Curseforge id to metadata later
-- [ ] todo: make satisforest a lot less rare
-- [ ] todo: make villages appear in shrublands and other relevant
+- [x] todo: make satisforest a lot less rare
+- [x] todo: make villages appear in shrublands and other relevant
 - [x] fix very: flk version mismatch
 - [ ] pain: do a 50/50 on some biomes if that would work reasonably ??? ; couldnt with current terrablender rip
   ; on my Christmas wishlist
@@ -87,17 +89,17 @@ Multiloader moves:
 - [ ] todo maybe: update to latest
 - [ ] todo maybe: bog with mud and shrooms
 - [ ] todo maybe: 1.20.1
-- [ ] todo maybe: revisit some biomes ; witchy ; satisforest ; i wish witchy to feel a lot more themed or natural, it's just copy pastes trees rn tbh
+- [x] todo maybe: revisit some biomes ; witchy ; satisforest ; i wish witchy to feel a lot more themed or natural, it's just copy pastes trees rn tbh
 - [ ] todo: block that disables possibly annoying visual effects for biome
 - [ ] todo: add some custom soils (for at least a few at once, not just 1)
-- [ ] todo maybe: make leaf particles only appear on naturally generated ones ; leaf particler staffe
+- [ ] todo maybe: make leaf particles only appear on naturally generated ones ; leaf particler staffe ; mi ingles left me there
 
 ### Should, but would?
 
 - [ ] finish: shrooms
 - [ ] todo maybe: maybe marble columns and etc.
 - [ ] todo maybe: actually put marble in somewhere
-- [ ] improve: pumpkin ; having connected textures for the outside for the ultimate chonk pumpkins would be really nice
+- [ ] todo: pumpkin ; having connected textures for the outside for the ultimate chonk pumpkins would be really nice
 - [ ] cleanup: linked biome configs
 - [ ] todo maybe: add items to vanilla tabs
 - [ ] fix maybe: frontier blossom very rarely generates two cressets on top of eachother

@@ -25,10 +25,6 @@ import terrablender.api.ParameterUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-// TODO now: make anthocyanin, satis even, less acid ; grass
-// TODO now: villages for shrubland, thrumletons, lupine fields
-// TODO now: make lupine fields more fun if got ideas ; moss? ; stony terrain?
-
 public class ModBiomes {
     public static final List<ResourceKey<Biome>> MOD_OVERWORLD_SURFACE_BIOMES = new ArrayList<>();
     public static final List<ResourceKey<Biome>> MOD_OVERWORLD_CAVE_BIOMES = new ArrayList<>();
