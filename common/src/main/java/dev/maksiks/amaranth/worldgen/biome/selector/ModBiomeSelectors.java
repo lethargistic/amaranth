@@ -61,7 +61,7 @@ public class ModBiomeSelectors {
             List.of(P, P, P, P, P)
     );
 
-    // TODO now: figure out how to squish in rosery, also biolithbiolithbiolithbiolith
+    // TODO: biolithbiolithbiolithbiolith
     public static final List<List<ResourceKey<Biome>>> MOD_MIDDLE_BIOMES_2 = ModBiomeSelectorUtils.create("middle_biomes/mod_middle_biomes_2", "",
             List.of(P, P, P, P, P),
             List.of(MINDLESS_ROSERY, MINDLESS_ROSERY, THRUMLETONS, P, P),
@@ -107,7 +107,7 @@ public class ModBiomeSelectors {
             List.of(P, P, P, P, P),
             List.of(P, P, SPARSEY_SPEARS, ORDERLY_COURTS, P),
             List.of(P, P, P, P, P),
-            List.of(P, P, P, P, P)
+            List.of(P, P, SATISFOREST, SATISFOREST, SATISFOREST)
     );
 
     public static final List<List<ResourceKey<Biome>>> MOD_PLATEAU_BIOMES_4 = ModBiomeSelectorUtils.create("plateau_biomes/mod_plateau_biomes_4", "",
@@ -115,7 +115,7 @@ public class ModBiomeSelectors {
             List.of(P, P, P, P, P),
             List.of(P, P, P, P, P),
             List.of(P, P, P, P, P),
-            List.of(P, P, SATISFOREST, SATISFOREST, P)
+            List.of(P, P, P, P, P)
     );
 
     public static final List<List<ResourceKey<Biome>>> MOD_PLATEAU_BIOMES_VARIANT = ModBiomeSelectorUtils.create("plateau_biomes_variant/mod_plateau_biomes_variant", "",

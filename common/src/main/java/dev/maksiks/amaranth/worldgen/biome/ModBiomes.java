@@ -26,7 +26,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 // TODO now: make anthocyanin, satis even, less acid ; grass
-// TODO now: fix satisforest being super rare
 // TODO now: villages for shrubland, thrumletons, lupine fields
 // TODO now: make lupine fields more fun if got ideas ; moss? ; stony terrain?
 

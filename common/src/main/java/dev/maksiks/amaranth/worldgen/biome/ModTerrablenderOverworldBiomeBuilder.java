@@ -99,6 +99,20 @@ public class ModTerrablenderOverworldBiomeBuilder extends TerrablenderOverworldB
     public ResourceKey<Biome> pickBeachBiome(int temperature, int humidity) {
         return super.pickBeachBiome(temperature, humidity);
     }
+
+    @Override
+    public ResourceKey<Biome> pickBadlandsBiome(int humidity, Climate.Parameter param) {
+        if (regionId == 0) {
+            if (humidity < 2) {
+                return super.pickBadlandsBiome(humidity, param);
+            } else {
+                return humidity < 3 ? Biomes.BADLANDS : ModBiomes.SATISFOREST;
+            }
+        }
+        return super.pickBadlandsBiome(humidity, param);
+    }
+
+
     @Override
     public ResourceKey<Biome> pickPeakBiome(int temperature, int humidity, Climate.Parameter weirdness) {
         if (temperature <= 2) {

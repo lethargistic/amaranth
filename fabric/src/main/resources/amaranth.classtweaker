@@ -18,8 +18,8 @@ accessible method net/minecraft/core/particles/SimpleParticleType <init> (Z)V
 accessible field net/minecraft/world/item/TieredItem tier Lnet/minecraft/world/item/Tier;
 
 # OverworldBiomeBuilder
-accessible method net/minecraft/world/level/biome/OverworldBiomeBuilder pickBadlandsBiome (ILnet/minecraft/world/level/biome/Climate$Parameter;)Lnet/minecraft/resources/ResourceKey;
-accessible method net/minecraft/world/level/biome/OverworldBiomeBuilder pickPlateauBiome (IILnet/minecraft/world/level/biome/Climate$Parameter;)Lnet/minecraft/resources/ResourceKey;
+extendable method net/minecraft/world/level/biome/OverworldBiomeBuilder pickBadlandsBiome (ILnet/minecraft/world/level/biome/Climate$Parameter;)Lnet/minecraft/resources/ResourceKey;
+extendable method net/minecraft/world/level/biome/OverworldBiomeBuilder pickPlateauBiome (IILnet/minecraft/world/level/biome/Climate$Parameter;)Lnet/minecraft/resources/ResourceKey;
 
 # Terrablender ones, unfortunately not transitive for some reason
 mutable field net/minecraft/world/level/biome/OverworldBiomeBuilder OCEANS [[Lnet/minecraft/resources/ResourceKey;
