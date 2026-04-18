@@ -7,7 +7,7 @@ a lot of this probably won't even ever end up in the mod at all
 
 ### Current
 
-- [ ] todo very: ask people for music for music discs
+- [ ] todo very: ask people for music discs
 - [ ] ~~todo very: try datagenning the biome noise~~ ; not using it so nvm
 - [x] todo very: instameal
 - [ ] todo fun: 1/100 chance for rosery rock to have a moustache or a top hat, and also pots to add to the primality of the stachio
@@ -19,6 +19,7 @@ a lot of this probably won't even ever end up in the mod at all
 - [ ] fix very: fields of pain suck, make them like vines with lots of blockstates rather than this ; made them have cool ground tho 
 - [x] fix very: some grass colors are acid
 - [x] fix minor: vivid lupine rocks are repetitive 
+- [ ] fix minor: there is a layer on top of neat-water blocks in mindless
 - [x] prod: remove dev biomes, clean up
 - [x] todo very: melon helmet
 - [ ] fix minor: game logs missing item for alien bamboo sapling
