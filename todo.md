@@ -14,6 +14,7 @@ a lot of this probably won't even ever end up in the mod at all
 - [ ] todo fun: gnomessssss
 - [ ] todo fun: autumnal
 - [ ] todo fun: naaite roots
+- [ ] todo maybe: block that makes desolate ice field biomes turn into calm desolate ice field biomes with no fog and snow ; (-> blizzard in a bottle?)
 - [ ] todo eventually: lupine meadows are boring
 - [ ] todo eventually: remake anthocyanin wood color, add new ground blocks and position it somewhere better
 - [x] todo eventually: remake anthocyanin to be more uh porcelain and less CuSO4, so new ground blocks instead of prismarine stuff and different wood color

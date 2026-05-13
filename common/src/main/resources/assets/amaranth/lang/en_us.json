@@ -148,6 +148,7 @@
   "block.amaranth.witchy_sapling": "Witchy Sapling",
   "block.amaranth.potted_witchy_sapling": "Potted Witchy Sapling",
   "block.amaranth.naaite": "Naaite",
+  "block.amaranth.potted_naaite": "Potted Naaite",
 
   "block.amaranth.lupine": "Lupine",
   "block.amaranth.potted_lupine": "Potted Lupine",
@@ -187,9 +188,39 @@
   "block.amaranth.cresset_flower": "Cresset Flower",
   "tooltip.amaranth.cresset_flower.tooltip": "§8§oParasitic flower targeting winter cherries since they're are rich in certain semi-magical crystals due to frost churning.§r",
   "block.amaranth.frontier_blossom_sapling": "Frontier Blossom Sapling",
+  "block.amaranth.potted_frontier_blossom_sapling": "Potted Frontier Blossom Sapling",
 
   "entity.amaranth.shroom_boi": "Shroom Boi",
 
   "sounds.amaranth.metal_pipe": "Metal Pipe Falling",
-  "sounds.amaranth.arctic_wind_throngled": "Intense Wind"
+  "sounds.amaranth.arctic_wind_throngled": "Intense Wind",
+
+  "biome.amaranth.test_biome": "Test Biome",
+  "biome.amaranth.mystic_forest": "Mystic Forest",
+  "biome.amaranth.stubby_woodland": "Stubby Woodland",
+  "biome.amaranth.silver_birch_forest": "Silver Birch Forest",
+  "biome.amaranth.desolate_ice_fields": "Desolate Ice Fields",
+  "biome.amaranth.mixed_woods": "Mixed Woods",
+  "biome.amaranth.orderly_courts": "Orderly Courts",
+  "biome.amaranth.orderly_courts_ruins": "Orderly Courts Ruins",
+  "biome.amaranth.tree_on_tree_forest": "Tree on Tree Forest",
+  "biome.amaranth.shroomlands": "Shroomlands",
+  "biome.amaranth.dusty_flats": "Dusty Flats",
+  "biome.amaranth.anthocyanin_forest": "Anthocyanin Forest",
+  "biome.amaranth.fields_of_pain": "Fields of Pain",
+  "biome.amaranth.thrumletons": "Thrumletons",
+  "biome.amaranth.sparsey_spears": "Sparsey Spears",
+  "biome.amaranth.pastel_parcel": "Pastel Parcel",
+  "biome.amaranth.mushland": "Mushland",
+  "biome.amaranth.witchy_forest": "Witchy Forest",
+  "biome.amaranth.lupine_meadow": "Lupine Meadow",
+  "biome.amaranth.alpine_range": "Alpine Range",
+  "biome.amaranth.ashen_peaks": "Ashen Peaks",
+  "biome.amaranth.volcanic_ashen_peaks": "Volcanic Ashen Peaks",
+  "biome.amaranth.stepped_springs": "Stepped Springs",
+  "biome.amaranth.satisforest": "Satisforest",
+  "biome.amaranth.shrubland": "Shrubland",
+  "biome.amaranth.vivid_shrubland": "Vivid Shrubland",
+  "biome.amaranth.bleeding_edge": "Bleeding Edge",
+  "biome.amaranth.mindless_rosery": "Mindless Rosery"
 }
