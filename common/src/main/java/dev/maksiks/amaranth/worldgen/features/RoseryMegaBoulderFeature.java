@@ -2,10 +2,12 @@ package dev.maksiks.amaranth.worldgen.features;
 
 import com.mojang.serialization.Codec;
 import dev.maksiks.amaranth.block.ModBlocks;
+import dev.maksiks.amaranth.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -21,8 +23,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class RoseryMegaBoulder extends Feature<NoneFeatureConfiguration> {
-    public RoseryMegaBoulder(Codec<NoneFeatureConfiguration> codec) {
+public class RoseryMegaBoulderFeature extends Feature<NoneFeatureConfiguration> {
+    public RoseryMegaBoulderFeature(Codec<NoneFeatureConfiguration> codec) {
         super(codec);
     }
 
@@ -55,6 +57,15 @@ public class RoseryMegaBoulder extends Feature<NoneFeatureConfiguration> {
 
     private static final int VERTICAL_OFFSET_MIN = -4;
     private static final int VERTICAL_OFFSET_MAX = 2;
+
+    private static final String C2ME_MOD_ID = "c2me";
+
+    private BlockState getMarkerOrCompatState() {
+        if (Services.PLATFORM.isModLoaded(C2ME_MOD_ID)) {
+            return Blocks.ANDESITE.defaultBlockState();
+        }
+        return ModBlocks.WORLDGEN_MARKER_PURPLE.get().defaultBlockState();
+    }
 
     @Override
     public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> ctx) {
@@ -241,7 +252,7 @@ public class RoseryMegaBoulder extends Feature<NoneFeatureConfiguration> {
                     state = (andesiteN + 1.0) / 2.0 < ANDESITE_IN_STONE_THRESHOLD
                             ? Blocks.ANDESITE.defaultBlockState()
                             /// this gets replaced in {@link dev.maksiks.amaranth.worldgen.biome.terrain.MindlessRoseryTerrain}
-                            : ModBlocks.WORLDGEN_MARKER_PURPLE.get().defaultBlockState();
+                            : getMarkerOrCompatState();
                 }
             }
 

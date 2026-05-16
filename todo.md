@@ -7,6 +7,7 @@ a lot of this probably won't even ever end up in the mod at all
 
 ### Current
 
+- [ ] todo very: C2ME compat
 - [ ] todo very: ask people for music discs
 - [ ] ~~todo very: try datagenning the biome noise~~ ; not using it so nvm
 - [x] todo very: instameal
@@ -55,6 +56,12 @@ a lot of this probably won't even ever end up in the mod at all
   ; got it to work but requires a world restart and it sounds like a pain to ask the player to relog tho
   ; if i do this i beat Terrablender (the boss) 
   ; BIOLITH BIOLITH BIOLITH BIOLITH BIOLITH BIOLITH BIOLITH 
+
+Compat list:
+- [x] BWG ; feature order cycle
+- [x] BOP ; works out of the box
+- [x] Tectonic ; works out of the box with minor aesthetic issues but that's tectonic for ya
+- [ ] C2ME ; mindless rosary rock oh no blocks are not replaced which is reasonable enough, otherwise it works like a charm ; band aided it for now
 
 Multiloader moves:
 - [x] todo: written down todos

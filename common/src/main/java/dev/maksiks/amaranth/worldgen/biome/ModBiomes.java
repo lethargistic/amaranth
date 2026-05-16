@@ -676,7 +676,7 @@ public class ModBiomes {
         BiomeDefaultFeatures.addDefaultSoftDisks(biomeBuilder);
         BiomeDefaultFeatures.addPlainGrass(biomeBuilder);
         BiomeDefaultFeatures.addSavannaGrass(biomeBuilder);
-        // note to self: path sunflower before extra grass
+        // note to self: patch sunflower before extra grass otherwise feature cycle with BWG
         biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, VegetationPlacements.PATCH_SUNFLOWER);
         BiomeDefaultFeatures.addSavannaExtraGrass(biomeBuilder);
         biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.THRUMLETONS_FLOWER_PLACED_KEY);

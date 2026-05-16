@@ -26,8 +26,8 @@ import java.util.List;
 public class NeoForgePlatformHelper implements IPlatformHelper {
     @Override
     public Supplier<CreativeModeTab> createCreativeTab(String tabName, List<Supplier<? extends ItemLike>> items,
-                                         Supplier<? extends ItemLike> icon) {
-        return  () -> CreativeModeTab.builder().icon(() -> new ItemStack(icon.get()))
+                                                       Supplier<? extends ItemLike> icon) {
+        return () -> CreativeModeTab.builder().icon(() -> new ItemStack(icon.get()))
                 .title(Component.translatable(String.format("creativetab.amaranth.%s", tabName)))
                 .displayItems((itemDisplayParameters, output) -> {
                     items.forEach(item -> output.accept(item.get().asItem()));

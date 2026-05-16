@@ -14,7 +14,6 @@ import java.util.List;
 
 
 public interface IPlatformHelper {
-
     Supplier<CreativeModeTab> createCreativeTab(String tabName, List<Supplier<? extends ItemLike>> items, Supplier<? extends ItemLike> icon);
 
     Supplier<RotatedPillarBlock> createLoaderStrippableLog(BlockBehaviour.Properties props);

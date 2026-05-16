@@ -63,7 +63,7 @@ public class ModFeatures {
 
     public static final Supplier<Feature<NoneFeatureConfiguration>> ROSERY_MEGA_BOULDER_FEATURE =
             register("rosery_mega_boulder",
-                    () -> new RoseryMegaBoulder(NoneFeatureConfiguration.CODEC));
+                    () -> new RoseryMegaBoulderFeature(NoneFeatureConfiguration.CODEC));
 
     private static <T extends FeatureConfiguration> Supplier<Feature<T>> register(String key, Supplier<Feature<T>> feature) {
         Supplier<Feature<T>> memoized = Suppliers.memoize(feature);
