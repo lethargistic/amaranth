@@ -13,6 +13,7 @@ a lot of this probably won't even ever end up in the mod at all
 - [ ] todo fun: 1/100 chance for rosery rock to have a moustache or a top hat, and also pots to add to the primality of the stachio
 - [ ] todo fun: gnomessssss
 - [ ] todo fun: autumnal
+- [ ] todo maybe: automatically re-register vanilla features used in the mod as my own to prevent feature order cycles with other mods in the future or come up with another permanent solution
 - [ ] todo fun: naaite roots
 - [ ] todo maybe: block that makes desolate ice field biomes turn into calm desolate ice field biomes with no fog and snow ; (-> blizzard in a bottle?)
 - [ ] todo eventually: lupine meadows are boring
@@ -105,7 +106,7 @@ Multiloader moves:
 - [ ] todo: pumpkin ; having connected textures for the outside for the ultimate chonk pumpkins would be really nice
 - [ ] cleanup: linked biome configs
 - [ ] todo maybe: add items to vanilla tabs
-- [ ] fix maybe: frontier blossom very rarely generates two cressets on top of eachother
+- [ ] fix maybe: frontier blossom very rarely generates two cressets on top of eachother ; probably happens more often than i thought
 
 ### Whatever
 
