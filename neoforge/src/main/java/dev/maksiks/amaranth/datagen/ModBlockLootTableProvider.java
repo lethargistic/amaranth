@@ -82,6 +82,8 @@ public class ModBlockLootTableProvider extends BlockLootSubProvider {
 
         // misc
         this.dropSelf(ModBlocks.MARBLE.get());
+        this.add(ModBlocks.WORLDGEN_STONE.get(),
+                this.createSingleItemTableWithSilkTouch(Blocks.STONE, Blocks.COBBLESTONE));
         this.dropSelf(ModBlocks.WORLDGEN_MARKER_RED.get());
         this.dropSelf(ModBlocks.WORLDGEN_MARKER_BLUE.get());
         this.dropSelf(ModBlocks.WORLDGEN_MARKER_GREEN.get());

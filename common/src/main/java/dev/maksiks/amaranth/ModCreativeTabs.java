@@ -137,6 +137,7 @@ public class ModCreativeTabs {
 
         // misc but at the end
         MAIN_CREATIVE_MODE_ITEM_MAP.add(ModItems.ASHES_OF_THE_LAWN_GNOME);
+        MAIN_CREATIVE_MODE_ITEM_MAP.add(ModBlocks.WORLDGEN_STONE);
         MAIN_CREATIVE_MODE_ITEM_MAP.add(ModBlocks.WORLDGEN_MARKER_RED);
         MAIN_CREATIVE_MODE_ITEM_MAP.add(ModBlocks.WORLDGEN_MARKER_BLUE);
         MAIN_CREATIVE_MODE_ITEM_MAP.add(ModBlocks.WORLDGEN_MARKER_GREEN);

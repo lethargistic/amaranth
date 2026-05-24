@@ -116,6 +116,12 @@ class ModBlocks {
         ) { Block(BlockBehaviour.Properties.ofFullCopy(Blocks.CALCITE)) }
 
         @JvmField
+        val WORLDGEN_STONE: Supplier<Block?> = registerWithItem<Block?>("worldgen_stone") {
+            Block(
+                BlockBehaviour.Properties.ofFullCopy(Blocks.STONE)
+            )
+        }
+        @JvmField
         val WORLDGEN_MARKER_RED: Supplier<Block?> = registerWithItem<Block?>("worldgen_marker_red") {
             Block(
                 BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_RED).instrument(NoteBlockInstrument.BASEDRUM).strength(0.5F, 6.0F)

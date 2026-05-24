@@ -51,6 +51,13 @@ public class ModBlockTagProvider extends BlockTagsProvider {
         this.tag(BlockTags.MINEABLE_WITH_PICKAXE)
                 .add(ModBlocks.MARBLE.get());
 
+        // copy of stone
+        this.tag(BlockTags.STONE_ORE_REPLACEABLES).add(ModBlocks.WORLDGEN_STONE.get());
+        this.tag(BlockTags.BASE_STONE_OVERWORLD).add(ModBlocks.WORLDGEN_STONE.get());
+        this.tag(BlockTags.MINEABLE_WITH_PICKAXE).add(ModBlocks.WORLDGEN_STONE.get());
+        this.tag(BlockTags.SNAPS_GOAT_HORN).add(ModBlocks.WORLDGEN_STONE.get());
+        this.tag(BlockTags.GOATS_SPAWNABLE_ON).add(ModBlocks.WORLDGEN_STONE.get());
+
         this.tag(BlockTags.NEEDS_STONE_TOOL)
                 .add(ModBlocks.MARBLE.get());
 

@@ -54,6 +54,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
         // misc
         blockWithItem(ModBlocks.MARBLE);
+        blockWithItem(ModBlocks.WORLDGEN_STONE);
         blockWithItem(ModBlocks.WORLDGEN_MARKER_RED);
         blockWithItem(ModBlocks.WORLDGEN_MARKER_BLUE);
         blockWithItem(ModBlocks.WORLDGEN_MARKER_GREEN);

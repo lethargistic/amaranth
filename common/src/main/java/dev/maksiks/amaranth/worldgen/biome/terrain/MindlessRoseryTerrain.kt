@@ -209,7 +209,7 @@ class MindlessRoseryTerrain {
                 for (z in 0..15) {
                     for (y in minY until chunk.height) {
                         val pos = BlockPos(startX + x, y, startZ + z)
-                        if (chunk.getBlockState(pos).`is`(ModBlocks.WORLDGEN_MARKER_PURPLE.get() ?: Blocks.STONE )) {
+                        if (chunk.getBlockState(pos).`is`(ModBlocks.WORLDGEN_STONE.get() ?: Blocks.STONE )) {
                             chunk.setBlockState(pos, Blocks.STONE.defaultBlockState() , false)
                         }
                     }

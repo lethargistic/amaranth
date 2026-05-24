@@ -57,11 +57,13 @@ a lot of this probably won't even ever end up in the mod at all
   ; if i do this i beat Terrablender (the boss) 
   ; BIOLITH BIOLITH BIOLITH BIOLITH BIOLITH BIOLITH BIOLITH 
 
-Compat list:
+Compat list (1.21.1, 16.05.26):
 - [x] BWG ; feature order cycle
 - [x] BOP ; works out of the box
 - [x] Tectonic ; works out of the box with minor aesthetic issues but that's tectonic for ya
 - [ ] C2ME ; mindless rosary rock oh no blocks are not replaced which is reasonable enough, otherwise it works like a charm ; band aided it for now
+- [x] YUNG's mods ; i see no issues
+- [x] Pufferfish's biome dither ; works
 
 Multiloader moves:
 - [x] todo: written down todos

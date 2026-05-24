@@ -1,13 +1,13 @@
 package dev.maksiks.amaranth.worldgen.features;
 
 import com.mojang.serialization.Codec;
+import dev.maksiks.amaranth.Constants;
 import dev.maksiks.amaranth.block.ModBlocks;
 import dev.maksiks.amaranth.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -59,12 +59,14 @@ public class RoseryMegaBoulderFeature extends Feature<NoneFeatureConfiguration> 
     private static final int VERTICAL_OFFSET_MAX = 2;
 
     private static final String C2ME_MOD_ID = "c2me";
+    private static Boolean warned = false;
 
-    private BlockState getMarkerOrCompatState() {
-        if (Services.PLATFORM.isModLoaded(C2ME_MOD_ID)) {
-            return Blocks.ANDESITE.defaultBlockState();
+    private BlockState getMarkerWithWarn() {
+        if (Services.PLATFORM.isModLoaded(C2ME_MOD_ID) && !warned) {
+            Constants.LOG.warn("Amaranth: C2ME is detected, Mindless Rosery boulders will contain fake stone instead of normal stone");
+            warned = true;
         }
-        return ModBlocks.WORLDGEN_MARKER_PURPLE.get().defaultBlockState();
+        return ModBlocks.WORLDGEN_STONE.get().defaultBlockState();
     }
 
     @Override
@@ -252,7 +254,7 @@ public class RoseryMegaBoulderFeature extends Feature<NoneFeatureConfiguration> 
                     state = (andesiteN + 1.0) / 2.0 < ANDESITE_IN_STONE_THRESHOLD
                             ? Blocks.ANDESITE.defaultBlockState()
                             /// this gets replaced in {@link dev.maksiks.amaranth.worldgen.biome.terrain.MindlessRoseryTerrain}
-                            : getMarkerOrCompatState();
+                            : getMarkerWithWarn();
                 }
             }
 
