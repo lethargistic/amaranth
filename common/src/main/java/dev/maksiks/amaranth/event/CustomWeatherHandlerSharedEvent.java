@@ -1,5 +1,7 @@
 package dev.maksiks.amaranth.event;
 
+import dev.maksiks.amaranth.ClientConfig;
+import dev.maksiks.amaranth.Config;
 import dev.maksiks.amaranth.sound.DesolateWindSoundInstance;
 import dev.maksiks.amaranth.sound.ModSounds;
 import dev.maksiks.amaranth.worldgen.biome.ModBiomes;
@@ -33,6 +35,9 @@ public class CustomWeatherHandlerSharedEvent {
 
 
     public static void clientTick() {
+        if (Minecraft.getInstance().level == null) return;
+        if (!ClientConfig.SPEC.isLoaded()) return;
+
         if (HIDE_CUSTOM_BIOME_WEATHER_PARTICLES.getAsBoolean() || HIDE_ALL_BIOME_PARTICLES.getAsBoolean()) {
             stopMoodSound();
             return;

@@ -52,7 +52,7 @@ public class ClientConfig {
             .comment(" Random amount added to the direction change timer in ticks")
             .defineInRange("snowDirectionChangeTimeAddedRange", 60000, 1, Integer.MAX_VALUE);
 
-    static final ModConfigSpec SPEC = BUILDER.build();
+    public static final ModConfigSpec SPEC = BUILDER.build();
 
     private static boolean validateItemName(final Object obj) {
         return obj instanceof String itemName && BuiltInRegistries.ITEM.containsKey(ResourceLocation.parse(itemName));
