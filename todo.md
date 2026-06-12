@@ -65,7 +65,6 @@ Compat list (1.21.1, 16.05.26):
 - [ ] C2ME ; mindless rosary rock oh no blocks are not replaced which is reasonable enough, otherwise it works like a charm ; band aided it for now
 - [x] YUNG's mods ; i see no issues
 - [x] Pufferfish's biome dither ; works
-Compat list (1.21.1, 12.06.26):
 
 Multiloader moves:
 - [x] todo: written down todos

@@ -3,6 +3,7 @@ package dev.maksiks.amaranth;
 import dev.maksiks.amaranth.block.ModBlocks;
 import dev.maksiks.amaranth.entity.ModEntitiesServer;
 import dev.maksiks.amaranth.entity.client.ModEntitiesClient;
+import dev.maksiks.amaranth.event.ModFabricClientEvents;
 import dev.maksiks.amaranth.particle.AnthocyaninParticles;
 import dev.maksiks.amaranth.particle.ModParticles;
 import dev.maksiks.amaranth.particle.SilverBirchParticles;
@@ -74,5 +75,8 @@ public class FabricModClient implements ClientModInitializer {
                     return true;
                 }
         );
+
+        // events
+        ModFabricClientEvents.init();
     }
 }

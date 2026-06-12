@@ -7,6 +7,5 @@ public class ModFabricEvents {
     public static void init() {
         // mixins mostly
 
-        CustomWeatherHandlerEvent.init();
     }
 }
