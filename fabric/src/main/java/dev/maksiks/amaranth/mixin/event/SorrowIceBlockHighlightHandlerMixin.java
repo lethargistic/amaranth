@@ -74,7 +74,6 @@ public class SorrowIceBlockHighlightHandlerMixin {
     )
     private void onRenderHitOutline(PoseStack poseStack, VertexConsumer consumer, Entity entity, double camX, double camY, double camZ, BlockPos pos, BlockState state, CallbackInfo ci) {
         if (currentResult) {
-            Constants.LOG.info("Amaranth: hi im looking at bloc");
             ci.cancel();
 
             SorrowIceBlockHighlightHandlerSharedEvent

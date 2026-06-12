@@ -35,7 +35,6 @@ public class ModNeoClientEvents {
         ModEntitiesClient.initializeClientEntityData();
 
         ModEntitiesClient.ENTITY_MODELS.forEach((entry) -> {
-            Constants.LOG.info("Ama: all models rhere {}", entry);
             event.registerLayerDefinition(entry.loc(), entry.def());
         });
     }

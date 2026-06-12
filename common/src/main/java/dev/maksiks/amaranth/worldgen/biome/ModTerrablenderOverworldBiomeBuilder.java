@@ -54,9 +54,9 @@ public class ModTerrablenderOverworldBiomeBuilder extends TerrablenderOverworldB
 
         // RegionUtils.getVanillaParameterPoints() for something, maybe?
 
+        /// reminder to also add it to config in {@link ModTerrablenderRegion}
         if (regionId == 0 || regionId == 1) {
             if (biome.equals(Biomes.SWAMP)) {
-                
                 return Pair.of(point, ModBiomes.MUSHLAND);
             }
         }

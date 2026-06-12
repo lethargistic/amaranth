@@ -1,8 +1,8 @@
 package dev.maksiks.amaranth.worldgen.biome;
 
 import com.mojang.datafixers.util.Pair;
-import dev.maksiks.amaranth.Constants;
 import dev.maksiks.amaranth.Config;
+import dev.maksiks.amaranth.Constants;
 import dev.maksiks.amaranth.worldgen.biome.selector.ModBiomeSelectors;
 import dev.maksiks.amaranth.worldgen.biome.selector.TerrablenderBiomeSelectors;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
@@ -18,6 +18,7 @@ import terrablender.api.Region;
 import terrablender.api.RegionType;
 import terrablender.api.Regions;
 
+import java.util.List;
 import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
@@ -113,6 +114,7 @@ public class ModTerrablenderRegion extends Region {
     private final Set<ResourceKey<Biome>> modKeys = new ObjectOpenHashSet<>();
     private final ModTerrablenderOverworldBiomeBuilder terrablenderOverworldBiomeBuilder;
 
+    @SuppressWarnings("unchecked")
     public ModTerrablenderRegion(int regionId, int overworldWeight,
                                  ResourceKey<Biome>[][] oceans, ResourceKey<Biome>[][] middleBiomes,
                                  ResourceKey<Biome>[][] middleBiomesVariant, ResourceKey<Biome>[][] plateauBiomes,
@@ -136,6 +138,13 @@ public class ModTerrablenderRegion extends Region {
         peakBiomesVariant = sanitize("peak_biomes_variant", this.getName(), count, peakBiomesVariant, noVoidBiomes, false);
         slopeBiomesVariant = sanitize("slope_biomes_variant", this.getName(), count, slopeBiomesVariant, noVoidBiomes, false);
 
+        // TODO: refactor this with a list, why is it copy pasted like that?
+        List<ResourceKey<Biome>[][]> allBiomes = List.of(
+                oceans, middleBiomes, middleBiomesVariant,
+                plateauBiomes, plateauBiomesVariant, shatteredBiomes,
+                beachBiomes, peakBiomes, peakBiomesVariant, slopeBiomes, slopeBiomesVariant
+        );
+
         this.terrablenderOverworldBiomeBuilder = new ModTerrablenderOverworldBiomeBuilder(
                 oceans, middleBiomes, middleBiomesVariant,
                 plateauBiomes, plateauBiomesVariant, shatteredBiomes,
@@ -146,7 +155,9 @@ public class ModTerrablenderRegion extends Region {
             if (biomeResourceKey != null) {
                 modKeys.add(biomeResourceKey);
             }
-        }), oceans, middleBiomes, middleBiomesVariant, plateauBiomes, plateauBiomesVariant, shatteredBiomes, beachBiomes, peakBiomes);
+        }), allBiomes.toArray(new ResourceKey[0][][]));
+
+        modKeys.add(ModBiomes.MUSHLAND);
     }
 
     @Override
