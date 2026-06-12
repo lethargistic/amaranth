@@ -3,7 +3,7 @@ package dev.maksiks.amaranth;
 import com.google.common.base.Supplier;
 import dev.maksiks.amaranth.block.ModBlocks;
 import dev.maksiks.amaranth.component.ModDataComponentTypes;
-import dev.maksiks.amaranth.entity.ModEntities;
+import dev.maksiks.amaranth.entity.ModEntitiesServer;
 import dev.maksiks.amaranth.item.ModItems;
 import dev.maksiks.amaranth.particle.ModParticles;
 import dev.maksiks.amaranth.sound.ModSounds;
@@ -31,7 +31,7 @@ public class FabricModRegistries {
         ModCreativeTabs.init();
         registerUsualEach(ModBlocks.BLOCK_MAP, BuiltInRegistries.BLOCK);
         registerUsualEach(ModItems.ITEM_MAP, BuiltInRegistries.ITEM);
-        registerUsualEach(ModEntities.ENTITY_TYPE_MAP, BuiltInRegistries.ENTITY_TYPE);
+        registerUsualEach(ModEntitiesServer.ENTITY_TYPE_MAP, BuiltInRegistries.ENTITY_TYPE);
         registerUsualEach(ModTrunkPlacerTypes.TRUNK_PLACER_TYPE_MAP, BuiltInRegistries.TRUNK_PLACER_TYPE);
 
         registerUsualEach(ModFoliagePlacerTypes.FOLIAGE_PLACER_TYPE_MAP, BuiltInRegistries.FOLIAGE_PLACER_TYPE);
@@ -49,11 +49,8 @@ public class FabricModRegistries {
         ModBlocks.MOD_STRIPPABLES.forEach((strippable, stripped) ->
                 StrippableBlockRegistry.register(strippable.get(), stripped.get()));
 
-        ModEntities.ENTITY_MODELS.forEach((entry)
-                -> EntityModelLayerRegistry.registerModelLayer(entry.loc(), entry.def()::get)
-        );
         // noinspection unchecked
-        ModEntities.ENTITY_ATTRIBUTES.forEach((entry)
+        ModEntitiesServer.ENTITY_ATTRIBUTES.forEach((entry)
                 -> FabricDefaultAttributeRegistry.register((EntityType<? extends LivingEntity>) entry.entity().get(), entry.attributes().get())
         );
 

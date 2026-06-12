@@ -1,9 +1,8 @@
 package dev.maksiks.amaranth;
 
-import com.google.common.base.Supplier;
 import dev.maksiks.amaranth.block.ModBlocks;
 import dev.maksiks.amaranth.component.ModDataComponentTypes;
-import dev.maksiks.amaranth.entity.ModEntities;
+import dev.maksiks.amaranth.entity.ModEntitiesServer;
 import dev.maksiks.amaranth.item.ModItems;
 import dev.maksiks.amaranth.particle.ModParticles;
 import dev.maksiks.amaranth.sound.ModSounds;
@@ -56,7 +55,7 @@ public class NeoModRegistries {
 
         ModBlocks.BLOCK_MAP.forEach(BLOCKS::register);
         ModItems.ITEM_MAP.forEach(ITEMS::register);
-        ModEntities.ENTITY_TYPE_MAP.forEach(ENTITY_TYPES::register);
+        ModEntitiesServer.ENTITY_TYPE_MAP.forEach(ENTITY_TYPES::register);
         ModTrunkPlacerTypes.TRUNK_PLACER_TYPE_MAP.forEach(TRUNK_PLACER_TYPES::register);
         ModFoliagePlacerTypes.FOLIAGE_PLACER_TYPE_MAP.forEach(FOLIAGE_PLACER_TYPES::register);
         ModParticles.PARTICLE_TYPE_MAP.forEach(PARTICLE_TYPES::register);

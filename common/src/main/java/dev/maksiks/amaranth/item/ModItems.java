@@ -2,7 +2,7 @@ package dev.maksiks.amaranth.item;
 
 import com.google.common.base.Supplier;
 import com.google.common.base.Suppliers;
-import dev.maksiks.amaranth.entity.ModEntities;
+import dev.maksiks.amaranth.entity.ModEntitiesServer;
 import dev.maksiks.amaranth.item.custom.*;
 import dev.maksiks.amaranth.platform.Services;
 import dev.maksiks.amaranth.sound.ModSounds;
@@ -52,7 +52,7 @@ public class ModItems {
             () -> new Item(new Item.Properties().food(ModFoodProperties.HEXFRUIT)));
 
     public static final Supplier<Item> SHROOM_BOI_SPAWN_EGG = register("shroom_boi_spawn_egg",
-            () -> Services.PLATFORM.createSpawnEggItem(ModEntities.SHROOM_BOI, 0xf75d57, 0xf1f1f1,
+            () -> Services.PLATFORM.createSpawnEggItem(ModEntitiesServer.SHROOM_BOI, 0xf75d57, 0xf1f1f1,
                     new Item.Properties()));
 
     public static final Supplier<Item> EMPTY_TEA_CUP = register("empty_tea_cup",

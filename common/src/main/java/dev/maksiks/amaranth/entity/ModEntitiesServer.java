@@ -18,34 +18,22 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class ModEntities {
+public class ModEntitiesServer {
     public static final HashMap<String, Supplier<? extends EntityType<?>>> ENTITY_TYPE_MAP = new HashMap<>();
-    public record EntityModelEntry(ModelLayerLocation loc, Supplier<LayerDefinition> def) {}
-    public static final List<EntityModelEntry> ENTITY_MODELS = new ArrayList<>();
     public record EntityAttributeEntry(Supplier<?> entity, Supplier<AttributeSupplier.Builder> attributes) {}
     public static final List<EntityAttributeEntry> ENTITY_ATTRIBUTES = new ArrayList<>();
-    public record EntityRendererEntry(Supplier<?> entity, EntityRendererProvider<?> renderer) {}
-    public static final List<EntityRendererEntry> ENTITY_RENDERERS = new ArrayList<>();
 
     public static final Supplier<EntityType<ShroomBoiEntity>> SHROOM_BOI = register("shroom_boi",
             () -> EntityType.Builder.of(ShroomBoiEntity::new, MobCategory.CREATURE)
             .sized(0.6f, 1.0f).build(Constants.MOD_ID + ":shroom_boi"),
-            ShroomBoiModel.LAYER_LOCATION,
-            ShroomBoiEntity::createAttributes,
-            ShroomBoiModel::createBodyLayer,
-            ShroomBoiRenderer::new);
+            ShroomBoiEntity::createAttributes);
 
     private static <T extends Entity> Supplier<EntityType<T>> register(String key, Supplier<EntityType<T>> entity,
-                                                                       ModelLayerLocation layerLoc,
-                                                                       Supplier<AttributeSupplier.Builder> attributes,
-                                                                       Supplier<LayerDefinition> layerDef,
-                                                                       EntityRendererProvider<T> renderer
+                                                                       Supplier<AttributeSupplier.Builder> attributes
     ) {
         Supplier<EntityType<T>> memoized = Suppliers.memoize(entity);
         ENTITY_TYPE_MAP.put(key, memoized);
         ENTITY_ATTRIBUTES.add(new EntityAttributeEntry(memoized, attributes));
-        ENTITY_MODELS.add(new EntityModelEntry(layerLoc, layerDef));
-        ENTITY_RENDERERS.add(new EntityRendererEntry(memoized, renderer));
         return memoized;
     }
 }

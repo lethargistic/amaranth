@@ -1,6 +1,6 @@
 package dev.maksiks.amaranth.entity.custom;
 
-import dev.maksiks.amaranth.entity.ModEntities;
+import dev.maksiks.amaranth.entity.ModEntitiesServer;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
@@ -68,7 +68,7 @@ public class ShroomBoiEntity extends Animal {
 
     @Override
     public @Nullable AgeableMob getBreedOffspring(ServerLevel level, AgeableMob otherParent) {
-        return ModEntities.SHROOM_BOI.get().create(level);
+        return ModEntitiesServer.SHROOM_BOI.get().create(level);
     }
 
     @Override

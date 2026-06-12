@@ -1,7 +1,8 @@
 package dev.maksiks.amaranth;
 
 import dev.maksiks.amaranth.block.ModBlocks;
-import dev.maksiks.amaranth.entity.ModEntities;
+import dev.maksiks.amaranth.entity.ModEntitiesServer;
+import dev.maksiks.amaranth.entity.client.ModEntitiesClient;
 import dev.maksiks.amaranth.particle.AnthocyaninParticles;
 import dev.maksiks.amaranth.particle.ModParticles;
 import dev.maksiks.amaranth.particle.SilverBirchParticles;
@@ -12,6 +13,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.EntityRenderers;
@@ -50,16 +52,22 @@ public class FabricModClient implements ClientModInitializer {
         // config
         NeoForgeConfigRegistry.INSTANCE.register(Constants.MOD_ID, ModConfig.Type.CLIENT, ClientConfig.SPEC, "amaranth/amaranth-client.toml");
 
-        // Entity renderers
-        ModEntities.ENTITY_RENDERERS.forEach((entry) -> {
+        // Entity renderers & models
+        ModEntitiesClient.initializeClientEntityData();
+
+        ModEntitiesClient.ENTITY_RENDERERS.forEach((entry) -> {
             // noinspection unchecked
             EntityRendererProvider<Entity> r = (EntityRendererProvider<Entity>) entry.renderer();
             EntityRenderers.register((EntityType<? extends Entity>) entry.entity().get(), r);
         });
 
+        ModEntitiesClient.ENTITY_MODELS.forEach((entry)
+                -> EntityModelLayerRegistry.registerModelLayer(entry.loc(), entry.def()::get)
+        );
+
         // spawn placements (even if i only have a placeholder lol)
         SpawnPlacements.register(
-                ModEntities.SHROOM_BOI.get(),
+                ModEntitiesServer.SHROOM_BOI.get(),
                 SpawnPlacementTypes.ON_GROUND,
                 Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
                 (entityType, level, reason, pos, random) -> {

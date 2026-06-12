@@ -2,7 +2,8 @@ package dev.maksiks.amaranth.event;
 
 import com.google.common.base.Supplier;
 import dev.maksiks.amaranth.Constants;
-import dev.maksiks.amaranth.entity.ModEntities;
+import dev.maksiks.amaranth.entity.ModEntitiesServer;
+import dev.maksiks.amaranth.entity.client.ModEntitiesClient;
 import dev.maksiks.amaranth.util.Utils;
 import dev.maksiks.amaranth.worldgen.biome.surface.ModSurfaceRules;
 import net.minecraft.resources.ResourceLocation;
@@ -26,16 +27,9 @@ import static dev.maksiks.amaranth.block.ModBlocks.MOD_FLOWER_POTS;
 @EventBusSubscriber(modid = Constants.MOD_ID)
 public class ModOtherEvents {
     @SubscribeEvent
-    public static void registerLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
-        ModEntities.ENTITY_MODELS.forEach((entry) -> {
-            event.registerLayerDefinition(entry.loc(), entry.def());
-        });
-    }
-
-    @SubscribeEvent
     public static void registerAttributes(EntityAttributeCreationEvent event) {
         // noinspection unchecked
-        ModEntities.ENTITY_ATTRIBUTES.forEach((entry)
+        ModEntitiesServer.ENTITY_ATTRIBUTES.forEach((entry)
                 -> event.put((EntityType<? extends LivingEntity>) entry.entity().get(), entry.attributes().get().build()));
     }
 
@@ -43,7 +37,7 @@ public class ModOtherEvents {
     @SubscribeEvent
     public static void registerSpawnPlacements(RegisterSpawnPlacementsEvent event) {
         event.register(
-                ModEntities.SHROOM_BOI.get(),
+                ModEntitiesServer.SHROOM_BOI.get(),
                 SpawnPlacementTypes.ON_GROUND,
                 Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
                 (entityType, level, reason, pos, random) -> {
