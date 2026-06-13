@@ -632,6 +632,13 @@ class ModBlocks {
         @JvmField
         val POTTED_NAAITE_FLOWER: Supplier<FlowerPotBlock?> = registerFlowerPot(NAAITE)
 
+        @JvmField
+        val VEIKAAN: Supplier<Block?> = registerWithItem<Block?>(
+            "veikaan", renderType = RenderType.CUTOUT
+        ) { FlowerBlock(MobEffects.HUNGER, 10.5f, BlockBehaviour.Properties.ofFullCopy(Blocks.POPPY)) }
+
+        val POTTED_VEIKAAN_FLOWER: Supplier<FlowerPotBlock?> = registerFlowerPot(VEIKAAN)
+
         // lupine
         @JvmField
         val LUPINE: Supplier<Block?> = registerWithItem<Block?>(

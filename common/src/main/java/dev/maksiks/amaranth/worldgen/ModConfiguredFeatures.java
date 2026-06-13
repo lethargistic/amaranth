@@ -69,6 +69,8 @@ public class ModConfiguredFeatures {
 
     public static ResourceKey<ConfiguredFeature<?, ?>> TREE_ON_TREE_TREE_KEY = registerKey("tree_on_tree_tree");
 
+    public static ResourceKey<ConfiguredFeature<?, ?>> SHROOMLANDS_MUSHROOM_KEY = registerKey("shroomlands_mushroom");
+
     public static ResourceKey<ConfiguredFeature<?, ?>> ANTHOCYANIN_KEY = registerKey("anthocyanin");
     public static ResourceKey<ConfiguredFeature<?, ?>> ANTHOCYANIN_FLOWER_KEY = registerKey("anthocyanin_flower");
 
@@ -91,6 +93,7 @@ public class ModConfiguredFeatures {
 
     public static ResourceKey<ConfiguredFeature<?, ?>> WITCHY_KEY = registerKey("witchy");
     public static ResourceKey<ConfiguredFeature<?, ?>> WITCHY_FLOWER_NAAITE_KEY = registerKey("witchy_flower_naaite");
+    public static ResourceKey<ConfiguredFeature<?, ?>> WITCHY_FLOWER_VEIKAAN_KEY = registerKey("witchy_flower_veikaan");
 
     public static ResourceKey<ConfiguredFeature<?, ?>> LUPINE_FILL_KEY = registerKey("lupine_fill");
 
@@ -357,6 +360,31 @@ public class ModConfiguredFeatures {
                         new TwoLayersFeatureSize(1, 0, 1)).build()
         );
 
+        // shroom
+        register(
+                context,
+                SHROOMLANDS_MUSHROOM_KEY,
+                Feature.FLOWER,
+                new RandomPatchConfiguration(
+                        240,
+                        7,
+                        2,
+                        PlacementUtils.onlyWhenEmpty(
+                                Feature.SIMPLE_BLOCK,
+                                new SimpleBlockConfiguration(
+                                        new WeightedStateProvider(
+                                                SimpleWeightedRandomList.<BlockState>builder()
+                                                        .add(Blocks.RED_MUSHROOM.defaultBlockState(), 9)
+                                                        .add(Blocks.BROWN_MUSHROOM.defaultBlockState(), 11)
+                                                        .build()
+                                        )
+                                )
+                        )
+                )
+        );
+
+
+
         // anthocyanin
         register(
                 context,
@@ -448,7 +476,7 @@ public class ModConfiguredFeatures {
                 Feature.TREE,
                 new TreeConfiguration.TreeConfigurationBuilder(
                         BlockStateProvider.simple(Blocks.OAK_LOG),
-                        new StraightTrunkPlacer(3, 2, 0),
+                        new StraightTrunkPlacer(3, 2, 2),
                         BlockStateProvider.simple(Blocks.AZALEA_LEAVES),
                         new SpearyFoliagePlacer(ConstantInt.of(0), ConstantInt.of(0), 0),
                         new TwoLayersFeatureSize(1, 0, 1)).build()
@@ -592,6 +620,23 @@ public class ModConfiguredFeatures {
                                 Feature.SIMPLE_BLOCK,
                                 new SimpleBlockConfiguration(
                                         BlockStateProvider.simple(ModBlocks.NAAITE.get())
+                                )
+                        )
+                )
+        );
+
+        register(
+                context,
+                WITCHY_FLOWER_VEIKAAN_KEY,
+                Feature.FLOWER,
+                new RandomPatchConfiguration(
+                        36,
+                        4,
+                        2,
+                        PlacementUtils.onlyWhenEmpty(
+                                Feature.SIMPLE_BLOCK,
+                                new SimpleBlockConfiguration(
+                                        BlockStateProvider.simple(ModBlocks.VEIKAAN.get())
                                 )
                         )
                 )

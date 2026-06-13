@@ -45,7 +45,7 @@ public class WitchyTrunkPlacer extends TrunkPlacer {
         setDirtAt(level, blockSetter, random, pos.below(), config);
 
         List<FoliagePlacer.FoliageAttachment> foliage = new ArrayList<>();
-        int height = random.nextInt(2) + 6;
+        int height = random.nextInt(2) + 8;
         // a bit off but oh well
         int maxBranchCount = random.nextInt(1) + 1;
         int branchCount = 0;

@@ -59,6 +59,7 @@ public class ModCreativeTabs {
         MAIN_CREATIVE_MODE_ITEM_MAP.add(ModBlocks.LUPINE);
         MAIN_CREATIVE_MODE_ITEM_MAP.add(ModBlocks.CRESSET_FLOWER);
         MAIN_CREATIVE_MODE_ITEM_MAP.add(ModBlocks.NAAITE);
+        MAIN_CREATIVE_MODE_ITEM_MAP.add(ModBlocks.VEIKAAN);
 
         // full biome vegetation blocks
         MAIN_CREATIVE_MODE_ITEM_MAP.add(ModBlocks.THICK_PUMPKIN);

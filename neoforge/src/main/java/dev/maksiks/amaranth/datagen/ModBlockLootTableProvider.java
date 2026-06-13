@@ -188,6 +188,7 @@ public class ModBlockLootTableProvider extends BlockLootSubProvider {
 
         // witchy
         this.dropSelf(ModBlocks.NAAITE.get());
+        this.dropSelf(ModBlocks.VEIKAAN.get());
 
         // lupine
         this.dropSelf(ModBlocks.LUPINE.get());

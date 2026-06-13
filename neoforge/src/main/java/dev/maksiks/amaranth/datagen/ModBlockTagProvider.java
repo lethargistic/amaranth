@@ -150,6 +150,7 @@ public class ModBlockTagProvider extends BlockTagsProvider {
 
         // witchy
         this.tag(BlockTags.SMALL_FLOWERS).add(ModBlocks.NAAITE.get());
+        this.tag(BlockTags.SMALL_FLOWERS).add(ModBlocks.VEIKAAN.get());
 
         // lupine
         this.tag(BlockTags.SMALL_FLOWERS).add(ModBlocks.LUPINE.get());

@@ -7,7 +7,7 @@ a lot of this probably won't even ever end up in the mod at all
 
 ### Current
 
-- [ ] todo very: more exteme creative features rather than just new biomes, stuff you can't get bored off quickly, after a lot of discussions i really see people want that so much more than another biome number 2 tho i might have to add sum for world design anyway. Gigantic rocks, etc.
+- [ ] todo very: more extreme creative features rather than just new biomes, stuff you can't get bored off quickly, after a lot of discussions i really see people want that so much more than another biome number 2 tho i might have to add sum for world design anyway. Gigantic rocks, etc.
 - [ ] todo very: C2ME compat
 - [ ] todo very: ask people for music discs
 - [ ] ~~todo very: try datagenning the biome noise~~ ; not using it so nvm
@@ -89,6 +89,7 @@ Multiloader moves:
 
 ### Moderate
 
+- [ ] todo fun: connected textures for lupine, kinda as in irl in bushes, would make it way more fun to explore ; rework the biome to feel iceland and move it there really
 - [ ] todo fun: gnome kid mob, makes ashes of the garden gnome ; lmao make the texture animated and still have eyes moving around
 - [ ] todo maybe: report VanillaParameterOverlayBuilder mob spawn issue if it's still a thing in latest
 - [ ] todo fun: a mod that makes players edible

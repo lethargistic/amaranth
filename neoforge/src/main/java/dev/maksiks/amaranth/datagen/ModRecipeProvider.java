@@ -280,6 +280,11 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_naaite", has(ModBlocks.NAAITE.get()))
                 .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "magenta_dye_from_naaite"));
 
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Items.MAGENTA_DYE, 1)
+                .requires(ModBlocks.VEIKAAN.get())
+                .unlockedBy("has_veikaan", has(ModBlocks.VEIKAAN.get()))
+                .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "magenta_dye_from_veikaan"));
+
         // lupine
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Items.PURPLE_DYE, 1)
                 .requires(ModBlocks.LUPINE.get().asItem())

@@ -3,10 +3,8 @@ package dev.maksiks.amaranth.worldgen;
 import dev.maksiks.amaranth.Constants;
 import dev.maksiks.amaranth.block.ModBlocks;
 import net.minecraft.core.Holder;
-import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
-import net.minecraft.data.worldgen.features.FeatureUtils;
 import net.minecraft.data.worldgen.features.VegetationFeatures;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.data.worldgen.placement.VegetationPlacements;
@@ -14,13 +12,8 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.valueproviders.ClampedInt;
 import net.minecraft.util.valueproviders.UniformInt;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
-import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.configurations.SimpleBlockConfiguration;
-import net.minecraft.world.level.levelgen.feature.configurations.SimpleRandomFeatureConfiguration;
-import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 import net.minecraft.world.level.levelgen.placement.*;
 
 import java.util.List;
@@ -49,6 +42,8 @@ public class ModPlacedFeatures {
 
     public static final ResourceKey<PlacedFeature> TREE_ON_TREE_TREE_PLACED_KEY = registerKey("tree_on_tree_tree_placed");
 
+    public static final ResourceKey<PlacedFeature> SHROOMLANDS_MUSHROOM_PLACED_KEY = registerKey("shroomlands_mushrooms_placed");
+
     public static final ResourceKey<PlacedFeature> ANTHOCYANIN_PLACED_KEY = registerKey("anthocyanin_placed");
     public static final ResourceKey<PlacedFeature> ANTHOCYANIN_FLOWER_PLACED_KEY = registerKey("anthocyanin_flower_placed");
 
@@ -71,6 +66,7 @@ public class ModPlacedFeatures {
 
     public static final ResourceKey<PlacedFeature> WITCHY_PLACED_KEY = registerKey("witchy_placed");
     public static final ResourceKey<PlacedFeature> WITCHY_FLOWER_NAAITE_PLACED_KEY = registerKey("witchy_flower_naaite_placed");
+    public static final ResourceKey<PlacedFeature> WITCHY_FLOWER_VEIKAAN_PLACED_KEY = registerKey("witchy_flower_veikaan_placed");
 
     public static final ResourceKey<PlacedFeature> LUPINE_FILL_PLACED_KEY = registerKey("lupine_fill_placed");
 
@@ -203,6 +199,11 @@ public class ModPlacedFeatures {
                 VegetationPlacements.treePlacement(PlacementUtils.countExtra(100, 0.1F, 1),
                         ModBlocks.PURPLE_MIXED_OAK_SAPLING.get()));
 
+        // shroom
+        register(context, SHROOMLANDS_MUSHROOM_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.SHROOMLANDS_MUSHROOM_KEY),
+                List.of(InSquarePlacement.spread(), CountPlacement.of(1), PlacementUtils.HEIGHTMAP, BiomeFilter.biome()));
+
+
         // anthocyanin
         register(context, ANTHOCYANIN_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.ANTHOCYANIN_KEY),
                 // 1 / chance has to be integer mojang why
@@ -275,12 +276,12 @@ public class ModPlacedFeatures {
 
         register(context, RED_MINI_SHROOM_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.RED_MINI_SHROOM_KEY),
                 // 1 / chance has to be integer mojang why
-                VegetationPlacements.treePlacement(PlacementUtils.countExtra(1, 0.1F, 1),
+                VegetationPlacements.treePlacement(PlacementUtils.countExtra(0, 0.5F, 1),
                         ModBlocks.RED_MINI_SHROOM_SPORELING.get()));
 
         register(context, BROWN_MINI_SHROOM_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.BROWN_MINI_SHROOM_KEY),
                 // 1 / chance has to be integer mojang why
-                VegetationPlacements.treePlacement(PlacementUtils.countExtra(1, 0.1F, 1),
+                VegetationPlacements.treePlacement(PlacementUtils.countExtra(0, 0.5F, 1),
                         ModBlocks.BROWN_MINI_SHROOM_SPORELING.get()));
 
         // witchy
@@ -290,6 +291,8 @@ public class ModPlacedFeatures {
                         ModBlocks.WITCHY_SAPLING.get()));
 
         register(context, WITCHY_FLOWER_NAAITE_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.WITCHY_FLOWER_NAAITE_KEY),
+                List.of(InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, RarityFilter.onAverageOnceEvery(3), BiomeFilter.biome()));
+        register(context, WITCHY_FLOWER_VEIKAAN_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.WITCHY_FLOWER_VEIKAAN_KEY),
                 List.of(InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, RarityFilter.onAverageOnceEvery(3), BiomeFilter.biome()));
 
         // lupine

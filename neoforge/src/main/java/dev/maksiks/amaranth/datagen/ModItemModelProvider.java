@@ -81,6 +81,7 @@ public class ModItemModelProvider extends ItemModelProvider {
 
         // witchy
         splatBlockItem(ModBlocks.NAAITE);
+        splatBlockItem(ModBlocks.VEIKAAN);
 
         // lupine
         splatBlockItem(ModBlocks.LUPINE);

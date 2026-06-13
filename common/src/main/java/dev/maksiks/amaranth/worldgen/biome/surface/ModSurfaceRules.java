@@ -401,11 +401,11 @@ public class ModSurfaceRules {
                         safeSurfaceFloorRule(
                                 SurfaceRules.ifTrue(
                                         SurfaceRules.noiseCondition(PATCHY_NOISE, -1.0D, -0.3D),
-                                        SurfaceRules.ifTrue(isAtOrAboveWaterLevel, GRASS_BLOCK)
+                                        SurfaceRules.ifTrue(isAtOrAboveWaterLevel, ANDESITE)
                                 )
                         ),
-                        SurfaceRules.ifTrue(SurfaceRules.ON_FLOOR, SurfaceRules.ifTrue(SurfaceRules.not(isAtOrAboveWaterLevel), DIRT)),
-                        SurfaceRules.ifTrue(SurfaceRules.UNDER_FLOOR, DIRT),
+                        SurfaceRules.ifTrue(SurfaceRules.ON_FLOOR, SurfaceRules.ifTrue(SurfaceRules.not(isAtOrAboveWaterLevel), ANDESITE)),
+                        SurfaceRules.ifTrue(SurfaceRules.UNDER_FLOOR, ANDESITE),
                         STONE
                 )
         ));

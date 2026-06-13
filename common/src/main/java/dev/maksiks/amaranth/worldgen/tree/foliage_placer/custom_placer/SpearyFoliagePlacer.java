@@ -21,6 +21,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import static dev.maksiks.amaranth.worldgen.tree.ModOldTreeHelpers.splat;
 
+
+// TODO eventually: twig old trees
 public class SpearyFoliagePlacer extends FoliagePlacer {
     public static final MapCodec<SpearyFoliagePlacer> CODEC = RecordCodecBuilder.mapCodec(instance -> blobParts(instance).apply(instance, SpearyFoliagePlacer::new));
     protected final int height;
