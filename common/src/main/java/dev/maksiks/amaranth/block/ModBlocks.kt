@@ -876,6 +876,8 @@ class ModBlocks {
         ): Supplier<Block?> {
             val trueProps = props ?: BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_LEAVES)
             val leaves: Supplier<Block?> = registerWithItem<Block?>(
+                // this currently overrides vanilla FAST graphics setting replacing transparency with opaque parts,
+                // it looks horrendous if we keep it so i'd rather not for now
                 key, renderType = RenderType.CUTOUT_MIPPED
             ) { constructor(trueProps) }
 

@@ -359,9 +359,12 @@ public class ModBlockStateProvider extends BlockStateProvider {
         });
     }
 
+    ///
+    /// this assumes we're making newer leaves e.g. azalea, not old tint based like oak, birch etc.
+    ///
     private void leavesBlock(Supplier<Block> block) {
         simpleBlockWithItem(block.get(),
-                models().singleTexture(Utils.findBlockId(block), ResourceLocation.parse("minecraft:block/leaves"),
+                models().singleTexture(Utils.findBlockId(block), ResourceLocation.parse("minecraft:block/cube_all"),
                         "all", blockTexture(block.get())));
     }
 

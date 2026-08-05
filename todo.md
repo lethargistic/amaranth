@@ -8,15 +8,13 @@ a lot of this probably won't even ever end up in the mod at all
 ### Current
 
 - [ ] todo very: more extreme creative features rather than just new biomes, stuff you can't get bored off quickly, after a lot of discussions i really see people want that so much more than another biome number 2 tho i might have to add sum for world design anyway. Gigantic rocks, etc.
-- [ ] todo very: C2ME compat
+- [ ] todo very: setup upload via api (aka a premade thing by someone else) because the curseforge ui is killing me
+- [ ] todo very: proper C2ME compat
 - [ ] todo very: ask people for music discs
-- [ ] ~~todo very: try datagenning the biome noise~~ ; not using it so nvm
+- [x] ~~todo very: try datagenning the biome noise~~ ; not using it so nvm
 - [x] todo very: instameal
-- [ ] todo fun: 1/100 chance for rosery rock to have a moustache or a top hat, and also pots to add to the primality of the stachio
-- [ ] todo fun: gnomessssss
-- [ ] todo fun: autumnal
+- [x] ~~todo fun: autumnal ;~~ mojang added it fuck
 - [ ] todo maybe: automatically re-register vanilla features used in the mod as my own to prevent feature order cycles with other mods in the future or come up with another permanent solution
-- [ ] todo fun: naaite roots
 - [ ] todo maybe: block that makes desolate ice field biomes turn into calm desolate ice field biomes with no fog and snow ; (-> blizzard in a bottle?)
 - [ ] todo eventually: lupine meadows are boring
 - [ ] todo eventually: remake anthocyanin wood color, add new ground blocks and position it somewhere better
@@ -87,6 +85,17 @@ Multiloader moves:
 - [x] fix minor: sorrow ice is not actually translucent, or just doens't seem like it? ; that's too much coding for
   today i forgor to replace it
 
+Concurrent ideas:
+
+after a lot of takk also realizing people want extreme or at least pretty biomes and not shrubland two
+
+- [ ] todo fun: turn sparsey spears into like lances, make them stand out
+- [ ] todo fun: 1/100 chance for rosery rock to have a moustache or a top hat, and also pots to add to the primality of the stachio
+- [ ] todo fun: gnomessssss
+- [ ] todo fun: naaite roots
+- [ ] todo fun: biome with wiggly trees, so like as if they were swaying in the wind
+- [ ] todo thonk: clair obscur inspirations
+
 ### Moderate
 
 - [ ] todo fun: connected textures for lupine, kinda as in irl in bushes, would make it way more fun to explore ; rework the biome to feel iceland and move it there really
@@ -125,6 +134,10 @@ Multiloader moves:
 - [ ] todo maybe: unrelated but make like an actually good color picker website cuz im annoyed ; so real
 - [ ] feat twig maybe: leaf check for structures
 - [ ] fix: shroom boi needs datafixer apparently
+
+### Updating
+
+- [ ] todo newver: check if they made leaf transparency color sensible
 
 ***
 
