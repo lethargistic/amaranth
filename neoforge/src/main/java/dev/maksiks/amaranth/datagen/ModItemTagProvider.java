@@ -1,14 +1,15 @@
 package dev.maksiks.amaranth.datagen;
 
 import dev.maksiks.amaranth.Constants;
+import dev.maksiks.amaranth.block.ModBlocks;
 import dev.maksiks.amaranth.item.ModItems;
-import dev.maksiks.amaranth.tags.ModTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.level.block.Block;
+import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.Nullable;
 
@@ -37,6 +38,7 @@ public class ModItemTagProvider extends ItemTagsProvider {
                 .add(ModItems.MELON_HELMET.get());
         this.tag(ItemTags.HEAD_ARMOR_ENCHANTABLE)
                 .add(ModItems.MELON_HELMET.get());
+        this.tag(Tags.Items.MUSHROOMS).add(ModBlocks.SHAGGY_INK_CAP_MUSHROOM.get().asItem());
 
         // uh
         this.tag(ItemTags.GOAT_FOOD)

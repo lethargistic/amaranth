@@ -31,6 +31,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         handheldItem(ModItems.SKEWER.get());
         basicItem(ModItems.RAW_MEAT_SKEWER.get());
         basicItem(ModItems.MEAT_SKEWER.get());
+        splatBlockItem(ModBlocks.SHAGGY_INK_CAP_MUSHROOM);
 
         // mystic
         basicItem(ModItems.MAFIA_BLOB.get());

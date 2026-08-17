@@ -46,6 +46,9 @@ import static dev.maksiks.amaranth.worldgen.features.ModFeatures.TEST_FILL_FEATU
 public class ModConfiguredFeatures {
     public static ResourceKey<ConfiguredFeature<?, ?>> TEST_FILL_KEY = registerKey("test_lupine_fill");
 
+    // the vanilla classes should just accept null but oh well doing this instead it's fine
+    public static ResourceKey<ConfiguredFeature<?, ?>> NONE_KEY = registerKey("none");
+
     public static ResourceKey<ConfiguredFeature<?, ?>> MYSTIC_KEY = registerKey("mystic");
     public static ResourceKey<ConfiguredFeature<?, ?>> MYSTIC_FLOWER_KEY = registerKey("mystic_flower");
     public static ResourceKey<ConfiguredFeature<?, ?>> MYSTIC_AMETHYST_KEY = registerKey("mystic_amethyst");

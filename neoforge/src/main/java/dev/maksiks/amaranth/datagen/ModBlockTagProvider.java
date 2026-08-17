@@ -10,6 +10,7 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FlowerPotBlock;
+import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.Nullable;
@@ -21,6 +22,7 @@ public class ModBlockTagProvider extends BlockTagsProvider {
         super(output, lookupProvider, Constants.MOD_ID, existingFileHelper);
     }
 
+    // TODO: add stuff to common tags
     // TODO: refactor it all with ModBlocks utils and maps for everything
     // generic rather than forgetting to add this every time
 

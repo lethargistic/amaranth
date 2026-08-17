@@ -54,6 +54,9 @@ public class ModCreativeTabs {
         MAIN_CREATIVE_MODE_ITEM_MAP.add(ModBlocks.REEDS);
         MAIN_CREATIVE_MODE_ITEM_MAP.add(ModBlocks.ALIEN_PHYLLOSTACHYS);
 
+        // mushrooms
+        MAIN_CREATIVE_MODE_ITEM_MAP.add(ModBlocks.SHAGGY_INK_CAP_MUSHROOM);
+
         // flowers
         MAIN_CREATIVE_MODE_ITEM_MAP.add(ModBlocks.MALACHITE_VIPERS_BUGLOSS);
         MAIN_CREATIVE_MODE_ITEM_MAP.add(ModBlocks.LUPINE);

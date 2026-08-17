@@ -10,6 +10,7 @@ import dev.maksiks.amaranth.block.custom.leaves.*
 import dev.maksiks.amaranth.item.ModItems
 import dev.maksiks.amaranth.platform.Services
 import dev.maksiks.amaranth.util.Utils
+import dev.maksiks.amaranth.worldgen.ModConfiguredFeatures
 import dev.maksiks.amaranth.worldgen.tree.ModTreeGrowers
 import net.minecraft.core.BlockPos
 import net.minecraft.util.ColorRGBA
@@ -614,6 +615,15 @@ class ModBlocks {
         @JvmField
         val POTTED_BROWN_MINI_SHROOM_SPORELING: Supplier<FlowerPotBlock?> =
             registerFlowerPot(BROWN_MINI_SHROOM_SPORELING)
+
+
+        @JvmField
+        val SHAGGY_INK_CAP_MUSHROOM: Supplier<Block?> = registerWithItem<Block?>(
+            "shaggy_ink_cap_mushroom", renderType = RenderType.CUTOUT
+        ) { MushroomBlock(ModConfiguredFeatures.NONE_KEY, BlockBehaviour.Properties.ofFullCopy(Blocks.BROWN_MUSHROOM)) }
+
+        @JvmField
+        val POTTED_GRAY_MUSHROOM: Supplier<FlowerPotBlock?> = registerFlowerPot(SHAGGY_INK_CAP_MUSHROOM)
 
         // witchy
         @JvmField

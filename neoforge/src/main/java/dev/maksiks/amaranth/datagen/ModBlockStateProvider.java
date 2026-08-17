@@ -59,6 +59,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
         blockWithItem(ModBlocks.WORLDGEN_MARKER_BLUE);
         blockWithItem(ModBlocks.WORLDGEN_MARKER_GREEN);
         blockWithItem(ModBlocks.WORLDGEN_MARKER_PURPLE);
+        twoPlanesCutoutBlock(ModBlocks.SHAGGY_INK_CAP_MUSHROOM);
 
         // mystic
         logBlock((ModBlocks.MYSTIC_LOG.get()));
