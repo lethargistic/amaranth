@@ -37,7 +37,7 @@ public class CustomFogHandlerMixin {
             at = @At(
                     value = "INVOKE",
                     target = "Lcom/mojang/blaze3d/systems/RenderSystem;clearColor(FFFF)V",
-                    ordinal = 0,
+                    ordinal = 1,
                     remap = false
             )
     )
