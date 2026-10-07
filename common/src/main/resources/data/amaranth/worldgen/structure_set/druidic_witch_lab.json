@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "amaranth:druidic_witch_lab",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 29657848,
+    "separation": 6,
+    "spacing": 34
+  }
+}

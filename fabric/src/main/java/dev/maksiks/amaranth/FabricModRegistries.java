@@ -9,6 +9,8 @@ import dev.maksiks.amaranth.particle.ModParticles;
 import dev.maksiks.amaranth.sound.ModSounds;
 import dev.maksiks.amaranth.worldgen.features.ModFeatures;
 import dev.maksiks.amaranth.worldgen.features.structure_processor.ModStructureProcessorTypes;
+import dev.maksiks.amaranth.worldgen.structure.ModStructures;
+import dev.maksiks.amaranth.worldgen.structure.piece.ModPieces;
 import dev.maksiks.amaranth.worldgen.tree.foliage_placer.ModFoliagePlacerTypes;
 import dev.maksiks.amaranth.worldgen.tree.trunk_placer.ModTrunkPlacerTypes;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
@@ -40,6 +42,8 @@ public class FabricModRegistries {
         registerUsualEach(ModDataComponentTypes.DATA_COMPONENT_TYPE_MAP, BuiltInRegistries.DATA_COMPONENT_TYPE);
         registerUsualEach(ModFeatures.FEATURE_MAP, BuiltInRegistries.FEATURE);
         registerUsualEach(ModStructureProcessorTypes.STRUCTURE_PROCESSOR_TYPE_MAP, BuiltInRegistries.STRUCTURE_PROCESSOR);
+        registerUsualEach(ModPieces.PIECE_MAP, BuiltInRegistries.STRUCTURE_PIECE);
+        registerUsualEach(ModStructures.STRUCTURE_TYPE_MAP, BuiltInRegistries.STRUCTURE_TYPE);
 
         // Fabric specific / other
         LandPathNodeTypesRegistry.register(ModBlocks.SPIKY_ARCHES.get(), PathType.DAMAGE_OTHER, null);

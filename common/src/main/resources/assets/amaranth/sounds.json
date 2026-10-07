@@ -24,5 +24,13 @@
         "stream": true
       }
     ]
+  },
+  "mushland_mash": {
+    "sounds": [
+      {
+        "name": "amaranth:mushland_mash",
+        "stream": true
+      }
+    ]
   }
 }

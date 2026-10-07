@@ -8,6 +8,8 @@ import dev.maksiks.amaranth.particle.ModParticles;
 import dev.maksiks.amaranth.sound.ModSounds;
 import dev.maksiks.amaranth.worldgen.features.ModFeatures;
 import dev.maksiks.amaranth.worldgen.features.structure_processor.ModStructureProcessorTypes;
+import dev.maksiks.amaranth.worldgen.structure.ModStructures;
+import dev.maksiks.amaranth.worldgen.structure.piece.ModPieces;
 import dev.maksiks.amaranth.worldgen.tree.foliage_placer.ModFoliagePlacerTypes;
 import dev.maksiks.amaranth.worldgen.tree.trunk_placer.ModTrunkPlacerTypes;
 import net.minecraft.core.component.DataComponentType;
@@ -22,6 +24,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacerType;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacerType;
+import net.minecraft.world.level.levelgen.structure.StructureType;
+import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -50,6 +54,10 @@ public class NeoModRegistries {
                 DeferredRegister.create(STRUCTURE_PROCESSOR, Constants.MOD_ID);
         DeferredRegister<DataComponentType<?>> DATA_COMPONENT_TYPES =
                 DeferredRegister.create(BuiltInRegistries.DATA_COMPONENT_TYPE, Constants.MOD_ID);
+        DeferredRegister<StructurePieceType> STRUCTURE_PIECE_TYPES =
+                DeferredRegister.create(Registries.STRUCTURE_PIECE, Constants.MOD_ID);
+        DeferredRegister<StructureType<?>> STRUCTURE_TYPES =
+                DeferredRegister.create(Registries.STRUCTURE_TYPE, Constants.MOD_ID);
 
         CREATIVE_MODE_TABS.register(ModCreativeTabs.MAIN_TAB_NAME, ModCreativeTabs.loaderTabContents);
 
@@ -63,6 +71,8 @@ public class NeoModRegistries {
         ModFeatures.FEATURE_MAP.forEach(FEATURES::register);
         ModStructureProcessorTypes.STRUCTURE_PROCESSOR_TYPE_MAP.forEach(STRUCTURE_PROCESSOR_TYPES::register);
         ModDataComponentTypes.DATA_COMPONENT_TYPE_MAP.forEach(DATA_COMPONENT_TYPES::register);
+        ModPieces.PIECE_MAP.forEach(STRUCTURE_PIECE_TYPES::register);
+        ModStructures.STRUCTURE_TYPE_MAP.forEach(STRUCTURE_TYPES::register);
 
         CREATIVE_MODE_TABS.register(eventBus);
         BLOCKS.register(eventBus);
@@ -74,5 +84,7 @@ public class NeoModRegistries {
         SOUND_EVENTS.register(eventBus);
         FEATURES.register(eventBus);
         STRUCTURE_PROCESSOR_TYPES.register(eventBus);
+        STRUCTURE_PIECE_TYPES.register(eventBus);
+        STRUCTURE_TYPES.register(eventBus);
     }
 }

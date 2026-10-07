@@ -1,0 +1,8 @@
+{
+  "comparator_output": 14,
+  "description": {
+    "translate": "item.amaranth.mushland_mash_music_disc.desc"
+  },
+  "length_in_seconds": 97.0,
+  "sound_event": "amaranth:mushland_mash"
+}

@@ -1,0 +1,9 @@
+{
+  "type": "amaranth:druidic_witch_lab",
+
+  "biomes": "#amaranth:has_structure/druidic_witch_lab",
+
+  "step": "surface_structures",
+
+  "spawn_overrides": {}
+}

@@ -1,0 +1,66 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "amaranth:mushland_mash_music_disc",
+          "weight":20
+        },
+        {
+          "type": "minecraft:item",
+          "name": "amaranth:witchy_sapling",
+          "weight": 60
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:iron_shovel",
+          "weight": 15
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:flower_pot",
+          "weight": 15
+        },
+        {
+          "type": "minecraft:item",
+          "name": "amaranth:naaite",
+          "weight": 60
+        },
+        {
+          "type": "minecraft:item",
+          "name": "amaranth:veikaan",
+          "weight": 60
+        },
+        {
+          "type": "minecraft:item",
+          "name": "amaranth:reed_bar",
+          "weight": 20
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:bone_meal",
+          "weight": 40
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:blue_orchid",
+          "weight": 60
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:short_grass",
+          "weight": 20
+        }
+      ],
+      "rolls": {
+        "type": "minecraft:uniform",
+        "max": 23.0,
+        "min": 23.0
+      }
+    }
+  ],
+  "random_sequence": "minecraft:chests/simple_dungeon"
+}

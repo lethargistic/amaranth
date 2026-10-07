@@ -138,6 +138,7 @@ public class ModCreativeTabs {
 
         // music discs
         MAIN_CREATIVE_MODE_ITEM_MAP.add(ModItems.PALETTE_OVERLOAD_MUSIC_DISC);
+        MAIN_CREATIVE_MODE_ITEM_MAP.add(ModItems.MUSHLAND_MASH_MUSIC_DISC);
 
         // misc but at the end
         MAIN_CREATIVE_MODE_ITEM_MAP.add(ModItems.ASHES_OF_THE_LAWN_GNOME);

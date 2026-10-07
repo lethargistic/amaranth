@@ -25,6 +25,7 @@ public class ModItemModelProvider extends ItemModelProvider {
 
         // misc
         basicItem(ModItems.PALETTE_OVERLOAD_MUSIC_DISC.get());
+        basicItem(ModItems.MUSHLAND_MASH_MUSIC_DISC.get());
         basicItem(ModItems.EMPTY_TEA_CUP.get());
         basicItem(ModItems.MELON_HELMET.get());
         basicItem(ModItems.ASHES_OF_THE_LAWN_GNOME.get());

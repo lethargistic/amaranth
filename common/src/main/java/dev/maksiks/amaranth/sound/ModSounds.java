@@ -29,6 +29,8 @@ public class ModSounds {
 
     public static final Supplier<SoundEvent> PALETTE_OVERLOAD = registerSoundEvent("palette_overload");
     public static final ResourceKey<JukeboxSong> PALETTE_OVERLOAD_KEY = createSong("palette_overload");
+    public static final Supplier<SoundEvent> MUSHLAND_MASH = registerSoundEvent("mushland_mash");
+    public static final ResourceKey<JukeboxSong> MUSHLAND_MASH_KEY = createSong("mushland_mash");
 
     private static ResourceKey<JukeboxSong> createSong(String name) {
         return ResourceKey.create(Registries.JUKEBOX_SONG, ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, name));

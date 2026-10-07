@@ -69,6 +69,8 @@ public class ModItems {
     // discs
     public static final Supplier<Item> PALETTE_OVERLOAD_MUSIC_DISC = register("palette_overload_music_disc",
             () -> new Item(new Item.Properties().rarity(Rarity.RARE).jukeboxPlayable(ModSounds.PALETTE_OVERLOAD_KEY).stacksTo(1)));
+    public static final Supplier<Item> MUSHLAND_MASH_MUSIC_DISC = register("mushland_mash_music_disc",
+            () -> new Item(new Item.Properties().rarity(Rarity.RARE).jukeboxPlayable(ModSounds.MUSHLAND_MASH_KEY).stacksTo(1)));
 
     // pain
     public static final Supplier<Item> THORN = register("thorn",
