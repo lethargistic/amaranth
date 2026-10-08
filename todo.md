@@ -7,6 +7,7 @@ a lot of this probably won't even ever end up in the mod at all
 
 ### Current
 
+- [ ] fix kinda very: structures float if bordering mushland
 - [ ] todo very: more extreme creative features rather than just new biomes, stuff you can't get bored off quickly, after a lot of discussions i really see people want that so much more than another biome number 2 tho i might have to add sum for world design anyway. Gigantic rocks, etc.
 - [ ] todo very: setup upload via api (aka a premade thing by someone else) because the curseforge ui is killing me
 - [ ] todo very: proper C2ME compat
